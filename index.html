@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lumen — Digital Product Agency</title>
-<meta name="description" content="Lumen is a digital info-product agency. We design, build and launch knowledge products that sell." />
+<title>Vorgrow — Digital Product Agency</title>
+<meta name="description" content="Vorgrow is a digital info-product agency. We design, build and launch knowledge products that sell." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -192,11 +192,12 @@
   /* ---------- Hero: poster on black, dotted-orbit animation right ---------- */
   .hero {
     position: relative;
-    min-height: 92vh;
+    min-height: 88vh;
     display: flex;
     align-items: center;
     padding: calc(56px + 60px) 0 var(--sp-section);
     overflow: hidden;
+    text-align: center;
   }
   .hero-canvas {
     position: absolute;
@@ -225,17 +226,17 @@
   }
   .hero-badge .plus { color: var(--ink-muted); font-size: 14px; }
   .hero h1 {
-    max-width: 11ch;
-    margin: 0 0 var(--sp-xl);
+    max-width: 14ch;
+    margin: 0 auto var(--sp-xl);
   }
   .hero .subhead {
-    max-width: 460px;
-    margin: 0 0 var(--sp-xxl);
+    max-width: 520px;
+    margin: 0 auto var(--sp-xxl);
   }
   .hero-actions {
     display: flex;
     gap: var(--sp-sm);
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
   }
   .hero-note {
@@ -382,50 +383,130 @@
   }
   .step p { color: var(--ink-muted); font-size: 14px; line-height: 1.45; }
 
-  /* ---------- Stats: flat on canvas ---------- */
-  .stats { text-align: center; }
-  .stat-value {
+  /* ---------- Why: alternating feature rows with count-up metrics ---------- */
+  .why-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: clamp(30px, 5vw, 80px);
+    align-items: center;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  .why-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .why-main {
+    display: flex;
+    align-items: center;
+    gap: clamp(24px, 3.5vw, 48px);
+  }
+  .why-row.reversed .why-main { order: 2; }
+  .why-row.reversed .why-metrics { order: 1; }
+
+  .why-visual {
+    background: var(--surface-1);
+    border-radius: var(--r-xl);
+    padding: 26px;
+    width: min(260px, 36%);
+    aspect-ratio: 29 / 32;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: background 0.25s ease;
+  }
+  .why-row:hover .why-visual { background: var(--surface-2); }
+
+  .why-copy h3 {
     font-family: var(--font-display);
-    font-size: clamp(38px, 4.5vw, 62px);
+    font-size: clamp(22px, 2.5vw, 28px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    margin-bottom: var(--sp-md);
+  }
+  .why-copy p {
+    color: var(--ink-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 52ch;
+  }
+
+  .why-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xxl);
+    border-left: 1px solid var(--hairline-soft);
+    padding-left: clamp(24px, 3.5vw, 48px);
+  }
+  .why-row.reversed .why-metrics {
+    border-left: none;
+    border-right: 1px solid var(--hairline-soft);
+    padding-left: 0;
+    padding-right: clamp(24px, 3.5vw, 48px);
+  }
+
+  .metric-value {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 3.5vw, 46px);
     font-weight: 500;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.04em;
     line-height: 1;
     color: var(--ink);
   }
-  .stat-label {
-    color: var(--ink-muted);
+  .metric-label {
     font-size: 14px;
     font-weight: 500;
+    color: var(--ink);
     margin-top: 10px;
   }
+  .metric-sub {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
 
-  /* ---------- Testimonials ---------- */
-  .quote-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: var(--sp-xl);
-  }
-  .quote-card blockquote {
-    font-size: 15px;
-    line-height: 1.45;
-    color: var(--ink);
-  }
-  .quote-author { display: flex; align-items: center; gap: var(--sp-sm); }
-  .avatar {
-    width: 40px; height: 40px;
+  /* CSS mock illustrations inside why-visual tiles */
+  .mock { display: flex; flex-direction: column; gap: 12px; }
+  .mock-row { display: flex; align-items: center; gap: 10px; }
+  .mock-dot {
+    width: 10px; height: 10px;
     border-radius: 9999px;
     background: var(--surface-2);
-    color: var(--ink);
+    flex-shrink: 0;
+  }
+  .mock-bar { height: 8px; border-radius: 4px; background: var(--surface-2); }
+  .mock-row.done .mock-dot { background: rgba(255, 255, 255, 0.35); }
+  .mock-row.done .mock-bar { background: rgba(255, 255, 255, 0.18); }
+  .mock-row.active .mock-dot { background: #ffffff; }
+  .mock-row.active .mock-bar { background: rgba(255, 255, 255, 0.55); }
+
+  .mock-landing { height: 100%; justify-content: center; }
+  .mock-nav { height: 9px; border-radius: 5px; background: var(--surface-2); }
+  .mock-hero {
+    height: 42%;
+    border-radius: var(--r-md);
+    background: var(--surface-2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
   }
-  .quote-author strong { display: block; font-size: 14px; font-weight: 700; }
-  .quote-author span { font-size: 13px; color: var(--ink-muted); }
+  .mock-pill {
+    width: 42%; height: 12px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.6);
+  }
+  .mock-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 36px; }
+  .mock-col { background: var(--surface-2); border-radius: var(--r-md); }
+
+  .mock-cal {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 7px;
+  }
+  .mock-cell { aspect-ratio: 1; border-radius: 4px; background: var(--surface-2); }
+  .mock-cell.dim { background: rgba(255, 255, 255, 0.12); }
+  .mock-cell.drop { background: #ffffff; }
 
   /* ---------- FAQ: flat rows with soft hairlines ---------- */
   .faq { max-width: 720px; margin: 0 auto; }
@@ -581,13 +662,29 @@
     .hero { min-height: 80vh; padding-top: calc(56px + 48px); }
     .hero-canvas { opacity: 0.55; }
     .section { padding: 72px 0; }
+
+    .why-row { grid-template-columns: 1fr; gap: var(--sp-xl); padding: 44px 0; }
+    .why-row.reversed .why-main { order: 0; }
+    .why-row.reversed .why-metrics { order: 0; }
+    .why-metrics,
+    .why-row.reversed .why-metrics {
+      flex-direction: row;
+      gap: var(--sp-xxl);
+      border-left: none;
+      border-right: none;
+      padding: 0;
+    }
+    .why-metrics .metric { flex: 1; }
   }
 
   @media (max-width: 520px) {
     .grid-4 { grid-template-columns: 1fr; }
-    .stats.grid-4 { grid-template-columns: 1fr 1fr; row-gap: var(--sp-xxl); }
     .footer-main { grid-template-columns: 1fr; gap: var(--sp-xxl); }
     .container { padding: 0 var(--sp-lg); }
+
+    .why-main { flex-direction: column; align-items: flex-start; }
+    .why-visual { width: 100%; max-width: 280px; aspect-ratio: auto; padding: 24px; }
+    .why-metrics, .why-row.reversed .why-metrics { flex-direction: column; gap: var(--sp-xl); }
   }
 </style>
 </head>
@@ -596,11 +693,11 @@
 <!-- ======= NAV ======= -->
 <nav class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#" class="logo"><span class="logo-mark"></span>Lumen</a>
+    <a href="#" class="logo"><span class="logo-mark"></span>Vorgrow</a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why us</a></li>
       <li><a href="#process">Process</a></li>
-      <li><a href="#results">Results</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <div class="nav-actions">
@@ -616,8 +713,8 @@
   <span class="hero-corner bl" aria-hidden="true">+</span>
   <span class="hero-corner br" aria-hidden="true">+</span>
   <div class="container">
-    <div class="hero-badge"><span class="plus">+</span>Welcome to Lumen</div>
-    <h1 class="display-xxl">Your knowledge, shipped as a product.</h1>
+    <div class="hero-badge"><span class="plus">+</span>Welcome to Vorgrow</div>
+    <h1 class="display-xl">Your knowledge, shipped as a product.</h1>
     <p class="subhead">We're a digital product agency that designs, builds and launches info products — courses, memberships and digital goods — end to end.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">Start your project</a>
@@ -666,7 +763,7 @@
         <p>Funnels, email sequences and launch campaigns engineered to turn attention into customers from day one.</p>
       </div>
       <div class="spotlight spotlight-violet reveal">
-        <p class="caption">The Lumen standard</p>
+        <p class="caption">The Vorgrow standard</p>
         <p class="subhead">One team, one fixed price, one polished product — from first call to first sale.</p>
       </div>
     </div>
@@ -706,61 +803,102 @@
   </div>
 </section>
 
-<!-- ======= STATS ======= -->
-<section class="section" id="results">
+<!-- ======= WHY VORGROW ======= -->
+<section class="section" id="why">
   <div class="container">
     <div class="section-head center reveal">
-      <p class="eyebrow">Results</p>
-      <h2 class="display-lg">Numbers we're proud of.</h2>
+      <p class="eyebrow">Why Vorgrow</p>
+      <h2 class="display-lg">Built to make you grow faster.</h2>
+      <p class="subhead">Every project ships with the systems that compound: a course built to be finished, pages built to convert, and an audience engine built before day one.</p>
     </div>
-    <div class="stats grid grid-4">
-      <div class="reveal">
-        <p class="stat-value">40+</p>
-        <p class="stat-label">Products launched</p>
-      </div>
-      <div class="reveal">
-        <p class="stat-value">$12M+</p>
-        <p class="stat-label">Client revenue generated</p>
-      </div>
-      <div class="reveal">
-        <p class="stat-value">6 wks</p>
-        <p class="stat-label">Average time to launch</p>
-      </div>
-      <div class="reveal">
-        <p class="stat-value">98%</p>
-        <p class="stat-label">Clients who'd recommend us</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ======= TESTIMONIALS ======= -->
-<section class="section" id="testimonials" style="padding-top: 0;">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="eyebrow">Clients</p>
-      <h2 class="display-lg">What founders say.</h2>
+    <!-- Row 1: Course structure & design -->
+    <div class="why-row reveal">
+      <div class="why-main">
+        <div class="why-visual" aria-hidden="true">
+          <div class="mock mock-course">
+            <div class="mock-row done"><span class="mock-dot"></span><span class="mock-bar" style="width: 72%"></span></div>
+            <div class="mock-row done"><span class="mock-dot"></span><span class="mock-bar" style="width: 58%"></span></div>
+            <div class="mock-row active"><span class="mock-dot"></span><span class="mock-bar" style="width: 80%"></span></div>
+            <div class="mock-row"><span class="mock-dot"></span><span class="mock-bar" style="width: 64%"></span></div>
+            <div class="mock-row"><span class="mock-dot"></span><span class="mock-bar" style="width: 70%"></span></div>
+            <div class="mock-row"><span class="mock-dot"></span><span class="mock-bar" style="width: 52%"></span></div>
+          </div>
+        </div>
+        <div class="why-copy">
+          <h3>Course structure &amp; design</h3>
+          <p>Most courses get abandoned because they're built like archives, not journeys. We sequence your modules for momentum — quick wins early, depth where it matters — so students finish, get results, and tell people about it. Finished students are your growth engine.</p>
+        </div>
+      </div>
+      <div class="why-metrics">
+        <div class="metric">
+          <p class="metric-value"><span class="metric-num" data-value="10">0</span>+</p>
+          <p class="metric-label">Module blueprints</p>
+          <p class="metric-sub">Structured for completion, not padding</p>
+        </div>
+        <div class="metric">
+          <p class="metric-value"><span class="metric-num" data-value="100">0</span>%</p>
+          <p class="metric-label">Yours to own</p>
+          <p class="metric-sub">Content, files and rights included</p>
+        </div>
+      </div>
     </div>
-    <div class="grid grid-3">
-      <div class="card quote-card reveal">
-        <blockquote>"They took a course idea I'd been sitting on for two years and turned it into a real product in six weeks. First launch did more than my last full year of consulting."</blockquote>
-        <div class="quote-author">
-          <div class="avatar">SK</div>
-          <div><strong>Sara Kim</strong><span>Founder, Brightside</span></div>
+
+    <!-- Row 2: Optimized landing pages -->
+    <div class="why-row reversed reveal">
+      <div class="why-main">
+        <div class="why-visual" aria-hidden="true">
+          <div class="mock mock-landing">
+            <div class="mock-nav"></div>
+            <div class="mock-hero"><span class="mock-pill"></span></div>
+            <div class="mock-cols"><span class="mock-col"></span><span class="mock-col"></span></div>
+          </div>
+        </div>
+        <div class="why-copy">
+          <h3>Optimized landing pages</h3>
+          <p>Your sales page is your storefront, and most lose the sale in the first scroll. We write conversion-focused copy, design for clarity over cleverness, and build pages that load instantly on any device — so the traffic you earn actually turns into customers.</p>
         </div>
       </div>
-      <div class="card quote-card reveal">
-        <blockquote>"The cleanest process I've experienced with any agency. Clear scope, clear price, zero surprises — and the final product looks better than anything in our niche."</blockquote>
-        <div class="quote-author">
-          <div class="avatar">JM</div>
-          <div><strong>James Moreau</strong><span>CEO, Apex Labs</span></div>
+      <div class="why-metrics">
+        <div class="metric">
+          <p class="metric-value"><span class="metric-num" data-value="100">0</span></p>
+          <p class="metric-label">Performance score target</p>
+          <p class="metric-sub">Fast pages convert better</p>
+        </div>
+        <div class="metric">
+          <p class="metric-value"><span class="metric-num" data-value="3">0</span></p>
+          <p class="metric-label">Page variants to test</p>
+          <p class="metric-sub">Find the message that sells</p>
         </div>
       </div>
-      <div class="card quote-card reveal">
-        <blockquote>"We didn't just get a sales page — we got a strategy, a funnel and a launch plan. The membership paid for the project inside the first month."</blockquote>
-        <div class="quote-author">
-          <div class="avatar">AO</div>
-          <div><strong>Amara Obi</strong><span>Creator, Fieldnote</span></div>
+    </div>
+
+    <!-- Row 3: Lead magnets & drop day -->
+    <div class="why-row reveal">
+      <div class="why-main">
+        <div class="why-visual" aria-hidden="true">
+          <div class="mock mock-cal">
+            <span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span>
+            <span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span>
+            <span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell"></span>
+            <span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell drop"></span><span class="mock-cell"></span><span class="mock-cell"></span>
+          </div>
+        </div>
+        <div class="why-copy">
+          <h3>Lead magnets &amp; drop day</h3>
+          <p>Growth starts before launch. We build lead magnets that fill your list while the product is still in production, then orchestrate a coordinated drop day — emails, posts and assets all shipping together — so you launch to a warm audience instead of an empty room.</p>
+        </div>
+      </div>
+      <div class="why-metrics">
+        <div class="metric">
+          <p class="metric-value"><span class="metric-num" data-value="30">0</span></p>
+          <p class="metric-label">Days of launch content</p>
+          <p class="metric-sub">Emails, posts and assets prepared</p>
+        </div>
+        <div class="metric">
+          <p class="metric-value"><span class="metric-num" data-value="1">0</span></p>
+          <p class="metric-label">Coordinated drop day</p>
+          <p class="metric-sub">Everything ships at once</p>
         </div>
       </div>
     </div>
@@ -802,8 +940,8 @@
       <h2 class="display-xl">Let's build your next product.</h2>
       <p class="subhead">Book a free 30-minute strategy call. We'll tell you exactly what we'd build and what it would cost.</p>
       <div class="cta-actions">
-        <a href="mailto:hello@lumen.agency" class="btn btn-primary">Book your free call</a>
-        <a href="mailto:hello@lumen.agency" class="btn btn-translucent">Email us instead</a>
+        <a href="mailto:hello@vorgrow.agency" class="btn btn-primary">Book your free call</a>
+        <a href="mailto:hello@vorgrow.agency" class="btn btn-translucent">Email us instead</a>
       </div>
     </div>
   </div>
@@ -814,15 +952,15 @@
   <div class="container">
     <div class="footer-main">
       <div class="footer-brand">
-        <a href="#" class="logo"><span class="logo-mark"></span>Lumen</a>
+        <a href="#" class="logo"><span class="logo-mark"></span>Vorgrow</a>
         <p>A digital product agency turning expertise into info products that sell.</p>
       </div>
       <div class="footer-col">
         <h4>Agency</h4>
         <ul>
           <li><a href="#services">Services</a></li>
+          <li><a href="#why">Why us</a></li>
           <li><a href="#process">Process</a></li>
-          <li><a href="#results">Results</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -841,15 +979,15 @@
           <li><a href="#">X / Twitter</a></li>
           <li><a href="#">LinkedIn</a></li>
           <li><a href="#">YouTube</a></li>
-          <li><a href="mailto:hello@lumen.agency">hello@lumen.agency</a></li>
+          <li><a href="mailto:hello@vorgrow.agency">hello@vorgrow.agency</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="footer-wordmark" aria-hidden="true"><span>Lumen</span></div>
+    <div class="footer-wordmark" aria-hidden="true"><span>Vorgrow</span></div>
 
     <div class="footer-bottom">
-      <p>© 2026 Lumen Agency. All rights reserved.</p>
+      <p>© 2026 Vorgrow Agency. All rights reserved.</p>
       <div class="footer-legal">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
@@ -878,6 +1016,41 @@
     observer.observe(el);
   });
 
+  // Count-up metrics: animate from 0 when scrolled into view, once.
+  (() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const nums = document.querySelectorAll(".metric-num");
+
+    function animate(el) {
+      const end = parseFloat(el.dataset.value);
+      const duration = 1600;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(end * eased).toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    if (reduceMotion) {
+      nums.forEach((el) => { el.textContent = parseFloat(el.dataset.value).toLocaleString(); });
+      return;
+    }
+
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          countObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+
+    nums.forEach((el) => countObserver.observe(el));
+  })();
+
   // Hero dotted-orbit animation: concentric rings of dots, each ring
   // drifting at its own speed with a soft twinkle.
   (() => {
@@ -896,9 +1069,9 @@
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Orbit center sits right of the headline, vertically centered.
-      cx = w * (w > 810 ? 0.72 : 0.85);
-      cy = h * 0.52;
+      // Orbits radiate from behind the centered headline.
+      cx = w * 0.5;
+      cy = h * 0.5;
 
       const maxRadius = Math.hypot(Math.max(cx, w - cx), Math.max(cy, h - cy));
       const ringGap = Math.max(54, maxRadius / 14);
