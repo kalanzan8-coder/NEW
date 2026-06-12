@@ -189,13 +189,10 @@
 
   .nav-actions { display: flex; gap: 10px; }
 
-  /* ---------- Hero: poster on black, dotted-orbit animation right ---------- */
+  /* ---------- Hero: centered statement + browser mockup over dotted orbits ---------- */
   .hero {
     position: relative;
-    min-height: 88vh;
-    display: flex;
-    align-items: center;
-    padding: calc(56px + 60px) 0 var(--sp-section);
+    padding: calc(56px + 80px) 0 var(--sp-section);
     overflow: hidden;
     text-align: center;
   }
@@ -205,6 +202,7 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+    opacity: 0.85;
   }
   .hero .container {
     position: relative;
@@ -226,12 +224,13 @@
   }
   .hero-badge .plus { color: var(--ink-muted); font-size: 14px; }
   .hero h1 {
-    max-width: 14ch;
-    margin: 0 auto var(--sp-xl);
+    max-width: 15ch;
+    margin: 0 auto var(--sp-lg);
   }
   .hero .subhead {
-    max-width: 520px;
-    margin: 0 auto var(--sp-xxl);
+    font-size: 18px;
+    max-width: 480px;
+    margin: 0 auto var(--sp-xl);
   }
   .hero-actions {
     display: flex;
@@ -255,6 +254,84 @@
   }
   .hero-corner.bl { left: 28px; bottom: 28px; }
   .hero-corner.br { right: 28px; bottom: 28px; }
+
+  /* Browser-frame mockup: surface-1 tile with the level-2 light-edge lift */
+  .hero-mock {
+    max-width: 840px;
+    margin: 64px auto 0;
+    background: var(--surface-1);
+    border-radius: var(--r-xl);
+    padding: 12px;
+    box-shadow:
+      inset 0 0.5px 0 rgba(255, 255, 255, 0.1),
+      0 10px 30px rgba(0, 0, 0, 0.25);
+    text-align: left;
+  }
+  .hero-mock-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 4px 14px;
+  }
+  .hm-dots {
+    position: absolute;
+    left: 8px;
+    display: flex;
+    gap: 6px;
+  }
+  .hm-dots span {
+    width: 9px; height: 9px;
+    border-radius: 9999px;
+    background: var(--surface-2);
+  }
+  .hm-url {
+    width: min(240px, 40%);
+    height: 16px;
+    border-radius: 8px;
+    background: var(--surface-2);
+  }
+  .hero-mock-screen {
+    background: var(--canvas);
+    border-radius: var(--r-md);
+    padding: clamp(22px, 4vw, 42px) clamp(20px, 4vw, 48px);
+  }
+  .hm-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+  .hm-chip { width: 58px; height: 10px; border-radius: 5px; background: var(--surface-2); }
+  .hm-links { display: flex; gap: 10px; }
+  .hm-links i { width: 26px; height: 7px; border-radius: 4px; background: var(--surface-2); }
+  .hm-cta { width: 58px; height: 16px; border-radius: 9999px; background: rgba(255, 255, 255, 0.5); }
+  .hm-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .hm-line { height: 16px; border-radius: 8px; background: var(--surface-2); }
+  .hm-line.w60 { width: 56%; }
+  .hm-line.w40 { width: 38%; background: rgba(255, 255, 255, 0.12); }
+  .hm-btn {
+    width: 92px; height: 24px;
+    border-radius: 9999px;
+    background: #ffffff;
+    margin-top: 8px;
+  }
+  .hm-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: clamp(28px, 4vw, 44px);
+  }
+  .hm-cards span {
+    height: clamp(48px, 7vw, 72px);
+    border-radius: var(--r-md);
+    background: var(--surface-1);
+  }
 
   /* ---------- Trust strip ---------- */
   .trust { padding: var(--sp-lg) 0 var(--sp-section); }
@@ -399,6 +476,7 @@
     align-items: center;
     gap: clamp(24px, 3.5vw, 48px);
   }
+  .why-row.reversed { grid-template-columns: 1fr 2fr; }
   .why-row.reversed .why-main { order: 2; }
   .why-row.reversed .why-metrics { order: 1; }
 
@@ -659,11 +737,12 @@
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
     .footer-main { grid-template-columns: 1fr 1fr; }
-    .hero { min-height: 80vh; padding-top: calc(56px + 48px); }
-    .hero-canvas { opacity: 0.55; }
+    .hero { padding-top: calc(56px + 56px); }
+    .hero-canvas { opacity: 0.5; }
+    .hero-mock { margin-top: 48px; }
     .section { padding: 72px 0; }
 
-    .why-row { grid-template-columns: 1fr; gap: var(--sp-xl); padding: 44px 0; }
+    .why-row, .why-row.reversed { grid-template-columns: 1fr; gap: var(--sp-xl); padding: 44px 0; }
     .why-row.reversed .why-main { order: 0; }
     .why-row.reversed .why-metrics { order: 0; }
     .why-metrics,
@@ -714,13 +793,33 @@
   <span class="hero-corner br" aria-hidden="true">+</span>
   <div class="container">
     <div class="hero-badge"><span class="plus">+</span>Welcome to Vorgrow</div>
-    <h1 class="display-xl">Your knowledge, shipped as a product.</h1>
-    <p class="subhead">We're a digital product agency that designs, builds and launches info products — courses, memberships and digital goods — end to end.</p>
+    <h1 class="display-lg">Your knowledge, shipped as a product.</h1>
+    <p class="subhead">We design, build and launch info products — courses, memberships and digital goods — end to end.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">Start your project</a>
       <a href="#services" class="btn btn-secondary">See what we do</a>
     </div>
     <p class="hero-note">No retainers. Fixed scope, fixed price.</p>
+
+    <div class="hero-mock" aria-hidden="true">
+      <div class="hero-mock-bar">
+        <span class="hm-dots"><span></span><span></span><span></span></span>
+        <span class="hm-url"></span>
+      </div>
+      <div class="hero-mock-screen">
+        <div class="hm-nav">
+          <span class="hm-chip"></span>
+          <span class="hm-links"><i></i><i></i><i></i></span>
+          <span class="hm-cta"></span>
+        </div>
+        <div class="hm-hero">
+          <span class="hm-line w60"></span>
+          <span class="hm-line w40"></span>
+          <span class="hm-btn"></span>
+        </div>
+        <div class="hm-cards"><span></span><span></span><span></span></div>
+      </div>
+    </div>
   </div>
 </header>
 
