@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Vorgrow — Digital Product Agency</title>
+<title>Vorgrow | Digital Product Agency</title>
 <meta name="description" content="Vorgrow is a digital info-product agency. We design, build and launch knowledge products that sell." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     Tokens — from DESIGN.md (Framer design analysis)
+     Tokens from DESIGN.md (Framer design analysis)
      ============================================================ */
   :root {
     /* colors */
@@ -423,8 +423,9 @@
     font-size: 16px;
     margin-bottom: var(--sp-lg);
   }
+  .card-icon svg { width: 20px; height: 20px; }
 
-  /* Gradient spotlight card — the signature atmosphere tile */
+  /* Gradient spotlight card: the signature atmosphere tile */
   .spotlight {
     border-radius: var(--r-xxl);
     padding: 32px;
@@ -505,7 +506,7 @@
     justify-content: center;
     transition: background 0.25s ease;
   }
-  .why-row:hover .why-visual { background: var(--surface-2); }
+  .why-svg { width: 100%; height: auto; display: block; }
 
   .why-copy h3 {
     font-family: var(--font-display);
@@ -553,48 +554,6 @@
     font-weight: 500;
   }
   .why-points strong { color: var(--ink); font-weight: 600; }
-
-  /* CSS mock illustrations inside why-visual tiles */
-  .mock { display: flex; flex-direction: column; gap: 12px; }
-  .mock-row { display: flex; align-items: center; gap: 10px; }
-  .mock-dot {
-    width: 10px; height: 10px;
-    border-radius: 9999px;
-    background: var(--surface-2);
-    flex-shrink: 0;
-  }
-  .mock-bar { height: 8px; border-radius: 4px; background: var(--surface-2); }
-  .mock-row.done .mock-dot { background: rgba(255, 255, 255, 0.35); }
-  .mock-row.done .mock-bar { background: rgba(255, 255, 255, 0.18); }
-  .mock-row.active .mock-dot { background: #ffffff; }
-  .mock-row.active .mock-bar { background: rgba(255, 255, 255, 0.55); }
-
-  .mock-landing { height: 100%; justify-content: center; }
-  .mock-nav { height: 9px; border-radius: 5px; background: var(--surface-2); }
-  .mock-hero {
-    height: 42%;
-    border-radius: var(--r-md);
-    background: var(--surface-2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .mock-pill {
-    width: 42%; height: 12px;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.6);
-  }
-  .mock-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 36px; }
-  .mock-col { background: var(--surface-2); border-radius: var(--r-md); }
-
-  .mock-cal {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 7px;
-  }
-  .mock-cell { aspect-ratio: 1; border-radius: 4px; background: var(--surface-2); }
-  .mock-cell.dim { background: rgba(255, 255, 255, 0.12); }
-  .mock-cell.drop { background: #ffffff; }
 
   /* ---------- FAQ: flat rows with soft hairlines ---------- */
   .faq { max-width: 720px; margin: 0 auto; }
@@ -802,9 +761,9 @@
   <span class="hero-corner bl" aria-hidden="true">+</span>
   <span class="hero-corner br" aria-hidden="true">+</span>
   <div class="container">
-    <span class="hero-kicker">Info-product studio for people who are already good at what they do</span>
+    <span class="hero-kicker">Info-product agency for people who are already good at what they do</span>
     <h1 class="display-lg">You know your craft. We turn it into a product that sells.</h1>
-    <p class="subhead">Vorgrow helps experts build, package, and launch their own digital product from scratch — from the first idea to drop day — without guessing what your audience wants or duct-taping the tech together yourself.</p>
+    <p class="subhead">Vorgrow helps experts build, package, and launch their own digital product from scratch, from the first idea to drop day, without guessing what your audience wants or duct-taping the tech together yourself.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">Book a call</a>
       <a href="#process" class="btn btn-secondary">See how it works</a>
@@ -840,8 +799,8 @@
       <h2 class="display-lg">The gap between knowing your craft and selling it.</h2>
     </div>
     <div class="prose reveal">
-      <p>You're good at something. People already trust you for it. But knowing your craft and turning it into a product people pay for are two completely different skills — and the gap between them is where most experts get stuck.</p>
-      <p>That's the gap we close. Vorgrow is an info-product studio that takes you from "I should probably make a course" to a finished, launched product with an audience ready to buy it. We don't hand you a template and wish you luck. We sit on your side of the table and build the whole thing with you: we figure out what your audience actually wants, shape it into a product worth paying for, build the platform and pages it lives on, and run the launch that gets it in front of people.</p>
+      <p>You're good at something. People already trust you for it. But knowing your craft and turning it into a product people pay for are two completely different skills, and the gap between them is where most experts get stuck.</p>
+      <p>That's the gap we close. Vorgrow is an info-product agency that takes you from "I should probably make a course" to a finished, launched product with an audience ready to buy it. We don't hand you a template and wish you luck. We sit on your side of the table and build the whole thing with you: we figure out what your audience actually wants, shape it into a product worth paying for, build the platform and pages it lives on, and run the launch that gets it in front of people.</p>
       <p class="lead">You bring the expertise. We bring the system that turns it into a business.</p>
     </div>
   </div>
@@ -852,23 +811,40 @@
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">The three pillars</p>
-      <h2 class="display-lg">Everything between idea and launch — handled.</h2>
+      <h2 class="display-lg">Everything between idea and launch, handled.</h2>
     </div>
     <div class="grid grid-2">
       <div class="card reveal">
-        <div class="card-icon">◆</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="7.5"/>
+            <line x1="21" y1="21" x2="16" y2="16"/>
+            <polyline points="7.5,10.5 9.8,12.8 13.5,8.3"/>
+          </svg>
+        </div>
         <h3>Validate &amp; shape</h3>
-        <p>Before a single page gets built, we find out what your audience will actually pay for. We survey your following, mine your expertise for product ideas, and map the full funnel — from a low-ticket entry point to your flagship offer — so you're building something with demand, not hoping for it.</p>
+        <p>Before a single page gets built, we find out what your audience will actually pay for. We survey your following, mine your expertise for product ideas, and map the full funnel, from a low-ticket entry point to your flagship offer, so you're building something with demand, not hoping for it.</p>
       </div>
       <div class="card reveal">
-        <div class="card-icon">▲</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="12,2.5 21.5,7.5 12,12.5 2.5,7.5"/>
+            <polyline points="2.5,12 12,17 21.5,12"/>
+            <polyline points="2.5,16.5 12,21.5 21.5,16.5"/>
+          </svg>
+        </div>
         <h3>Build &amp; design</h3>
         <p>We turn your knowledge into a real product: structured modules, recorded lessons, a clean platform, and conversion-focused landing pages. Designed to look premium, built to be finished by the people who buy it.</p>
       </div>
       <div class="card reveal">
-        <div class="card-icon">●</div>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="2,17 9,10 13,14 22,5"/>
+            <polyline points="16,5 22,5 22,11"/>
+          </svg>
+        </div>
         <h3>Launch &amp; grow</h3>
-        <p>We warm your audience up for weeks before launch with genuinely valuable free content — then run a coordinated drop day with emails, posts, and offers firing together, so you launch to people who already trust you instead of to an empty room.</p>
+        <p>We warm your audience up for weeks before launch with genuinely valuable free content, then run a coordinated drop day with emails, posts, and offers firing together, so you launch to people who already trust you instead of to an empty room.</p>
       </div>
       <div class="spotlight spotlight-violet reveal">
         <p class="caption">The Vorgrow promise</p>
@@ -884,7 +860,7 @@
     <div class="section-head center reveal">
       <p class="eyebrow">How it works</p>
       <h2 class="display-lg">A clear process, built around your launch.</h2>
-      <p class="subhead">Around six weeks from kickoff to drop day, depending on scope. Two phases, clear deliverables at every step — you always know what's happening and what's next.</p>
+      <p class="subhead">Around six weeks from kickoff to drop day, depending on scope. Two phases, clear deliverables at every step, so you always know what's happening and what's next.</p>
     </div>
     <div class="grid grid-2">
       <div class="step reveal">
@@ -895,7 +871,7 @@
       <div class="step reveal">
         <p class="step-num">Phase 2 · Month 2</p>
         <h3>Build &amp; Launch</h3>
-        <p>We build the ecosystem — platform, landing pages, and content — while ramping up free high-value content like a webinar or sample lessons. Then we announce the drop, warm the audience, and launch the product on a coordinated drop day with urgency built in.</p>
+        <p>We build the ecosystem (platform, landing pages, and content) while ramping up free high-value content like a webinar or sample lessons. Then we announce the drop, warm the audience, and launch the product on a coordinated drop day with urgency built in.</p>
       </div>
     </div>
   </div>
@@ -906,7 +882,7 @@
   <div class="container">
     <div class="section-head center reveal">
       <p class="eyebrow">Why Vorgrow</p>
-      <h2 class="display-lg">Built so your product actually sells — and keeps selling.</h2>
+      <h2 class="display-lg">Built so your product actually sells, and keeps selling.</h2>
       <p class="subhead">Most experts launch into silence. We build the three systems that compound: a product structured to be finished, pages built to convert, and an audience that's warm before day one.</p>
     </div>
 
@@ -914,24 +890,49 @@
     <div class="why-row reveal">
       <div class="why-main">
         <div class="why-visual" aria-hidden="true">
-          <div class="mock mock-course">
-            <div class="mock-row done"><span class="mock-dot"></span><span class="mock-bar" style="width: 72%"></span></div>
-            <div class="mock-row done"><span class="mock-dot"></span><span class="mock-bar" style="width: 58%"></span></div>
-            <div class="mock-row active"><span class="mock-dot"></span><span class="mock-bar" style="width: 80%"></span></div>
-            <div class="mock-row"><span class="mock-dot"></span><span class="mock-bar" style="width: 64%"></span></div>
-            <div class="mock-row"><span class="mock-dot"></span><span class="mock-bar" style="width: 70%"></span></div>
-            <div class="mock-row"><span class="mock-dot"></span><span class="mock-bar" style="width: 52%"></span></div>
-          </div>
+          <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An online course curriculum with completed and in-progress lessons">
+            <text x="16" y="30" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="12" font-weight="600" letter-spacing="1.5">CURRICULUM</text>
+            <circle cx="250" cy="24" r="15" stroke="rgba(255,255,255,0.15)" stroke-width="5"/>
+            <circle cx="250" cy="24" r="15" stroke="#7c6cff" stroke-width="5" stroke-linecap="round" stroke-dasharray="56 94" transform="rotate(-90 250 24)"/>
+
+            <!-- Lesson 1: complete -->
+            <rect x="16" y="54" width="248" height="48" rx="12" fill="#1c1c1c"/>
+            <circle cx="42" cy="78" r="13" fill="rgba(255,255,255,0.1)"/>
+            <polyline points="35,78 40,83 49,72" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="70" y="70" width="150" height="8" rx="4" fill="rgba(255,255,255,0.65)"/>
+            <rect x="70" y="84" width="95" height="6" rx="3" fill="rgba(255,255,255,0.18)"/>
+
+            <!-- Lesson 2: complete -->
+            <rect x="16" y="114" width="248" height="48" rx="12" fill="#1c1c1c"/>
+            <circle cx="42" cy="138" r="13" fill="rgba(255,255,255,0.1)"/>
+            <polyline points="35,138 40,143 49,132" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="70" y="130" width="130" height="8" rx="4" fill="rgba(255,255,255,0.65)"/>
+            <rect x="70" y="144" width="85" height="6" rx="3" fill="rgba(255,255,255,0.18)"/>
+
+            <!-- Lesson 3: in progress -->
+            <rect x="16" y="174" width="248" height="48" rx="12" fill="#1c1c1c" stroke="#7c6cff" stroke-width="1.5"/>
+            <circle cx="42" cy="198" r="13" fill="#7c6cff"/>
+            <path d="M38,192 L48,198 L38,204 Z" fill="#ffffff"/>
+            <rect x="70" y="186" width="140" height="8" rx="4" fill="rgba(255,255,255,0.85)"/>
+            <rect x="70" y="202" width="150" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+            <rect x="70" y="202" width="78" height="6" rx="3" fill="#7c6cff"/>
+
+            <!-- Lesson 4: upcoming -->
+            <rect x="16" y="234" width="248" height="48" rx="12" fill="#161616"/>
+            <circle cx="42" cy="258" r="13" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+            <rect x="70" y="250" width="120" height="8" rx="4" fill="rgba(255,255,255,0.22)"/>
+            <rect x="70" y="264" width="80" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+          </svg>
         </div>
         <div class="why-copy">
           <h3>Course structure &amp; design</h3>
-          <p>Most courses get abandoned because they're built like archives, not journeys. We sequence your modules for momentum — quick wins early, depth where it counts — so students finish, get results, and tell people about it. Finished students are your best marketing.</p>
+          <p>Most courses get abandoned because they're built like archives, not journeys. We sequence your modules for momentum: quick wins early, depth where it counts, so students finish, get results, and tell people about it. Finished students are your best marketing.</p>
         </div>
       </div>
       <div class="why-metrics">
         <ul class="why-points">
-          <li><strong>[X]+ module blueprints</strong> — structured for completion, not padding</li>
-          <li><strong>100% yours to own</strong> — content, files, and rights included</li>
+          <li><strong>[X]+ module blueprints</strong>: structured for completion, not padding</li>
+          <li><strong>100% yours to own</strong>: content, files, and rights included</li>
         </ul>
       </div>
     </div>
@@ -940,21 +941,45 @@
     <div class="why-row reversed reveal">
       <div class="why-main">
         <div class="why-visual" aria-hidden="true">
-          <div class="mock mock-landing">
-            <div class="mock-nav"></div>
-            <div class="mock-hero"><span class="mock-pill"></span></div>
-            <div class="mock-cols"><span class="mock-col"></span><span class="mock-col"></span></div>
-          </div>
+          <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landing page with a call-to-action button and a rising conversion rate">
+            <!-- Browser window -->
+            <rect x="16" y="20" width="248" height="196" rx="14" fill="#141414" stroke="rgba(255,255,255,0.1)"/>
+            <circle cx="34" cy="38" r="3.5" fill="rgba(255,255,255,0.25)"/>
+            <circle cx="46" cy="38" r="3.5" fill="rgba(255,255,255,0.25)"/>
+            <circle cx="58" cy="38" r="3.5" fill="rgba(255,255,255,0.25)"/>
+            <rect x="80" y="32" width="120" height="12" rx="6" fill="#1c1c1c"/>
+            <line x1="16" y1="54" x2="264" y2="54" stroke="rgba(255,255,255,0.08)"/>
+
+            <!-- Headline + subtext -->
+            <rect x="36" y="72" width="150" height="13" rx="6" fill="rgba(255,255,255,0.85)"/>
+            <rect x="36" y="92" width="110" height="13" rx="6" fill="rgba(255,255,255,0.85)"/>
+            <rect x="36" y="116" width="184" height="7" rx="3.5" fill="rgba(255,255,255,0.22)"/>
+            <rect x="36" y="128" width="150" height="7" rx="3.5" fill="rgba(255,255,255,0.22)"/>
+
+            <!-- CTA + cursor -->
+            <rect x="36" y="150" width="98" height="32" rx="16" fill="#7c6cff"/>
+            <text x="85" y="170" fill="#ffffff" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Get it now</text>
+            <path d="M150,156 L150,180 L156,174 L160,183 L164,181 L160,172 L168,172 Z" fill="#ffffff" stroke="#0a0a0a" stroke-width="1" stroke-linejoin="round"/>
+
+            <!-- Conversion uplift -->
+            <text x="16" y="250" fill="rgba(255,255,255,0.4)" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.2">CONVERSIONS</text>
+            <polyline points="30,290 92,278 152,260 232,232" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="30" cy="290" r="3" fill="#ffffff"/>
+            <circle cx="92" cy="278" r="3" fill="#ffffff"/>
+            <circle cx="152" cy="260" r="3" fill="#ffffff"/>
+            <circle cx="232" cy="232" r="4" fill="#7c6cff"/>
+            <path d="M222,231 L232,231 L232,241" stroke="#7c6cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div class="why-copy">
           <h3>Optimized landing pages</h3>
-          <p>Your sales page is your storefront, and most lose the sale in the first scroll. We write conversion-focused copy, design for clarity over cleverness, and build pages that load fast on any device — so the traffic you earn actually turns into customers.</p>
+          <p>Your sales page is your storefront, and most lose the sale in the first scroll. We write conversion-focused copy, design for clarity over cleverness, and build pages that load fast on any device, so the traffic you earn actually turns into customers.</p>
         </div>
       </div>
       <div class="why-metrics">
         <ul class="why-points">
-          <li><strong>[X] page variants tested</strong> — to find the message that sells</li>
-          <li><strong>Fast-loading pages</strong> — because speed converts</li>
+          <li><strong>[X] page variants tested</strong>: to find the message that sells</li>
+          <li><strong>Fast-loading pages</strong>: because speed converts</li>
         </ul>
       </div>
     </div>
@@ -963,22 +988,57 @@
     <div class="why-row reveal">
       <div class="why-main">
         <div class="why-visual" aria-hidden="true">
-          <div class="mock mock-cal">
-            <span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span>
-            <span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span>
-            <span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell"></span>
-            <span class="mock-cell"></span><span class="mock-cell dim"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell drop"></span><span class="mock-cell"></span><span class="mock-cell"></span>
-          </div>
+          <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A magnet attracting leads, and a calendar marking the launch drop day">
+            <!-- Magnet attracting leads -->
+            <path d="M118,98 L118,66 A22,22 0 0 1 162,66 L162,98" stroke="#ffffff" stroke-width="14" fill="none"/>
+            <line x1="118" y1="90" x2="118" y2="98" stroke="#7c6cff" stroke-width="14"/>
+            <line x1="162" y1="90" x2="162" y2="98" stroke="rgba(255,255,255,0.55)" stroke-width="14"/>
+
+            <!-- Leads being pulled in -->
+            <circle cx="108" cy="150" r="5" fill="rgba(255,255,255,0.9)"/>
+            <circle cx="140" cy="166" r="4" fill="rgba(255,255,255,0.55)"/>
+            <circle cx="172" cy="150" r="5" fill="rgba(255,255,255,0.9)"/>
+            <circle cx="124" cy="134" r="3.5" fill="rgba(255,255,255,0.45)"/>
+            <circle cx="156" cy="136" r="3.5" fill="rgba(255,255,255,0.7)"/>
+            <path d="M136,122 l4,-5 l4,5" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M108,124 l4,-5 l4,5" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M164,124 l4,-5 l4,5" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="140" y="186" fill="rgba(255,255,255,0.45)" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5" text-anchor="middle">LEAD MAGNET</text>
+
+            <!-- Drop-day calendar -->
+            <rect x="78" y="194" width="8" height="14" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <rect x="194" y="194" width="8" height="14" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <rect x="40" y="200" width="200" height="86" rx="12" fill="#141414" stroke="rgba(255,255,255,0.1)"/>
+            <line x1="40" y1="226" x2="240" y2="226" stroke="rgba(255,255,255,0.1)"/>
+            <text x="54" y="218" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5">DROP DAY</text>
+
+            <g fill="rgba(255,255,255,0.1)">
+              <rect x="54" y="238" width="18" height="16" rx="4"/>
+              <rect x="80" y="238" width="18" height="16" rx="4"/>
+              <rect x="106" y="238" width="18" height="16" rx="4"/>
+              <rect x="132" y="238" width="18" height="16" rx="4"/>
+              <rect x="158" y="238" width="18" height="16" rx="4"/>
+              <rect x="184" y="238" width="18" height="16" rx="4"/>
+              <rect x="210" y="238" width="18" height="16" rx="4"/>
+              <rect x="54" y="262" width="18" height="16" rx="4"/>
+              <rect x="80" y="262" width="18" height="16" rx="4"/>
+              <rect x="106" y="262" width="18" height="16" rx="4"/>
+              <rect x="184" y="262" width="18" height="16" rx="4"/>
+              <rect x="210" y="262" width="18" height="16" rx="4"/>
+            </g>
+            <rect x="132" y="260" width="44" height="20" rx="5" fill="#7c6cff"/>
+            <path d="M154,276 L154,265 M149,270 L154,264 L159,270" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div class="why-copy">
           <h3>Lead magnets &amp; drop day</h3>
-          <p>Growth starts before launch. We build lead magnets that fill your list while the product is still in production, then orchestrate a coordinated drop day — emails, posts, and assets all shipping together — so you launch to a warm audience, not an empty room.</p>
+          <p>Growth starts before launch. We build lead magnets that fill your list while the product is still in production, then orchestrate a coordinated drop day (emails, posts, and assets all shipping together) so you launch to a warm audience, not an empty room.</p>
         </div>
       </div>
       <div class="why-metrics">
         <ul class="why-points">
-          <li><strong>Weeks of launch content</strong> — emails, posts, and assets prepared</li>
-          <li><strong>One coordinated drop</strong> — everything ships at once</li>
+          <li><strong>Weeks of launch content</strong>: emails, posts, and assets prepared</li>
+          <li><strong>One coordinated drop</strong>: everything ships at once</li>
         </ul>
       </div>
     </div>
@@ -995,11 +1055,11 @@
     <div class="faq reveal">
       <details>
         <summary>How long does a typical project take?</summary>
-        <p>Around six weeks from kickoff to launch, though it flexes with the size of the product. Larger courses or more complex funnels take longer — we'll give you a realistic timeline before we start, and you'll know what's happening at every stage.</p>
+        <p>Around six weeks from kickoff to launch, though it flexes with the size of the product. Larger courses or more complex funnels take longer, so we'll give you a realistic timeline before we start, and you'll know what's happening at every stage.</p>
       </details>
       <details>
         <summary>What does a project cost?</summary>
-        <p>Pricing depends on the scope of your product and funnel. The best way to get an accurate number is a quick call — we'll learn what you're building and put together a clear proposal with no surprises.</p>
+        <p>Pricing depends on the scope of your product and funnel. The best way to get an accurate number is a quick call. We'll learn what you're building and put together a clear proposal with no surprises.</p>
       </details>
       <details>
         <summary>Do I need an existing audience?</summary>
@@ -1007,7 +1067,7 @@
       </details>
       <details>
         <summary>What happens after launch?</summary>
-        <p>You own everything — content, files, pages, and rights. We hand over a product and a system you can keep selling, relaunch, and build on.</p>
+        <p>You own everything: content, files, pages, and rights. We hand over a product and a system you can keep selling, relaunch, and build on.</p>
       </details>
     </div>
   </div>
@@ -1032,10 +1092,10 @@
     <div class="footer-main">
       <div class="footer-brand">
         <a href="#" class="logo"><span class="logo-mark"></span>Vorgrow</a>
-        <p>An info-product studio that turns your expertise into a product that sells.</p>
+        <p>An info-product agency that turns your expertise into a product that sells.</p>
       </div>
       <div class="footer-col">
-        <h4>Studio</h4>
+        <h4>Agency</h4>
         <ul>
           <li><a href="#what">What we do</a></li>
           <li><a href="#process">Process</a></li>
