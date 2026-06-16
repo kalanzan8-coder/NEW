@@ -209,27 +209,24 @@
     z-index: 1;
     width: 100%;
   }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface-1);
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1;
-    padding: 11px 18px;
-    border-radius: var(--r-pill);
-    margin-bottom: var(--sp-xl);
+  .hero-kicker {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    max-width: 40ch;
+    margin: 0 auto var(--sp-lg);
   }
-  .hero-badge .plus { color: var(--ink-muted); font-size: 14px; }
   .hero h1 {
-    max-width: 15ch;
+    max-width: 18ch;
     margin: 0 auto var(--sp-lg);
   }
   .hero .subhead {
     font-size: 18px;
-    max-width: 480px;
+    max-width: 540px;
     margin: 0 auto var(--sp-xl);
   }
   .hero-actions {
@@ -373,6 +370,22 @@
     margin-bottom: var(--sp-md);
   }
 
+  /* ---------- Prose: narrative text block (What we do) ---------- */
+  .prose {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .prose p {
+    font-size: clamp(16px, 1.6vw, 18px);
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: var(--sp-lg);
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose p strong, .prose .lead { color: var(--ink); font-weight: 500; }
+  .prose .lead { font-weight: 500; }
+
   /* ---------- Card grids: charcoal tiles + one gradient spotlight ---------- */
   .grid {
     display: grid;
@@ -512,7 +525,7 @@
   .why-metrics {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-xxl);
+    justify-content: center;
     border-left: 1px solid var(--hairline-soft);
     padding-left: clamp(24px, 3.5vw, 48px);
   }
@@ -523,26 +536,23 @@
     padding-right: clamp(24px, 3.5vw, 48px);
   }
 
-  .metric-value {
-    font-family: var(--font-display);
-    font-size: clamp(34px, 3.5vw, 46px);
-    font-weight: 500;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    color: var(--ink);
-  }
-  .metric-label {
+  .why-points { list-style: none; display: flex; flex-direction: column; gap: var(--sp-lg); }
+  .why-points li {
+    position: relative;
+    padding-left: 22px;
     font-size: 14px;
-    font-weight: 500;
-    color: var(--ink);
-    margin-top: 10px;
-  }
-  .metric-sub {
-    font-size: 13px;
-    font-weight: 500;
+    line-height: 1.5;
     color: var(--ink-muted);
-    margin-top: 4px;
   }
+  .why-points li::before {
+    content: "+";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+  .why-points strong { color: var(--ink); font-weight: 600; }
 
   /* CSS mock illustrations inside why-visual tiles */
   .mock { display: flex; flex-direction: column; gap: 12px; }
@@ -774,9 +784,9 @@
   <div class="container nav-inner">
     <a href="#" class="logo"><span class="logo-mark"></span>Vorgrow</a>
     <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#why">Why us</a></li>
+      <li><a href="#what">What we do</a></li>
       <li><a href="#process">Process</a></li>
+      <li><a href="#why">Why us</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <div class="nav-actions">
@@ -792,14 +802,13 @@
   <span class="hero-corner bl" aria-hidden="true">+</span>
   <span class="hero-corner br" aria-hidden="true">+</span>
   <div class="container">
-    <div class="hero-badge"><span class="plus">+</span>Welcome to Vorgrow</div>
-    <h1 class="display-lg">Your knowledge, shipped as a product.</h1>
-    <p class="subhead">We design, build and launch info products — courses, memberships and digital goods — end to end.</p>
+    <span class="hero-kicker">Info-product studio for people who are already good at what they do</span>
+    <h1 class="display-lg">You know your craft. We turn it into a product that sells.</h1>
+    <p class="subhead">Vorgrow helps experts build, package, and launch their own digital product from scratch — from the first idea to drop day — without guessing what your audience wants or duct-taping the tech together yourself.</p>
     <div class="hero-actions">
-      <a href="#contact" class="btn btn-primary">Start your project</a>
-      <a href="#services" class="btn btn-secondary">See what we do</a>
+      <a href="#contact" class="btn btn-primary">Book a call</a>
+      <a href="#process" class="btn btn-secondary">See how it works</a>
     </div>
-    <p class="hero-note">No retainers. Fixed scope, fixed price.</p>
 
     <div class="hero-mock" aria-hidden="true">
       <div class="hero-mock-bar">
@@ -823,47 +832,47 @@
   </div>
 </header>
 
-<!-- ======= TRUST STRIP ======= -->
-<div class="trust">
+<!-- ======= WHAT WE DO (narrative) ======= -->
+<section class="section" id="what">
   <div class="container">
-    <p class="trust-label">Trusted by creators and founders worldwide</p>
-    <div class="trust-row">
-      <span>Northwind</span>
-      <span>Apex Labs</span>
-      <span>Brightside</span>
-      <span>Monocle</span>
-      <span>Fieldnote</span>
-      <span>Halcyon</span>
+    <div class="section-head center reveal">
+      <p class="eyebrow">What we do</p>
+      <h2 class="display-lg">The gap between knowing your craft and selling it.</h2>
+    </div>
+    <div class="prose reveal">
+      <p>You're good at something. People already trust you for it. But knowing your craft and turning it into a product people pay for are two completely different skills — and the gap between them is where most experts get stuck.</p>
+      <p>That's the gap we close. Vorgrow is an info-product studio that takes you from "I should probably make a course" to a finished, launched product with an audience ready to buy it. We don't hand you a template and wish you luck. We sit on your side of the table and build the whole thing with you: we figure out what your audience actually wants, shape it into a product worth paying for, build the platform and pages it lives on, and run the launch that gets it in front of people.</p>
+      <p class="lead">You bring the expertise. We bring the system that turns it into a business.</p>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ======= SERVICES ======= -->
 <section class="section" id="services">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">What we do</p>
-      <h2 class="display-xl">Everything between idea and launch.</h2>
+      <p class="eyebrow">The three pillars</p>
+      <h2 class="display-lg">Everything between idea and launch — handled.</h2>
     </div>
     <div class="grid grid-2">
       <div class="card reveal">
         <div class="card-icon">◆</div>
-        <h3>Product strategy</h3>
-        <p>We validate your idea, define the offer, and map a product your audience actually wants to buy — before a single page is built.</p>
+        <h3>Validate &amp; shape</h3>
+        <p>Before a single page gets built, we find out what your audience will actually pay for. We survey your following, mine your expertise for product ideas, and map the full funnel — from a low-ticket entry point to your flagship offer — so you're building something with demand, not hoping for it.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">▲</div>
-        <h3>Design &amp; build</h3>
-        <p>Conversion-focused sales pages, course platforms and member areas — designed clean, built fast, made to feel premium.</p>
+        <h3>Build &amp; design</h3>
+        <p>We turn your knowledge into a real product: structured modules, recorded lessons, a clean platform, and conversion-focused landing pages. Designed to look premium, built to be finished by the people who buy it.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">●</div>
-        <h3>Launch &amp; growth</h3>
-        <p>Funnels, email sequences and launch campaigns engineered to turn attention into customers from day one.</p>
+        <h3>Launch &amp; grow</h3>
+        <p>We warm your audience up for weeks before launch with genuinely valuable free content — then run a coordinated drop day with emails, posts, and offers firing together, so you launch to people who already trust you instead of to an empty room.</p>
       </div>
       <div class="spotlight spotlight-violet reveal">
-        <p class="caption">The Vorgrow standard</p>
-        <p class="subhead">One team, one fixed price, one polished product — from first call to first sale.</p>
+        <p class="caption">The Vorgrow promise</p>
+        <p class="subhead">You bring the expertise. We bring the system that turns it into a business.</p>
       </div>
     </div>
   </div>
@@ -874,29 +883,19 @@
   <div class="container">
     <div class="section-head center reveal">
       <p class="eyebrow">How it works</p>
-      <h2 class="display-lg">A simple process, done properly.</h2>
-      <p class="subhead">Four steps. Clear deliverables at every stage. You always know what's next.</p>
+      <h2 class="display-lg">A clear process, built around your launch.</h2>
+      <p class="subhead">Around six weeks from kickoff to drop day, depending on scope. Two phases, clear deliverables at every step — you always know what's happening and what's next.</p>
     </div>
-    <div class="grid grid-4">
+    <div class="grid grid-2">
       <div class="step reveal">
-        <p class="step-num">01</p>
-        <h3>Discover</h3>
-        <p>A deep-dive session on your audience, expertise and goals. We find the product worth building.</p>
+        <p class="step-num">Phase 1 · Month 1</p>
+        <h3>Foundation &amp; Content</h3>
+        <p>We close the gap between what you teach and what your audience wants to buy. We launch a survey to your following, turn your expertise into a validated product idea, map the funnel, and start building the lessons and email campaigns that build trust before anything goes on sale.</p>
       </div>
       <div class="step reveal">
-        <p class="step-num">02</p>
-        <h3>Define</h3>
-        <p>Offer, pricing, positioning and roadmap — agreed and locked before we start designing.</p>
-      </div>
-      <div class="step reveal">
-        <p class="step-num">03</p>
-        <h3>Build</h3>
-        <p>Design and development in focused sprints, with weekly check-ins so there are no surprises.</p>
-      </div>
-      <div class="step reveal">
-        <p class="step-num">04</p>
-        <h3>Launch</h3>
-        <p>We ship, run the launch with you, and hand over everything you need to keep growing.</p>
+        <p class="step-num">Phase 2 · Month 2</p>
+        <h3>Build &amp; Launch</h3>
+        <p>We build the ecosystem — platform, landing pages, and content — while ramping up free high-value content like a webinar or sample lessons. Then we announce the drop, warm the audience, and launch the product on a coordinated drop day with urgency built in.</p>
       </div>
     </div>
   </div>
@@ -907,8 +906,8 @@
   <div class="container">
     <div class="section-head center reveal">
       <p class="eyebrow">Why Vorgrow</p>
-      <h2 class="display-lg">Built to make you grow faster.</h2>
-      <p class="subhead">Every project ships with the systems that compound: a course built to be finished, pages built to convert, and an audience engine built before day one.</p>
+      <h2 class="display-lg">Built so your product actually sells — and keeps selling.</h2>
+      <p class="subhead">Most experts launch into silence. We build the three systems that compound: a product structured to be finished, pages built to convert, and an audience that's warm before day one.</p>
     </div>
 
     <!-- Row 1: Course structure & design -->
@@ -926,20 +925,14 @@
         </div>
         <div class="why-copy">
           <h3>Course structure &amp; design</h3>
-          <p>Most courses get abandoned because they're built like archives, not journeys. We sequence your modules for momentum — quick wins early, depth where it matters — so students finish, get results, and tell people about it. Finished students are your growth engine.</p>
+          <p>Most courses get abandoned because they're built like archives, not journeys. We sequence your modules for momentum — quick wins early, depth where it counts — so students finish, get results, and tell people about it. Finished students are your best marketing.</p>
         </div>
       </div>
       <div class="why-metrics">
-        <div class="metric">
-          <p class="metric-value"><span class="metric-num" data-value="10">0</span>+</p>
-          <p class="metric-label">Module blueprints</p>
-          <p class="metric-sub">Structured for completion, not padding</p>
-        </div>
-        <div class="metric">
-          <p class="metric-value"><span class="metric-num" data-value="100">0</span>%</p>
-          <p class="metric-label">Yours to own</p>
-          <p class="metric-sub">Content, files and rights included</p>
-        </div>
+        <ul class="why-points">
+          <li><strong>[X]+ module blueprints</strong> — structured for completion, not padding</li>
+          <li><strong>100% yours to own</strong> — content, files, and rights included</li>
+        </ul>
       </div>
     </div>
 
@@ -955,20 +948,14 @@
         </div>
         <div class="why-copy">
           <h3>Optimized landing pages</h3>
-          <p>Your sales page is your storefront, and most lose the sale in the first scroll. We write conversion-focused copy, design for clarity over cleverness, and build pages that load instantly on any device — so the traffic you earn actually turns into customers.</p>
+          <p>Your sales page is your storefront, and most lose the sale in the first scroll. We write conversion-focused copy, design for clarity over cleverness, and build pages that load fast on any device — so the traffic you earn actually turns into customers.</p>
         </div>
       </div>
       <div class="why-metrics">
-        <div class="metric">
-          <p class="metric-value"><span class="metric-num" data-value="100">0</span></p>
-          <p class="metric-label">Performance score target</p>
-          <p class="metric-sub">Fast pages convert better</p>
-        </div>
-        <div class="metric">
-          <p class="metric-value"><span class="metric-num" data-value="3">0</span></p>
-          <p class="metric-label">Page variants to test</p>
-          <p class="metric-sub">Find the message that sells</p>
-        </div>
+        <ul class="why-points">
+          <li><strong>[X] page variants tested</strong> — to find the message that sells</li>
+          <li><strong>Fast-loading pages</strong> — because speed converts</li>
+        </ul>
       </div>
     </div>
 
@@ -985,20 +972,14 @@
         </div>
         <div class="why-copy">
           <h3>Lead magnets &amp; drop day</h3>
-          <p>Growth starts before launch. We build lead magnets that fill your list while the product is still in production, then orchestrate a coordinated drop day — emails, posts and assets all shipping together — so you launch to a warm audience instead of an empty room.</p>
+          <p>Growth starts before launch. We build lead magnets that fill your list while the product is still in production, then orchestrate a coordinated drop day — emails, posts, and assets all shipping together — so you launch to a warm audience, not an empty room.</p>
         </div>
       </div>
       <div class="why-metrics">
-        <div class="metric">
-          <p class="metric-value"><span class="metric-num" data-value="30">0</span></p>
-          <p class="metric-label">Days of launch content</p>
-          <p class="metric-sub">Emails, posts and assets prepared</p>
-        </div>
-        <div class="metric">
-          <p class="metric-value"><span class="metric-num" data-value="1">0</span></p>
-          <p class="metric-label">Coordinated drop day</p>
-          <p class="metric-sub">Everything ships at once</p>
-        </div>
+        <ul class="why-points">
+          <li><strong>Weeks of launch content</strong> — emails, posts, and assets prepared</li>
+          <li><strong>One coordinated drop</strong> — everything ships at once</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -1014,19 +995,19 @@
     <div class="faq reveal">
       <details>
         <summary>How long does a typical project take?</summary>
-        <p>Most projects launch in six weeks from kickoff. Strategy takes the first week, design and build run in sprints for four, and the final week is launch prep and handover.</p>
+        <p>Around six weeks from kickoff to launch, though it flexes with the size of the product. Larger courses or more complex funnels take longer — we'll give you a realistic timeline before we start, and you'll know what's happening at every stage.</p>
       </details>
       <details>
         <summary>What does a project cost?</summary>
-        <p>Every project is fixed scope and fixed price, agreed before we start. After the discovery call we send a single quote — no hourly billing, no retainers, no surprise invoices.</p>
+        <p>Pricing depends on the scope of your product and funnel. The best way to get an accurate number is a quick call — we'll learn what you're building and put together a clear proposal with no surprises.</p>
       </details>
       <details>
         <summary>Do I need an existing audience?</summary>
-        <p>It helps, but it's not required. During discovery we assess your reach and build the launch plan around it — whether that's an email list of 50,000 or a cold start.</p>
+        <p>It helps, but it's not a dealbreaker. A big part of our process is building your free-value email list and warming an audience before launch. If you already have a following, we'll put it to work; if you're earlier on, we'll help you build the engine.</p>
       </details>
       <details>
         <summary>What happens after launch?</summary>
-        <p>You own everything — the product, the funnel, the content and the accounts. We hand over full documentation, and you can book follow-on sprints whenever you want to grow further.</p>
+        <p>You own everything — content, files, pages, and rights. We hand over a product and a system you can keep selling, relaunch, and build on.</p>
       </details>
     </div>
   </div>
@@ -1036,11 +1017,10 @@
 <section class="section" id="contact" style="padding-top: 0;">
   <div class="container">
     <div class="cta-card spotlight-magenta reveal">
-      <h2 class="display-xl">Let's build your next product.</h2>
-      <p class="subhead">Book a free 30-minute strategy call. We'll tell you exactly what we'd build and what it would cost.</p>
+      <h2 class="display-lg">You've got the expertise. Let's build the product.</h2>
+      <p class="subhead">If people already trust you for what you know, you're closer to a real digital product than you think. Let's map it out together.</p>
       <div class="cta-actions">
-        <a href="mailto:hello@vorgrow.agency" class="btn btn-primary">Book your free call</a>
-        <a href="mailto:hello@vorgrow.agency" class="btn btn-translucent">Email us instead</a>
+        <a href="mailto:hello@vorgrow.agency" class="btn btn-primary">Book your call</a>
       </div>
     </div>
   </div>
@@ -1052,14 +1032,14 @@
     <div class="footer-main">
       <div class="footer-brand">
         <a href="#" class="logo"><span class="logo-mark"></span>Vorgrow</a>
-        <p>A digital product agency turning expertise into info products that sell.</p>
+        <p>An info-product studio that turns your expertise into a product that sells.</p>
       </div>
       <div class="footer-col">
-        <h4>Agency</h4>
+        <h4>Studio</h4>
         <ul>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#why">Why us</a></li>
+          <li><a href="#what">What we do</a></li>
           <li><a href="#process">Process</a></li>
+          <li><a href="#why">Why Vorgrow</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -1114,41 +1094,6 @@
     el.style.transitionDelay = `${(i % 4) * 60}ms`;
     observer.observe(el);
   });
-
-  // Count-up metrics: animate from 0 when scrolled into view, once.
-  (() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const nums = document.querySelectorAll(".metric-num");
-
-    function animate(el) {
-      const end = parseFloat(el.dataset.value);
-      const duration = 1600;
-      const start = performance.now();
-      function tick(now) {
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(end * eased).toLocaleString();
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
-
-    if (reduceMotion) {
-      nums.forEach((el) => { el.textContent = parseFloat(el.dataset.value).toLocaleString(); });
-      return;
-    }
-
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animate(entry.target);
-          countObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.6 });
-
-    nums.forEach((el) => countObserver.observe(el));
-  })();
 
   // Hero dotted-orbit animation: concentric rings of dots, each ring
   // drifting at its own speed with a soft twinkle.
