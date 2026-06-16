@@ -425,6 +425,42 @@
   }
   .card-icon svg { width: 20px; height: 20px; }
 
+  /* ---------- Feature matrix: what we provide ---------- */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+  }
+  .feature-cell {
+    background: var(--canvas);
+    padding: clamp(28px, 4vw, 46px);
+    transition: background 0.25s ease;
+  }
+  .feature-cell:hover { background: var(--surface-1); }
+  .feature-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .feature-head svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .feature-cell h3 {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .feature-cell p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
   /* Gradient spotlight card: the signature atmosphere tile */
   .spotlight {
     border-radius: var(--r-xxl);
@@ -705,6 +741,7 @@
     .nav-actions .btn-secondary { display: none; }
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-main { grid-template-columns: 1fr 1fr; }
     .hero { padding-top: calc(56px + 56px); }
     .hero-canvas { opacity: 0.5; }
@@ -727,6 +764,7 @@
 
   @media (max-width: 520px) {
     .grid-4 { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
     .footer-main { grid-template-columns: 1fr; gap: var(--sp-xxl); }
     .container { padding: 0 var(--sp-lg); }
 
@@ -809,46 +847,77 @@
 <!-- ======= SERVICES ======= -->
 <section class="section" id="services">
   <div class="container">
-    <div class="section-head reveal">
-      <p class="eyebrow">The three pillars</p>
-      <h2 class="display-lg">Everything between idea and launch, handled.</h2>
+    <div class="section-head center reveal">
+      <p class="eyebrow">What we provide</p>
+      <h2 class="display-lg">Everything we handle as your agency.</h2>
+      <p class="subhead">From the first audience survey to drop day, Vorgrow handles every piece of building and launching your product, so you never have to stitch together five freelancers and a pile of tools.</p>
     </div>
-    <div class="grid grid-2">
-      <div class="card reveal">
-        <div class="card-icon">
+    <div class="feature-grid reveal">
+      <div class="feature-cell">
+        <div class="feature-head">
           <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="10.5" cy="10.5" r="7.5"/>
-            <line x1="21" y1="21" x2="16" y2="16"/>
-            <polyline points="7.5,10.5 9.8,12.8 13.5,8.3"/>
+            <path d="M8 11l2 2 4-4"/>
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.3-4.3"/>
           </svg>
+          <h3>Audience research</h3>
         </div>
-        <h3>Validate &amp; shape</h3>
-        <p>Before a single page gets built, we find out what your audience will actually pay for. We survey your following, mine your expertise for product ideas, and map the full funnel, from a low-ticket entry point to your flagship offer, so you're building something with demand, not hoping for it.</p>
+        <p>We survey your following and validate exactly what they will pay for before anything gets built.</p>
       </div>
-      <div class="card reveal">
-        <div class="card-icon">
+      <div class="feature-cell">
+        <div class="feature-head">
           <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="12,2.5 21.5,7.5 12,12.5 2.5,7.5"/>
-            <polyline points="2.5,12 12,17 21.5,12"/>
-            <polyline points="2.5,16.5 12,21.5 21.5,16.5"/>
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
           </svg>
+          <h3>Offer &amp; funnel strategy</h3>
         </div>
-        <h3>Build &amp; design</h3>
-        <p>We turn your knowledge into a real product: structured modules, recorded lessons, a clean platform, and conversion-focused landing pages. Designed to look premium, built to be finished by the people who buy it.</p>
+        <p>We shape your idea into an offer and map the funnel, from a low-ticket entry point to your flagship product.</p>
       </div>
-      <div class="card reveal">
-        <div class="card-icon">
+      <div class="feature-cell">
+        <div class="feature-head">
           <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="2,17 9,10 13,14 22,5"/>
-            <polyline points="16,5 22,5 22,11"/>
+            <path d="M22 10v6"/>
+            <path d="M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
           </svg>
+          <h3>Course design &amp; build</h3>
         </div>
-        <h3>Launch &amp; grow</h3>
-        <p>We warm your audience up for weeks before launch with genuinely valuable free content, then run a coordinated drop day with emails, posts, and offers firing together, so you launch to people who already trust you instead of to an empty room.</p>
+        <p>We structure your modules and lessons for momentum, then build the platform they live on.</p>
       </div>
-      <div class="spotlight spotlight-violet reveal">
-        <p class="caption">The Vorgrow promise</p>
-        <p class="subhead">You bring the expertise. We bring the system that turns it into a business.</p>
+      <div class="feature-cell">
+        <div class="feature-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 9l5 12 1.8-5.2L21 14z"/>
+            <path d="M7.2 2.2 8 5.1"/>
+            <path d="M5.1 8l-2.9-.8"/>
+            <path d="M14 4.1 12 6"/>
+            <path d="M6 12l-1.9 2"/>
+          </svg>
+          <h3>Conversion landing pages</h3>
+        </div>
+        <p>Sales pages written and designed to turn the visitors you earn into paying customers.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          <h3>Email &amp; content systems</h3>
+        </div>
+        <p>Lead magnets, nurture sequences, and launch emails that warm your audience before you sell.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+            <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+          </svg>
+          <h3>Launch &amp; drop day</h3>
+        </div>
+        <p>A coordinated drop day with everything firing together, so you launch to a warm crowd.</p>
       </div>
     </div>
   </div>
