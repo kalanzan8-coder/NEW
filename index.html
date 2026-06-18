@@ -15,16 +15,19 @@
      ============================================================ */
   :root {
     /* colors */
-    --primary: #1668e3;        /* confident azure — primary CTA + key marks */
+    --primary: #1c2bb5;        /* deep royal blue — primary CTA, used sparingly */
     --on-primary: #ffffff;
-    --accent-blue: #1668e3;    /* the single accent: links, eyebrows, highlights */
-    --accent-strong: #0f52bd;  /* hover / pressed */
-    --accent-soft: #eaf1fe;    /* light azure tint surface */
-    --ink: #16171c;            /* near-black, faintly cool */
-    --ink-muted: #5e6068;      /* muted secondary text */
+    --accent-blue: #1c2bb5;    /* accent: buttons, links, active state, key marks */
+    --accent-strong: #161f8a;  /* hover / pressed */
+    --accent-soft: #ecedf8;    /* faint blue tint */
+    --ink: #15161f;            /* near-black navy text */
+    --ink-muted: #565a66;      /* muted secondary text */
     --canvas: #fcfcfb;         /* paper — faintly warm, never pure white */
     --surface-1: #f4f4f1;      /* cards, tiles */
     --surface-2: #ebebe7;      /* raised / hover */
+    --donut-track: #e7e8f0;    /* inactive process segment */
+    --donut-track-2: #d6d8e6;  /* second inactive segment shade */
+    --ink-deep: #14152a;       /* dark navy surface (CTA) */
     --hairline: #e4e4df;       /* borders, dividers */
     --hairline-soft: #efefea;  /* subtle dividers */
     --gradient-magenta: #d44df0;
@@ -192,50 +195,36 @@
 
   .nav-actions { display: flex; gap: 10px; }
 
-  /* ---------- Hero: heading + subheading over a soft light-blue aura ---------- */
+  /* ---------- Hero: left statement + right visual (idealink structure) ---------- */
   .hero {
     position: relative;
-    min-height: 76vh;
-    display: flex;
-    align-items: center;
-    padding: calc(56px + 70px) 0 var(--sp-section);
+    padding: calc(56px + 64px) 0 var(--sp-section);
     overflow: hidden;
-    text-align: center;
   }
-  .hero-aura { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-  .hero-aura::before, .hero-aura::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
+  .hero .container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
   }
-  .hero-aura::before {
-    width: 680px; height: 680px;
-    top: -200px; left: 50%; margin-left: -340px;
-    background: radial-gradient(circle, rgba(26, 140, 255, 0.30), rgba(26, 140, 255, 0) 70%);
-    animation: auraA 16s ease-in-out infinite;
-  }
-  .hero-aura::after {
-    width: 460px; height: 460px;
-    bottom: -160px; right: 8%;
-    background: radial-gradient(circle, rgba(120, 190, 255, 0.30), rgba(120, 190, 255, 0) 70%);
-    animation: auraB 20s ease-in-out infinite;
-  }
-  @keyframes auraA { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(50px) scale(1.08); } }
-  @keyframes auraB { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-40px) scale(1.12); } }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-aura::before, .hero-aura::after { animation: none; }
-  }
-  .hero .container { position: relative; z-index: 1; width: 100%; }
-  .hero h1 { max-width: 16ch; margin: 0 auto var(--sp-lg); }
-  .hero h1 .hl { color: var(--accent-blue); }
-  .hero .subhead { font-size: 18px; max-width: 560px; margin: 0 auto var(--sp-xl); }
+  .hero-copy { max-width: 560px; }
+  .hero h1 { margin: 0 0 var(--sp-lg); }
+  .hero .subhead { font-size: 18px; max-width: 30rem; margin: 0 0 var(--sp-xl); }
   .hero-actions {
     display: flex;
     gap: var(--sp-sm);
-    justify-content: center;
     flex-wrap: wrap;
   }
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 540px;
+    margin-left: auto;
+  }
+  .hero-visual svg { width: 100%; height: 100%; display: block; }
 
   /* ---------- Trust strip ---------- */
   .trust { padding: var(--sp-lg) 0 var(--sp-section); }
@@ -276,9 +265,10 @@
     line-height: 1.2;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--accent-blue);
+    color: var(--ink-muted);
     margin-bottom: var(--sp-md);
   }
+  .eyebrow .dot { color: var(--accent-blue); }
 
   /* ---------- Prose: narrative text block (What we do) ---------- */
   .prose {
@@ -397,126 +387,71 @@
   .spotlight .subhead { color: var(--ink); font-size: clamp(20px, 2.2vw, 24px); }
   .spotlight .caption { color: rgba(255, 255, 255, 0.75); margin-bottom: 10px; }
 
-  /* ---------- Process: interactive stepped tabs ---------- */
+  /* ---------- Process: circular dial ---------- */
   .process {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: clamp(24px, 4vw, 64px);
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
     margin-top: clamp(32px, 5vw, 56px);
   }
-  .process-tabs { list-style: none; display: flex; flex-direction: column; }
-  .process-tab {
-    position: relative;
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: baseline;
-    gap: 16px;
-    padding: 22px 6px;
+  .process-dial { position: relative; width: 100%; max-width: 440px; aspect-ratio: 1 / 1; margin: 0 auto; }
+  .process-ring { width: 100%; height: 100%; display: block; overflow: visible; }
+  .process-seg {
+    fill: none;
+    stroke: var(--donut-track);
+    stroke-width: 30;
+    transition: stroke 0.35s ease;
+    cursor: pointer;
+  }
+  .process-seg:hover { stroke: var(--donut-track-2); }
+  .process-seg.is-active { stroke: var(--accent-blue); }
+  .process-pointer-line { stroke: var(--ink); stroke-width: 1.5; }
+  .process-pointer-dot { fill: var(--ink); }
+  .process-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 8.5rem;
     background: none;
     border: none;
-    border-top: 1px solid var(--hairline);
-    font-family: inherit;
-    text-align: left;
-    cursor: pointer;
-    color: var(--ink-muted);
-    transition: color 0.25s ease;
-  }
-  .process-tabs li:last-child .process-tab { border-bottom: 1px solid var(--hairline); }
-  .process-tab:hover { color: var(--ink); }
-  .process-tab-num {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    color: var(--ink-muted);
-    transition: color 0.25s ease;
-  }
-  .process-tab-title {
-    font-family: var(--font-display);
-    font-size: clamp(20px, 2.4vw, 28px);
+    padding: 0;
+    font-family: var(--font-body);
+    font-size: 15px;
     font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    line-height: 1.25;
+    color: var(--ink-muted);
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.25s ease;
   }
-  .process-tab.is-active { color: var(--ink); }
-  .process-tab.is-active .process-tab-num { color: var(--accent-blue); }
-  .process-tab-bar {
-    grid-column: 1 / -1;
-    height: 2px;
-    margin-top: 16px;
-    background: var(--hairline);
-    border-radius: 2px;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-  .process-tab.is-active .process-tab-bar { opacity: 1; }
-  .process-tab-fill {
-    display: block;
-    height: 100%;
-    width: 0;
-    background: var(--accent-blue);
-    border-radius: 2px;
-  }
-  .process-tab.is-active .process-tab-fill.is-running {
-    animation: processFill var(--process-dur, 6000ms) linear forwards;
-  }
-  @keyframes processFill { from { width: 0; } to { width: 100%; } }
+  .process-label:hover { color: var(--ink); }
+  .process-label.is-active { color: var(--ink); font-weight: 600; }
 
   .process-panels { position: relative; }
-  .process-panel {
-    background: var(--surface-1);
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-xl);
-    padding: clamp(28px, 4vw, 44px);
+  .dpanel { display: none; }
+  .dpanel.is-active { display: block; animation: dpanelIn 0.4s ease both; }
+  @keyframes dpanelIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .dpanel-rule { display: block; height: 3px; width: 100%; max-width: 520px; background: var(--accent-blue); border-radius: 3px; margin-bottom: 30px; }
+  .dpanel-row { display: flex; gap: 14px; margin-bottom: 22px; }
+  .dpanel-row svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; fill: none; stroke: var(--ink-muted); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .dpanel-k { font-size: 14px; color: var(--ink-muted); margin-bottom: 5px; }
+  .dpanel-v { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .dpanel-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .dpanel-list li { font-size: 16px; font-weight: 600; color: var(--ink); padding-left: 16px; position: relative; }
+  .dpanel-list li::before { content: "\2013"; position: absolute; left: 0; color: var(--ink-muted); }
+  .dpanel-desc { font-size: 15px; line-height: 1.7; color: var(--ink-muted); max-width: 46ch; margin-top: 26px; }
+  .dpanel-next {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 26px;
+    font-weight: 600; font-size: 15px;
+    color: var(--accent-blue); text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
   }
-  .process-panel[hidden] { display: none; }
-  .process-panel.is-active { animation: panelIn 0.4s ease both; }
-  @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  .process-panel-meta {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent-blue);
-    margin-bottom: 18px;
-  }
-  .process-panel-title {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 3.4vw, 40px);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    line-height: 1.05;
-    margin-bottom: 16px;
-  }
-  .process-panel-body {
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--ink-muted);
-    max-width: 48ch;
-    margin-bottom: 28px;
-  }
-  .process-panel-points { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .process-panel-points li {
-    position: relative;
-    padding-left: 28px;
-    font-size: 15px;
-    color: var(--ink);
-  }
-  .process-panel-points li::before {
-    content: "";
-    position: absolute;
-    left: 2px; top: 6px;
-    width: 13px; height: 8px;
-    border-left: 2px solid var(--accent-blue);
-    border-bottom: 2px solid var(--accent-blue);
-    transform: rotate(-45deg);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .process-panel.is-active { animation: none; }
-    .process-tab.is-active .process-tab-fill.is-running { animation: none; width: 100%; }
-  }
+  .dpanel-next:hover { border-color: var(--accent-blue); }
+  .dpanel-next span { transition: transform 0.2s ease; }
+  .dpanel-next:hover span { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) { .dpanel.is-active { animation: none; } }
 
   /* ---------- FAQ: flat rows with soft hairlines ---------- */
   .faq { max-width: 720px; margin: 0 auto; }
@@ -554,24 +489,24 @@
     max-width: 60ch;
   }
 
-  /* ---------- CTA: one light-blue conversion card ---------- */
+  /* ---------- CTA: one dark navy conversion card ---------- */
   .cta-card {
     border-radius: var(--r-xxl);
     padding: clamp(40px, 7vw, 90px) var(--sp-xl);
     text-align: center;
     position: relative;
     overflow: hidden;
-    background: var(--accent-blue);
+    background: var(--ink-deep);
   }
   .cta-card h2 { max-width: 14ch; margin: 0 auto var(--sp-lg); color: #ffffff; }
   .cta-card .subhead {
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.72);
     max-width: 440px;
     margin: 0 auto var(--sp-xxl);
     font-size: 18px;
   }
-  .cta-card .btn-primary { background: #ffffff; color: var(--accent-blue); }
-  .cta-card .btn-primary:hover { background: rgba(255, 255, 255, 0.88); }
+  .cta-card .btn-primary { background: var(--accent-blue); color: #ffffff; }
+  .cta-card .btn-primary:hover { background: #2c3ccf; }
   .cta-actions {
     display: flex;
     gap: var(--sp-sm);
@@ -673,11 +608,16 @@
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
     .feature-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-main { grid-template-columns: 1fr 1fr; }
-    .hero { min-height: 70vh; padding-top: calc(56px + 48px); }
+    .hero { padding-top: calc(56px + 40px); }
+    .hero .container { grid-template-columns: 1fr; gap: 36px; text-align: left; }
+    .hero-copy { max-width: none; }
+    .hero-actions { justify-content: flex-start; }
+    .hero-visual { order: 2; max-width: 380px; margin: 0 auto; }
     .section { padding: 72px 0; }
 
-    .process { grid-template-columns: 1fr; gap: 28px; }
-    .process-tab { padding: 18px 4px; }
+    .process { grid-template-columns: 1fr; gap: 44px; }
+    .process-dial { max-width: 360px; }
+    .process-label { width: 7rem; font-size: 13px; }
   }
 
   @media (max-width: 520px) {
@@ -685,7 +625,8 @@
     .feature-grid { grid-template-columns: 1fr; }
     .footer-main { grid-template-columns: 1fr; gap: var(--sp-xxl); }
     .container { padding: 0 var(--sp-lg); }
-    .process-tab-title { font-size: 19px; }
+    .process-dial { max-width: 300px; }
+    .process-label { width: 6rem; font-size: 12px; }
   }
 </style>
 </head>
@@ -710,13 +651,53 @@
 
 <!-- ======= HERO ======= -->
 <header class="hero">
-  <div class="hero-aura" aria-hidden="true"></div>
   <div class="container">
-    <h1 class="display-lg">You know your craft. We turn it into <span class="hl">a product that sells</span>.</h1>
-    <p class="subhead">Vorgrow helps experts build, package, and launch their own digital product from scratch, from the first idea to drop day, without guessing what your audience wants or duct-taping the tech together yourself.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn btn-primary">Book a call</a>
-      <a href="#process" class="btn btn-secondary">See how it works</a>
+    <div class="hero-copy">
+      <h1 class="display-lg">You know your craft. We turn it into a product that sells.</h1>
+      <p class="subhead">Vorgrow helps experts build, package, and launch their own digital product from scratch, from the first idea to drop day, without guessing what your audience wants or duct-taping the tech together yourself.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Book a call</a>
+        <a href="#process" class="btn btn-secondary">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <!-- HERO-VISUAL-START -->
+      <svg viewBox="0 0 540 540" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Digital products being designed, built and launched">
+        <defs>
+          <radialGradient id="orb" cx="38%" cy="30%" r="78%">
+            <stop offset="0%" stop-color="#5b6ae8"/>
+            <stop offset="55%" stop-color="#2433bd"/>
+            <stop offset="100%" stop-color="#161c6e"/>
+          </radialGradient>
+          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="18" stdDeviation="26" flood-color="#15161f" flood-opacity="0.16"/>
+          </filter>
+          <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#15161f" flood-opacity="0.14"/>
+          </filter>
+        </defs>
+        <circle cx="300" cy="250" r="172" fill="url(#orb)"/>
+        <ellipse cx="248" cy="188" rx="72" ry="44" fill="#ffffff" opacity="0.10"/>
+        <g filter="url(#soft)"><rect x="44" y="150" width="190" height="120" rx="16" fill="#ffffff"/></g>
+        <circle cx="74" cy="182" r="13" fill="#ecedf8"/>
+        <path d="M70,176 L80,182 L70,188 Z" fill="#1c2bb5"/>
+        <rect x="96" y="174" width="110" height="9" rx="4.5" fill="#15161f" opacity="0.82"/>
+        <rect x="96" y="190" width="80" height="7" rx="3.5" fill="#15161f" opacity="0.22"/>
+        <rect x="60" y="222" width="158" height="8" rx="4" fill="#e7e8f0"/>
+        <rect x="60" y="222" width="96" height="8" rx="4" fill="#1c2bb5"/>
+        <rect x="60" y="244" width="120" height="7" rx="3.5" fill="#15161f" opacity="0.16"/>
+        <g filter="url(#soft2)"><rect x="318" y="324" width="186" height="116" rx="16" fill="#ffffff"/></g>
+        <rect x="340" y="346" width="70" height="8" rx="4" fill="#15161f" opacity="0.55"/>
+        <rect x="340" y="402" width="16" height="18" rx="3" fill="#e7e8f0"/>
+        <rect x="364" y="392" width="16" height="28" rx="3" fill="#cdd0e6"/>
+        <rect x="388" y="378" width="16" height="42" rx="3" fill="#1c2bb5"/>
+        <rect x="412" y="368" width="16" height="52" rx="3" fill="#1c2bb5"/>
+        <path d="M446,398 L470,374 M458,372 L470,372 L470,384" stroke="#1c2bb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="470" cy="150" r="8" fill="#1c2bb5"/>
+        <circle cx="120" cy="360" r="6" fill="#cdd0e6"/>
+        <circle cx="430" cy="250" r="5" fill="#ffffff" opacity="0.6"/>
+      </svg>
+      <!-- HERO-VISUAL-END -->
     </div>
   </div>
 </header>
@@ -825,95 +806,88 @@
     </div>
 
     <div class="process reveal" data-process>
-      <!-- Step tabs -->
-      <ol class="process-tabs" role="tablist" aria-label="Our process">
-        <li>
-          <button class="process-tab is-active" role="tab" aria-selected="true" data-step="0">
-            <span class="process-tab-num">01</span>
-            <span class="process-tab-title">Discover</span>
-            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
-          </button>
-        </li>
-        <li>
-          <button class="process-tab" role="tab" aria-selected="false" data-step="1">
-            <span class="process-tab-num">02</span>
-            <span class="process-tab-title">Validate</span>
-            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
-          </button>
-        </li>
-        <li>
-          <button class="process-tab" role="tab" aria-selected="false" data-step="2">
-            <span class="process-tab-num">03</span>
-            <span class="process-tab-title">Build</span>
-            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
-          </button>
-        </li>
-        <li>
-          <button class="process-tab" role="tab" aria-selected="false" data-step="3">
-            <span class="process-tab-num">04</span>
-            <span class="process-tab-title">Launch</span>
-            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
-          </button>
-        </li>
-        <li>
-          <button class="process-tab" role="tab" aria-selected="false" data-step="4">
-            <span class="process-tab-num">05</span>
-            <span class="process-tab-title">Grow</span>
-            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
-          </button>
-        </li>
-      </ol>
+      <div class="process-dial">
+        <svg class="process-ring" viewBox="0 0 320 320" aria-hidden="true">
+          <circle class="process-seg" data-step="0" cx="160" cy="160" r="120" stroke-dasharray="142.4 611.58" transform="rotate(-124 160 160)"/>
+          <circle class="process-seg" data-step="1" cx="160" cy="160" r="120" stroke-dasharray="142.4 611.58" transform="rotate(-52 160 160)"/>
+          <circle class="process-seg" data-step="2" cx="160" cy="160" r="120" stroke-dasharray="142.4 611.58" transform="rotate(20 160 160)"/>
+          <circle class="process-seg" data-step="3" cx="160" cy="160" r="120" stroke-dasharray="142.4 611.58" transform="rotate(92 160 160)"/>
+          <circle class="process-seg" data-step="4" cx="160" cy="160" r="120" stroke-dasharray="142.4 611.58" transform="rotate(164 160 160)"/>
+          <line class="process-pointer-line" x1="160" y1="22" x2="160" y2="2"/>
+          <circle class="process-pointer-dot" cx="160" cy="2" r="4"/>
+        </svg>
+        <button class="process-label is-active" role="tab" aria-selected="true" data-step="0" style="left:50%;top:6%">1. Discover</button>
+        <button class="process-label" role="tab" aria-selected="false" data-step="1" style="left:91%;top:36%">2. Validate</button>
+        <button class="process-label" role="tab" aria-selected="false" data-step="2" style="left:76%;top:85%">3. Build</button>
+        <button class="process-label" role="tab" aria-selected="false" data-step="3" style="left:24%;top:85%">4. Launch</button>
+        <button class="process-label" role="tab" aria-selected="false" data-step="4" style="left:9%;top:36%">5. Grow</button>
+      </div>
 
-      <!-- Step panels -->
       <div class="process-panels">
-        <article class="process-panel is-active" role="tabpanel" data-panel="0">
-          <p class="process-panel-meta">Step 01 — Week 1</p>
-          <h3 class="process-panel-title">Discover</h3>
-          <p class="process-panel-body">A free strategy call to understand your audience, your expertise, and what you want to build. You leave with a clear written proposal: scope, timeline, and price range, no guesswork.</p>
-          <ul class="process-panel-points">
-            <li>45-minute discovery call</li>
-            <li>Written proposal and roadmap</li>
-          </ul>
+        <article class="dpanel is-active" role="tabpanel" data-panel="0">
+          <span class="dpanel-rule"></span>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            <div><p class="dpanel-k">Timing</p><p class="dpanel-v">1 week</p></div>
+          </div>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/></svg>
+            <div><p class="dpanel-k">Outcomes</p><ul class="dpanel-list"><li>Discovery call</li><li>Written proposal &amp; roadmap</li></ul></div>
+          </div>
+          <p class="dpanel-desc">A free strategy call to understand your audience, your expertise, and what you want to build. You leave with a clear proposal: scope, timeline, and price range, no guesswork.</p>
+          <a class="dpanel-next" href="#process" data-next>Next stage <span>&rarr;</span></a>
         </article>
-
-        <article class="process-panel" role="tabpanel" data-panel="1" hidden>
-          <p class="process-panel-meta">Step 02 — Weeks 1 to 2</p>
-          <h3 class="process-panel-title">Validate</h3>
-          <p class="process-panel-body">Before a page is built, we find out what your audience will actually pay for. We survey your following, mine your expertise for the offer, and map the funnel from a low-ticket entry point to your flagship product.</p>
-          <ul class="process-panel-points">
-            <li>Audience survey and demand check</li>
-            <li>Offer and funnel mapped end to end</li>
-          </ul>
+        <article class="dpanel" role="tabpanel" data-panel="1">
+          <span class="dpanel-rule"></span>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            <div><p class="dpanel-k">Timing</p><p class="dpanel-v">1 to 2 weeks</p></div>
+          </div>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/></svg>
+            <div><p class="dpanel-k">Outcomes</p><ul class="dpanel-list"><li>Audience survey</li><li>Validated offer and funnel</li></ul></div>
+          </div>
+          <p class="dpanel-desc">Before a page is built, we find out what your audience will actually pay for, then map the funnel from a low-ticket entry point to your flagship product.</p>
+          <a class="dpanel-next" href="#process" data-next>Next stage <span>&rarr;</span></a>
         </article>
-
-        <article class="process-panel" role="tabpanel" data-panel="2" hidden>
-          <p class="process-panel-meta">Step 03 — Weeks 2 to 5</p>
-          <h3 class="process-panel-title">Build</h3>
-          <p class="process-panel-body">We turn your knowledge into a real product: structured modules, recorded lessons, a clean platform, and conversion-focused landing pages. Designed to look premium and built to be finished by the people who buy it.</p>
-          <ul class="process-panel-points">
-            <li>Course, platform, and pages built</li>
-            <li>Weekly check-ins, no surprises</li>
-          </ul>
+        <article class="dpanel" role="tabpanel" data-panel="2">
+          <span class="dpanel-rule"></span>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            <div><p class="dpanel-k">Timing</p><p class="dpanel-v">3 to 4 weeks</p></div>
+          </div>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/></svg>
+            <div><p class="dpanel-k">Outcomes</p><ul class="dpanel-list"><li>Course and platform</li><li>Conversion landing pages</li></ul></div>
+          </div>
+          <p class="dpanel-desc">We turn your knowledge into a real product: structured modules, a clean platform, and pages built to convert, with weekly check-ins so there are no surprises.</p>
+          <a class="dpanel-next" href="#process" data-next>Next stage <span>&rarr;</span></a>
         </article>
-
-        <article class="process-panel" role="tabpanel" data-panel="3" hidden>
-          <p class="process-panel-meta">Step 04 — Week 6</p>
-          <h3 class="process-panel-title">Launch</h3>
-          <p class="process-panel-body">We warm your audience for weeks with genuinely valuable free content, then run a coordinated drop day with emails, posts, and offers firing together, so you launch to people who already trust you instead of an empty room.</p>
-          <ul class="process-panel-points">
-            <li>Pre-launch nurture and lead magnets</li>
-            <li>One coordinated drop day</li>
-          </ul>
+        <article class="dpanel" role="tabpanel" data-panel="3">
+          <span class="dpanel-rule"></span>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            <div><p class="dpanel-k">Timing</p><p class="dpanel-v">1 week</p></div>
+          </div>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/></svg>
+            <div><p class="dpanel-k">Outcomes</p><ul class="dpanel-list"><li>Pre-launch nurture</li><li>Coordinated drop day</li></ul></div>
+          </div>
+          <p class="dpanel-desc">We warm your audience for weeks with genuinely valuable free content, then run a coordinated drop day so you launch to people who already trust you.</p>
+          <a class="dpanel-next" href="#process" data-next>Next stage <span>&rarr;</span></a>
         </article>
-
-        <article class="process-panel" role="tabpanel" data-panel="4" hidden>
-          <p class="process-panel-meta">Step 05 — Ongoing</p>
-          <h3 class="process-panel-title">Grow</h3>
-          <p class="process-panel-body">You own everything: the product, the funnel, the content, and the rights. We hand over a system you can keep selling, relaunch, and build on, with follow-on sprints whenever you want to push further.</p>
-          <ul class="process-panel-points">
-            <li>Full handover and documentation</li>
-            <li>Relaunch and expansion sprints</li>
-          </ul>
+        <article class="dpanel" role="tabpanel" data-panel="4">
+          <span class="dpanel-rule"></span>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            <div><p class="dpanel-k">Timing</p><p class="dpanel-v">Ongoing</p></div>
+          </div>
+          <div class="dpanel-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/></svg>
+            <div><p class="dpanel-k">Outcomes</p><ul class="dpanel-list"><li>Full handover and rights</li><li>Relaunch and expansion sprints</li></ul></div>
+          </div>
+          <p class="dpanel-desc">You own everything: the product, the funnel, and the content. We hand over a system you can keep selling, with follow-on sprints whenever you want to push further.</p>
+          <a class="dpanel-next" href="#process" data-next>Next stage <span>&rarr;</span></a>
         </article>
       </div>
     </div>
@@ -1030,59 +1004,61 @@
     observer.observe(el);
   });
 
-  // Process: stepped tabs that auto-advance with a progress bar, pause on
-  // hover/focus, and switch instantly on click. Keyboard + reduced-motion safe.
+  // Process: circular dial. Click a segment or label, or use Next stage, to
+  // select a step; auto-advances and pauses on hover. Reduced-motion safe.
   (() => {
     const root = document.querySelector("[data-process]");
     if (!root) return;
-    const tabs = [...root.querySelectorAll(".process-tab")];
-    const panels = [...root.querySelectorAll(".process-panel")];
-    const fills = tabs.map((t) => t.querySelector(".process-tab-fill"));
+    const segs = [...root.querySelectorAll(".process-seg")];
+    const labels = [...root.querySelectorAll(".process-label")];
+    const panels = [...root.querySelectorAll(".dpanel")];
+    const line = root.querySelector(".process-pointer-line");
+    const dot = root.querySelector(".process-pointer-dot");
+    const nexts = [...root.querySelectorAll("[data-next]")];
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    root.style.setProperty("--process-dur", "6000ms");
-    let current = 0;
-    let started = false;
+    const N = segs.length;
+    const cx = 160, cy = 160;
+    let current = 0, timer = null;
 
-    function show(i, auto) {
-      current = i;
-      tabs.forEach((t, k) => {
-        const on = k === i;
-        t.classList.toggle("is-active", on);
-        t.setAttribute("aria-selected", on ? "true" : "false");
-        const f = fills[k];
-        f.classList.remove("is-running");
-        f.style.animationPlayState = "running";
+    const pt = (deg, r) => {
+      const a = (deg * Math.PI) / 180;
+      return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    };
+
+    function show(i) {
+      current = ((i % N) + N) % N;
+      segs.forEach((s, k) => s.classList.toggle("is-active", k === current));
+      labels.forEach((l, k) => {
+        const on = k === current;
+        l.classList.toggle("is-active", on);
+        l.setAttribute("aria-selected", on ? "true" : "false");
       });
-      panels.forEach((p, k) => {
-        const on = k === i;
-        p.hidden = !on;
-        p.classList.toggle("is-active", on);
-      });
-      if (auto && !reduce) {
-        const f = fills[i];
-        void f.offsetWidth; // reflow so the bar restarts
-        f.classList.add("is-running");
-      }
+      panels.forEach((p, k) => p.classList.toggle("is-active", k === current));
+      const mid = current * 72 - 90;
+      const [x1, y1] = pt(mid, 138);
+      const [x2, y2] = pt(mid, 158);
+      line.setAttribute("x1", x1.toFixed(1)); line.setAttribute("y1", y1.toFixed(1));
+      line.setAttribute("x2", x2.toFixed(1)); line.setAttribute("y2", y2.toFixed(1));
+      dot.setAttribute("cx", x2.toFixed(1)); dot.setAttribute("cy", y2.toFixed(1));
     }
 
-    function next() { show((current + 1) % tabs.length, true); }
+    function arm() { if (reduce) return; clearInterval(timer); timer = setInterval(() => show(current + 1), 6500); }
+    function pick(i) { show(i); arm(); }
 
-    tabs.forEach((t, i) => t.addEventListener("click", () => show(i, true)));
-    fills.forEach((f) => f.addEventListener("animationend", () => { if (!reduce) next(); }));
+    segs.forEach((s, i) => s.addEventListener("click", () => pick(i)));
+    labels.forEach((l, i) => l.addEventListener("click", () => pick(i)));
+    nexts.forEach((n) => n.addEventListener("click", (e) => { e.preventDefault(); pick(current + 1); }));
 
     if (!reduce) {
-      const pause = () => { const f = fills[current]; if (f) f.style.animationPlayState = "paused"; };
-      const play = () => { const f = fills[current]; if (f) f.style.animationPlayState = "running"; };
-      root.addEventListener("mouseenter", pause);
-      root.addEventListener("mouseleave", play);
-      root.addEventListener("focusin", pause);
-      root.addEventListener("focusout", play);
+      root.addEventListener("mouseenter", () => clearInterval(timer));
+      root.addEventListener("mouseleave", arm);
+      root.addEventListener("focusin", () => clearInterval(timer));
+      root.addEventListener("focusout", arm);
     }
 
+    show(0);
     const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting && !started) { started = true; show(0, true); }
-      });
+      entries.forEach((e) => { if (e.isIntersecting) { arm(); io.disconnect(); } });
     }, { threshold: 0.3 });
     io.observe(root);
   })();
