@@ -7,25 +7,26 @@
 <meta name="description" content="Vorgrow is a digital info-product agency. We design, build and launch knowledge products that sell." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Albert+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     Light theme — white canvas, ink text, light-blue accent
+     Light, clean theme — tinted paper, confident azure accent
+     Type: Bricolage Grotesque (display) + Albert Sans (body) + mono
      ============================================================ */
   :root {
     /* colors */
-    --primary: #1a8cff;        /* light blue — primary CTA + key marks */
+    --primary: #1668e3;        /* confident azure — primary CTA + key marks */
     --on-primary: #ffffff;
-    --accent-blue: #1a8cff;    /* the single accent: links, eyebrows, highlights */
-    --accent-strong: #0a72d8;  /* hover / pressed blue */
-    --accent-soft: #eaf4ff;    /* light blue tint surface */
-    --ink: #0d0e11;            /* near-black body + headings */
-    --ink-muted: #5b616b;      /* muted gray secondary text */
-    --canvas: #ffffff;         /* page background */
-    --surface-1: #f5f6f8;      /* cards, tiles */
-    --surface-2: #ebedf1;      /* raised / hover */
-    --hairline: #e3e5ea;       /* borders, dividers */
-    --hairline-soft: #eef0f3;  /* subtle dividers */
+    --accent-blue: #1668e3;    /* the single accent: links, eyebrows, highlights */
+    --accent-strong: #0f52bd;  /* hover / pressed */
+    --accent-soft: #eaf1fe;    /* light azure tint surface */
+    --ink: #16171c;            /* near-black, faintly cool */
+    --ink-muted: #5e6068;      /* muted secondary text */
+    --canvas: #fcfcfb;         /* paper — faintly warm, never pure white */
+    --surface-1: #f4f4f1;      /* cards, tiles */
+    --surface-2: #ebebe7;      /* raised / hover */
+    --hairline: #e4e4df;       /* borders, dividers */
+    --hairline-soft: #efefea;  /* subtle dividers */
     --gradient-magenta: #d44df0;
     --gradient-violet: #6a4cf5;
     --gradient-orange: #ff7a3d;
@@ -47,8 +48,9 @@
     --sp-section: 96px;
 
     --max-w: 1199px;
-    --font-display: "Mona Sans", "Inter", -apple-system, sans-serif;
-    --font-body: "Inter", -apple-system, sans-serif;
+    --font-display: "Bricolage Grotesque", "Albert Sans", -apple-system, sans-serif;
+    --font-body: "Albert Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -57,10 +59,9 @@
 
   body {
     font-family: var(--font-body);
-    font-feature-settings: "cv01", "cv05", "cv09", "cv11", "ss03", "ss07";
     font-size: 15px;
     line-height: 1.3;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
     background: var(--canvas);
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
@@ -79,16 +80,16 @@
     padding: 0 var(--sp-xl);
   }
 
-  /* ---------- Display type: weight 500, -5% tracking, tight leading ---------- */
+  /* ---------- Display type: Bricolage Grotesque, tight but not crushed ---------- */
   .display-xxl, .display-xl, .display-lg, .display-md {
     font-family: var(--font-display);
     font-weight: 500;
     color: var(--ink);
   }
-  .display-xxl { font-size: clamp(46px, 9vw, 110px); line-height: 0.92; letter-spacing: -0.05em; }
-  .display-xl  { font-size: clamp(38px, 6.5vw, 85px); line-height: 0.95; letter-spacing: -0.05em; }
-  .display-lg  { font-size: clamp(32px, 5vw, 62px); line-height: 1.0; letter-spacing: -0.05em; }
-  .display-md  { font-size: 32px; line-height: 1.13; letter-spacing: -0.031em; }
+  .display-xxl { font-size: clamp(46px, 9vw, 104px); line-height: 0.96; letter-spacing: -0.03em; }
+  .display-xl  { font-size: clamp(38px, 6.5vw, 80px); line-height: 0.98; letter-spacing: -0.025em; }
+  .display-lg  { font-size: clamp(32px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -0.022em; }
+  .display-md  { font-size: 30px; line-height: 1.14; letter-spacing: -0.018em; }
 
   .subhead {
     font-size: clamp(18px, 2vw, 24px);
@@ -269,9 +270,12 @@
   .section-head .subhead { margin-top: var(--sp-lg); font-size: 18px; }
 
   .eyebrow {
-    font-size: 13px;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
     line-height: 1.2;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--accent-blue);
     margin-bottom: var(--sp-md);
   }
@@ -393,109 +397,126 @@
   .spotlight .subhead { color: var(--ink); font-size: clamp(20px, 2.2vw, 24px); }
   .spotlight .caption { color: rgba(255, 255, 255, 0.75); margin-bottom: 10px; }
 
-  /* ---------- Process steps ---------- */
-  .step {
-    background: var(--surface-1);
-    border-radius: var(--r-xl);
-    padding: var(--sp-xl) 26px;
-    transition: background 0.25s ease;
-  }
-  .step:hover { background: var(--surface-2); }
-  .step-num {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-muted);
-    margin-bottom: var(--sp-lg);
-  }
-  .step h3 {
-    font-family: var(--font-display);
-    font-size: 19px;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    margin-bottom: 8px;
-  }
-  .step p { color: var(--ink-muted); font-size: 14px; line-height: 1.45; }
-
-  /* ---------- Why: alternating feature rows with count-up metrics ---------- */
-  .why-row {
+  /* ---------- Process: interactive stepped tabs ---------- */
+  .process {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: clamp(30px, 5vw, 80px);
-    align-items: center;
-    padding: 56px 0;
-    border-bottom: 1px solid var(--hairline-soft);
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(24px, 4vw, 64px);
+    align-items: start;
+    margin-top: clamp(32px, 5vw, 56px);
   }
-  .why-row:last-child { border-bottom: none; padding-bottom: 0; }
-
-  .why-main {
-    display: flex;
-    align-items: center;
-    gap: clamp(24px, 3.5vw, 48px);
-  }
-  .why-row.reversed { grid-template-columns: 1fr 2fr; }
-  .why-row.reversed .why-main { order: 2; }
-  .why-row.reversed .why-metrics { order: 1; }
-
-  .why-visual {
-    background: var(--surface-1);
-    border-radius: var(--r-xl);
-    padding: 26px;
-    width: min(260px, 36%);
-    aspect-ratio: 29 / 32;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: background 0.25s ease;
-  }
-  .why-svg { width: 100%; height: auto; display: block; }
-
-  .why-copy h3 {
-    font-family: var(--font-display);
-    font-size: clamp(22px, 2.5vw, 28px);
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 1.15;
-    margin-bottom: var(--sp-md);
-  }
-  .why-copy p {
-    color: var(--ink-muted);
-    font-size: 15px;
-    line-height: 1.5;
-    max-width: 52ch;
-  }
-
-  .why-metrics {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-left: 1px solid var(--hairline-soft);
-    padding-left: clamp(24px, 3.5vw, 48px);
-  }
-  .why-row.reversed .why-metrics {
-    border-left: none;
-    border-right: 1px solid var(--hairline-soft);
-    padding-left: 0;
-    padding-right: clamp(24px, 3.5vw, 48px);
-  }
-
-  .why-points { list-style: none; display: flex; flex-direction: column; gap: var(--sp-lg); }
-  .why-points li {
+  .process-tabs { list-style: none; display: flex; flex-direction: column; }
+  .process-tab {
     position: relative;
-    padding-left: 22px;
-    font-size: 14px;
-    line-height: 1.5;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: 16px;
+    padding: 22px 6px;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--hairline);
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
     color: var(--ink-muted);
+    transition: color 0.25s ease;
   }
-  .why-points li::before {
-    content: "+";
-    position: absolute;
-    left: 0;
-    top: 0;
+  .process-tabs li:last-child .process-tab { border-bottom: 1px solid var(--hairline); }
+  .process-tab:hover { color: var(--ink); }
+  .process-tab-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    transition: color 0.25s ease;
+  }
+  .process-tab-title {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .process-tab.is-active { color: var(--ink); }
+  .process-tab.is-active .process-tab-num { color: var(--accent-blue); }
+  .process-tab-bar {
+    grid-column: 1 / -1;
+    height: 2px;
+    margin-top: 16px;
+    background: var(--hairline);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .process-tab.is-active .process-tab-bar { opacity: 1; }
+  .process-tab-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent-blue);
+    border-radius: 2px;
+  }
+  .process-tab.is-active .process-tab-fill.is-running {
+    animation: processFill var(--process-dur, 6000ms) linear forwards;
+  }
+  @keyframes processFill { from { width: 0; } to { width: 100%; } }
+
+  .process-panels { position: relative; }
+  .process-panel {
+    background: var(--surface-1);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-xl);
+    padding: clamp(28px, 4vw, 44px);
+  }
+  .process-panel[hidden] { display: none; }
+  .process-panel.is-active { animation: panelIn 0.4s ease both; }
+  @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .process-panel-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--accent-blue);
-    font-weight: 700;
+    margin-bottom: 18px;
   }
-  .why-points strong { color: var(--ink); font-weight: 600; }
+  .process-panel-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .process-panel-body {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    max-width: 48ch;
+    margin-bottom: 28px;
+  }
+  .process-panel-points { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .process-panel-points li {
+    position: relative;
+    padding-left: 28px;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .process-panel-points li::before {
+    content: "";
+    position: absolute;
+    left: 2px; top: 6px;
+    width: 13px; height: 8px;
+    border-left: 2px solid var(--accent-blue);
+    border-bottom: 2px solid var(--accent-blue);
+    transform: rotate(-45deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .process-panel.is-active { animation: none; }
+    .process-tab.is-active .process-tab-fill.is-running { animation: none; width: 100%; }
+  }
 
   /* ---------- FAQ: flat rows with soft hairlines ---------- */
   .faq { max-width: 720px; margin: 0 auto; }
@@ -655,18 +676,8 @@
     .hero { min-height: 70vh; padding-top: calc(56px + 48px); }
     .section { padding: 72px 0; }
 
-    .why-row, .why-row.reversed { grid-template-columns: 1fr; gap: var(--sp-xl); padding: 44px 0; }
-    .why-row.reversed .why-main { order: 0; }
-    .why-row.reversed .why-metrics { order: 0; }
-    .why-metrics,
-    .why-row.reversed .why-metrics {
-      flex-direction: row;
-      gap: var(--sp-xxl);
-      border-left: none;
-      border-right: none;
-      padding: 0;
-    }
-    .why-metrics .metric { flex: 1; }
+    .process { grid-template-columns: 1fr; gap: 28px; }
+    .process-tab { padding: 18px 4px; }
   }
 
   @media (max-width: 520px) {
@@ -674,10 +685,7 @@
     .feature-grid { grid-template-columns: 1fr; }
     .footer-main { grid-template-columns: 1fr; gap: var(--sp-xxl); }
     .container { padding: 0 var(--sp-lg); }
-
-    .why-main { flex-direction: column; align-items: flex-start; }
-    .why-visual { width: 100%; max-width: 280px; aspect-ratio: auto; padding: 24px; }
-    .why-metrics, .why-row.reversed .why-metrics { flex-direction: column; gap: var(--sp-xl); }
+    .process-tab-title { font-size: 19px; }
   }
 </style>
 </head>
@@ -689,8 +697,8 @@
     <a href="#" class="logo"><span class="logo-mark"></span>Vorgrow</a>
     <ul class="nav-links">
       <li><a href="#what">What we do</a></li>
+      <li><a href="#services">Services</a></li>
       <li><a href="#process">Process</a></li>
-      <li><a href="#why">Why us</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <div class="nav-actions">
@@ -810,189 +818,103 @@
 <!-- ======= PROCESS ======= -->
 <section class="section" id="process">
   <div class="container">
-    <div class="section-head center reveal">
+    <div class="section-head reveal">
       <p class="eyebrow">How it works</p>
       <h2 class="display-lg">A clear process, built around your launch.</h2>
-      <p class="subhead">Around six weeks from kickoff to drop day, depending on scope. Two phases, clear deliverables at every step, so you always know what's happening and what's next.</p>
-    </div>
-    <div class="grid grid-2">
-      <div class="step reveal">
-        <p class="step-num">Phase 1 · Month 1</p>
-        <h3>Foundation &amp; Content</h3>
-        <p>We close the gap between what you teach and what your audience wants to buy. We launch a survey to your following, turn your expertise into a validated product idea, map the funnel, and start building the lessons and email campaigns that build trust before anything goes on sale.</p>
-      </div>
-      <div class="step reveal">
-        <p class="step-num">Phase 2 · Month 2</p>
-        <h3>Build &amp; Launch</h3>
-        <p>We build the ecosystem (platform, landing pages, and content) while ramping up free high-value content like a webinar or sample lessons. Then we announce the drop, warm the audience, and launch the product on a coordinated drop day with urgency built in.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ======= WHY VORGROW ======= -->
-<section class="section" id="why">
-  <div class="container">
-    <div class="section-head center reveal">
-      <p class="eyebrow">Why Vorgrow</p>
-      <h2 class="display-lg">Built so your product actually sells, and keeps selling.</h2>
-      <p class="subhead">Most experts launch into silence. We build the three systems that compound: a product structured to be finished, pages built to convert, and an audience that's warm before day one.</p>
+      <p class="subhead">Around six weeks from kickoff to drop day. Five steps, clear deliverables at every one, so you always know what is happening and what is next.</p>
     </div>
 
-    <!-- Row 1: Course structure & design -->
-    <div class="why-row reveal">
-      <div class="why-main">
-        <div class="why-visual" aria-hidden="true">
-          <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An online course curriculum with completed and in-progress lessons">
-            <text x="16" y="30" fill="#8a8f98" font-family="Inter, sans-serif" font-size="12" font-weight="600" letter-spacing="1.5">CURRICULUM</text>
-            <circle cx="250" cy="24" r="15" stroke="rgba(13,14,17,0.12)" stroke-width="5"/>
-            <circle cx="250" cy="24" r="15" stroke="#1a8cff" stroke-width="5" stroke-linecap="round" stroke-dasharray="56 94" transform="rotate(-90 250 24)"/>
+    <div class="process reveal" data-process>
+      <!-- Step tabs -->
+      <ol class="process-tabs" role="tablist" aria-label="Our process">
+        <li>
+          <button class="process-tab is-active" role="tab" aria-selected="true" data-step="0">
+            <span class="process-tab-num">01</span>
+            <span class="process-tab-title">Discover</span>
+            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
+          </button>
+        </li>
+        <li>
+          <button class="process-tab" role="tab" aria-selected="false" data-step="1">
+            <span class="process-tab-num">02</span>
+            <span class="process-tab-title">Validate</span>
+            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
+          </button>
+        </li>
+        <li>
+          <button class="process-tab" role="tab" aria-selected="false" data-step="2">
+            <span class="process-tab-num">03</span>
+            <span class="process-tab-title">Build</span>
+            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
+          </button>
+        </li>
+        <li>
+          <button class="process-tab" role="tab" aria-selected="false" data-step="3">
+            <span class="process-tab-num">04</span>
+            <span class="process-tab-title">Launch</span>
+            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
+          </button>
+        </li>
+        <li>
+          <button class="process-tab" role="tab" aria-selected="false" data-step="4">
+            <span class="process-tab-num">05</span>
+            <span class="process-tab-title">Grow</span>
+            <span class="process-tab-bar"><span class="process-tab-fill"></span></span>
+          </button>
+        </li>
+      </ol>
 
-            <!-- Lesson 1: complete -->
-            <rect x="16" y="54" width="248" height="48" rx="12" fill="#ffffff" stroke="#e6e7ec"/>
-            <circle cx="42" cy="78" r="13" fill="#eef0f3"/>
-            <polyline points="35,78 40,83 49,72" stroke="#1a8cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="70" y="70" width="150" height="8" rx="4" fill="rgba(13,14,17,0.6)"/>
-            <rect x="70" y="84" width="95" height="6" rx="3" fill="rgba(13,14,17,0.16)"/>
+      <!-- Step panels -->
+      <div class="process-panels">
+        <article class="process-panel is-active" role="tabpanel" data-panel="0">
+          <p class="process-panel-meta">Step 01 — Week 1</p>
+          <h3 class="process-panel-title">Discover</h3>
+          <p class="process-panel-body">A free strategy call to understand your audience, your expertise, and what you want to build. You leave with a clear written proposal: scope, timeline, and price range, no guesswork.</p>
+          <ul class="process-panel-points">
+            <li>45-minute discovery call</li>
+            <li>Written proposal and roadmap</li>
+          </ul>
+        </article>
 
-            <!-- Lesson 2: complete -->
-            <rect x="16" y="114" width="248" height="48" rx="12" fill="#ffffff" stroke="#e6e7ec"/>
-            <circle cx="42" cy="138" r="13" fill="#eef0f3"/>
-            <polyline points="35,138 40,143 49,132" stroke="#1a8cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="70" y="130" width="130" height="8" rx="4" fill="rgba(13,14,17,0.6)"/>
-            <rect x="70" y="144" width="85" height="6" rx="3" fill="rgba(13,14,17,0.16)"/>
+        <article class="process-panel" role="tabpanel" data-panel="1" hidden>
+          <p class="process-panel-meta">Step 02 — Weeks 1 to 2</p>
+          <h3 class="process-panel-title">Validate</h3>
+          <p class="process-panel-body">Before a page is built, we find out what your audience will actually pay for. We survey your following, mine your expertise for the offer, and map the funnel from a low-ticket entry point to your flagship product.</p>
+          <ul class="process-panel-points">
+            <li>Audience survey and demand check</li>
+            <li>Offer and funnel mapped end to end</li>
+          </ul>
+        </article>
 
-            <!-- Lesson 3: in progress -->
-            <rect x="16" y="174" width="248" height="48" rx="12" fill="#ffffff" stroke="#1a8cff" stroke-width="1.5"/>
-            <circle cx="42" cy="198" r="13" fill="#1a8cff"/>
-            <path d="M38,192 L48,198 L38,204 Z" fill="#ffffff"/>
-            <rect x="70" y="186" width="140" height="8" rx="4" fill="rgba(13,14,17,0.78)"/>
-            <rect x="70" y="202" width="150" height="6" rx="3" fill="rgba(13,14,17,0.1)"/>
-            <rect x="70" y="202" width="78" height="6" rx="3" fill="#1a8cff"/>
+        <article class="process-panel" role="tabpanel" data-panel="2" hidden>
+          <p class="process-panel-meta">Step 03 — Weeks 2 to 5</p>
+          <h3 class="process-panel-title">Build</h3>
+          <p class="process-panel-body">We turn your knowledge into a real product: structured modules, recorded lessons, a clean platform, and conversion-focused landing pages. Designed to look premium and built to be finished by the people who buy it.</p>
+          <ul class="process-panel-points">
+            <li>Course, platform, and pages built</li>
+            <li>Weekly check-ins, no surprises</li>
+          </ul>
+        </article>
 
-            <!-- Lesson 4: upcoming -->
-            <rect x="16" y="234" width="248" height="48" rx="12" fill="#f0f2f5"/>
-            <circle cx="42" cy="258" r="13" stroke="rgba(13,14,17,0.18)" stroke-width="1.5"/>
-            <rect x="70" y="250" width="120" height="8" rx="4" fill="rgba(13,14,17,0.18)"/>
-            <rect x="70" y="264" width="80" height="6" rx="3" fill="rgba(13,14,17,0.1)"/>
-          </svg>
-        </div>
-        <div class="why-copy">
-          <h3>Course structure &amp; design</h3>
-          <p>Most courses get abandoned because they're built like archives, not journeys. We sequence your modules for momentum: quick wins early, depth where it counts, so students finish, get results, and tell people about it. Finished students are your best marketing.</p>
-        </div>
-      </div>
-      <div class="why-metrics">
-        <ul class="why-points">
-          <li><strong>[X]+ module blueprints</strong>: structured for completion, not padding</li>
-          <li><strong>100% yours to own</strong>: content, files, and rights included</li>
-        </ul>
-      </div>
-    </div>
+        <article class="process-panel" role="tabpanel" data-panel="3" hidden>
+          <p class="process-panel-meta">Step 04 — Week 6</p>
+          <h3 class="process-panel-title">Launch</h3>
+          <p class="process-panel-body">We warm your audience for weeks with genuinely valuable free content, then run a coordinated drop day with emails, posts, and offers firing together, so you launch to people who already trust you instead of an empty room.</p>
+          <ul class="process-panel-points">
+            <li>Pre-launch nurture and lead magnets</li>
+            <li>One coordinated drop day</li>
+          </ul>
+        </article>
 
-    <!-- Row 2: Optimized landing pages -->
-    <div class="why-row reversed reveal">
-      <div class="why-main">
-        <div class="why-visual" aria-hidden="true">
-          <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landing page with a call-to-action button and a rising conversion rate">
-            <!-- Browser window -->
-            <rect x="16" y="20" width="248" height="196" rx="14" fill="#ffffff" stroke="#e6e7ec"/>
-            <circle cx="34" cy="38" r="3.5" fill="rgba(13,14,17,0.18)"/>
-            <circle cx="46" cy="38" r="3.5" fill="rgba(13,14,17,0.18)"/>
-            <circle cx="58" cy="38" r="3.5" fill="rgba(13,14,17,0.18)"/>
-            <rect x="80" y="32" width="120" height="12" rx="6" fill="#eef0f3"/>
-            <line x1="16" y1="54" x2="264" y2="54" stroke="#eceef1"/>
-
-            <!-- Headline + subtext -->
-            <rect x="36" y="72" width="150" height="13" rx="6" fill="rgba(13,14,17,0.8)"/>
-            <rect x="36" y="92" width="110" height="13" rx="6" fill="rgba(13,14,17,0.8)"/>
-            <rect x="36" y="116" width="184" height="7" rx="3.5" fill="rgba(13,14,17,0.16)"/>
-            <rect x="36" y="128" width="150" height="7" rx="3.5" fill="rgba(13,14,17,0.16)"/>
-
-            <!-- CTA + cursor -->
-            <rect x="36" y="150" width="98" height="32" rx="16" fill="#1a8cff"/>
-            <text x="85" y="170" fill="#ffffff" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Get it now</text>
-            <path d="M150,156 L150,180 L156,174 L160,183 L164,181 L160,172 L168,172 Z" fill="#0d0e11" stroke="#ffffff" stroke-width="1" stroke-linejoin="round"/>
-
-            <!-- Conversion uplift -->
-            <text x="16" y="250" fill="#8a8f98" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.2">CONVERSIONS</text>
-            <polyline points="30,290 92,278 152,260 232,232" stroke="#0d0e11" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="30" cy="290" r="3" fill="#0d0e11"/>
-            <circle cx="92" cy="278" r="3" fill="#0d0e11"/>
-            <circle cx="152" cy="260" r="3" fill="#0d0e11"/>
-            <circle cx="232" cy="232" r="4" fill="#1a8cff"/>
-            <path d="M222,231 L232,231 L232,241" stroke="#1a8cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="why-copy">
-          <h3>Optimized landing pages</h3>
-          <p>Your sales page is your storefront, and most lose the sale in the first scroll. We write conversion-focused copy, design for clarity over cleverness, and build pages that load fast on any device, so the traffic you earn actually turns into customers.</p>
-        </div>
-      </div>
-      <div class="why-metrics">
-        <ul class="why-points">
-          <li><strong>[X] page variants tested</strong>: to find the message that sells</li>
-          <li><strong>Fast-loading pages</strong>: because speed converts</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Row 3: Lead magnets & drop day -->
-    <div class="why-row reveal">
-      <div class="why-main">
-        <div class="why-visual" aria-hidden="true">
-          <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A magnet attracting leads, and a calendar marking the launch drop day">
-            <!-- Magnet attracting leads -->
-            <path d="M118,98 L118,66 A22,22 0 0 1 162,66 L162,98" stroke="#0d0e11" stroke-width="14" fill="none"/>
-            <line x1="118" y1="90" x2="118" y2="98" stroke="#1a8cff" stroke-width="14"/>
-            <line x1="162" y1="90" x2="162" y2="98" stroke="rgba(13,14,17,0.45)" stroke-width="14"/>
-
-            <!-- Leads being pulled in -->
-            <circle cx="108" cy="150" r="5" fill="rgba(13,14,17,0.85)"/>
-            <circle cx="140" cy="166" r="4" fill="rgba(13,14,17,0.5)"/>
-            <circle cx="172" cy="150" r="5" fill="rgba(13,14,17,0.85)"/>
-            <circle cx="124" cy="134" r="3.5" fill="rgba(13,14,17,0.4)"/>
-            <circle cx="156" cy="136" r="3.5" fill="rgba(13,14,17,0.65)"/>
-            <path d="M136,122 l4,-5 l4,5" stroke="rgba(13,14,17,0.35)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M108,124 l4,-5 l4,5" stroke="rgba(13,14,17,0.25)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M164,124 l4,-5 l4,5" stroke="rgba(13,14,17,0.25)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <text x="140" y="186" fill="#8a8f98" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5" text-anchor="middle">LEAD MAGNET</text>
-
-            <!-- Drop-day calendar -->
-            <rect x="78" y="194" width="8" height="14" rx="3" fill="rgba(13,14,17,0.25)"/>
-            <rect x="194" y="194" width="8" height="14" rx="3" fill="rgba(13,14,17,0.25)"/>
-            <rect x="40" y="200" width="200" height="86" rx="12" fill="#ffffff" stroke="#e6e7ec"/>
-            <line x1="40" y1="226" x2="240" y2="226" stroke="#eceef1"/>
-            <text x="54" y="218" fill="#8a8f98" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5">DROP DAY</text>
-
-            <g fill="#eef0f3">
-              <rect x="54" y="238" width="18" height="16" rx="4"/>
-              <rect x="80" y="238" width="18" height="16" rx="4"/>
-              <rect x="106" y="238" width="18" height="16" rx="4"/>
-              <rect x="132" y="238" width="18" height="16" rx="4"/>
-              <rect x="158" y="238" width="18" height="16" rx="4"/>
-              <rect x="184" y="238" width="18" height="16" rx="4"/>
-              <rect x="210" y="238" width="18" height="16" rx="4"/>
-              <rect x="54" y="262" width="18" height="16" rx="4"/>
-              <rect x="80" y="262" width="18" height="16" rx="4"/>
-              <rect x="106" y="262" width="18" height="16" rx="4"/>
-              <rect x="184" y="262" width="18" height="16" rx="4"/>
-              <rect x="210" y="262" width="18" height="16" rx="4"/>
-            </g>
-            <rect x="132" y="260" width="44" height="20" rx="5" fill="#1a8cff"/>
-            <path d="M154,276 L154,265 M149,270 L154,264 L159,270" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="why-copy">
-          <h3>Lead magnets &amp; drop day</h3>
-          <p>Growth starts before launch. We build lead magnets that fill your list while the product is still in production, then orchestrate a coordinated drop day (emails, posts, and assets all shipping together) so you launch to a warm audience, not an empty room.</p>
-        </div>
-      </div>
-      <div class="why-metrics">
-        <ul class="why-points">
-          <li><strong>Weeks of launch content</strong>: emails, posts, and assets prepared</li>
-          <li><strong>One coordinated drop</strong>: everything ships at once</li>
-        </ul>
+        <article class="process-panel" role="tabpanel" data-panel="4" hidden>
+          <p class="process-panel-meta">Step 05 — Ongoing</p>
+          <h3 class="process-panel-title">Grow</h3>
+          <p class="process-panel-body">You own everything: the product, the funnel, the content, and the rights. We hand over a system you can keep selling, relaunch, and build on, with follow-on sprints whenever you want to push further.</p>
+          <ul class="process-panel-points">
+            <li>Full handover and documentation</li>
+            <li>Relaunch and expansion sprints</li>
+          </ul>
+        </article>
       </div>
     </div>
   </div>
@@ -1051,8 +973,8 @@
         <h4>Agency</h4>
         <ul>
           <li><a href="#what">What we do</a></li>
+          <li><a href="#services">Services</a></li>
           <li><a href="#process">Process</a></li>
-          <li><a href="#why">Why Vorgrow</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -1107,6 +1029,63 @@
     el.style.transitionDelay = `${(i % 4) * 60}ms`;
     observer.observe(el);
   });
+
+  // Process: stepped tabs that auto-advance with a progress bar, pause on
+  // hover/focus, and switch instantly on click. Keyboard + reduced-motion safe.
+  (() => {
+    const root = document.querySelector("[data-process]");
+    if (!root) return;
+    const tabs = [...root.querySelectorAll(".process-tab")];
+    const panels = [...root.querySelectorAll(".process-panel")];
+    const fills = tabs.map((t) => t.querySelector(".process-tab-fill"));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    root.style.setProperty("--process-dur", "6000ms");
+    let current = 0;
+    let started = false;
+
+    function show(i, auto) {
+      current = i;
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        const f = fills[k];
+        f.classList.remove("is-running");
+        f.style.animationPlayState = "running";
+      });
+      panels.forEach((p, k) => {
+        const on = k === i;
+        p.hidden = !on;
+        p.classList.toggle("is-active", on);
+      });
+      if (auto && !reduce) {
+        const f = fills[i];
+        void f.offsetWidth; // reflow so the bar restarts
+        f.classList.add("is-running");
+      }
+    }
+
+    function next() { show((current + 1) % tabs.length, true); }
+
+    tabs.forEach((t, i) => t.addEventListener("click", () => show(i, true)));
+    fills.forEach((f) => f.addEventListener("animationend", () => { if (!reduce) next(); }));
+
+    if (!reduce) {
+      const pause = () => { const f = fills[current]; if (f) f.style.animationPlayState = "paused"; };
+      const play = () => { const f = fills[current]; if (f) f.style.animationPlayState = "running"; };
+      root.addEventListener("mouseenter", pause);
+      root.addEventListener("mouseleave", play);
+      root.addEventListener("focusin", pause);
+      root.addEventListener("focusout", play);
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !started) { started = true; show(0, true); }
+      });
+    }, { threshold: 0.3 });
+    io.observe(root);
+  })();
 </script>
 
 </body>
