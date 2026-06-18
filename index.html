@@ -10,20 +10,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     Tokens from DESIGN.md (Framer design analysis)
+     Light theme — white canvas, ink text, light-blue accent
      ============================================================ */
   :root {
     /* colors */
-    --primary: #ffffff;
-    --on-primary: #000000;
-    --accent-blue: #0099ff;
-    --ink: #ffffff;
-    --ink-muted: #999999;
-    --canvas: #090909;
-    --surface-1: #141414;
-    --surface-2: #1c1c1c;
-    --hairline: #262626;
-    --hairline-soft: #1a1a1a;
+    --primary: #1a8cff;        /* light blue — primary CTA + key marks */
+    --on-primary: #ffffff;
+    --accent-blue: #1a8cff;    /* the single accent: links, eyebrows, highlights */
+    --accent-strong: #0a72d8;  /* hover / pressed blue */
+    --accent-soft: #eaf4ff;    /* light blue tint surface */
+    --ink: #0d0e11;            /* near-black body + headings */
+    --ink-muted: #5b616b;      /* muted gray secondary text */
+    --canvas: #ffffff;         /* page background */
+    --surface-1: #f5f6f8;      /* cards, tiles */
+    --surface-2: #ebedf1;      /* raised / hover */
+    --hairline: #e3e5ea;       /* borders, dividers */
+    --hairline-soft: #eef0f3;  /* subtle dividers */
     --gradient-magenta: #d44df0;
     --gradient-violet: #6a4cf5;
     --gradient-orange: #ff7a3d;
@@ -120,16 +122,16 @@
   }
   .btn:active { transform: scale(0.97); }
   .btn-primary { background: var(--primary); color: var(--on-primary); }
-  .btn-primary:hover { background: #e8e8e8; }
-  .btn-secondary { background: var(--surface-1); color: var(--ink); }
+  .btn-primary:hover { background: var(--accent-strong); }
+  .btn-secondary { background: var(--surface-1); color: var(--ink); border: 1px solid var(--hairline); }
   .btn-secondary:hover { background: var(--surface-2); }
   .btn-translucent {
-    background: rgba(255, 255, 255, 0.14);
-    color: var(--ink);
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
-  .btn-translucent:hover { background: rgba(255, 255, 255, 0.22); }
+  .btn-translucent:hover { background: rgba(255, 255, 255, 0.26); }
   .btn-sm { padding: 10px 15px; min-height: 36px; }
 
   /* ---------- Nav: 56px on canvas ---------- */
@@ -138,13 +140,13 @@
     top: 0; left: 0; right: 0;
     z-index: 100;
     height: 56px;
-    background: rgba(9, 9, 9, 0.8);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid transparent;
     transition: border-color 0.3s ease;
   }
-  .nav.scrolled { border-bottom-color: var(--hairline-soft); }
+  .nav.scrolled { border-bottom-color: var(--hairline); }
 
   .nav-inner {
     height: 56px;
@@ -167,7 +169,7 @@
   .logo-mark {
     width: 20px; height: 20px;
     border-radius: 6px;
-    background: linear-gradient(135deg, var(--gradient-violet), var(--gradient-magenta));
+    background: linear-gradient(135deg, var(--accent-blue), #6fc0ff);
   }
 
   .nav-links {
@@ -189,145 +191,49 @@
 
   .nav-actions { display: flex; gap: 10px; }
 
-  /* ---------- Hero: centered statement + browser mockup over dotted orbits ---------- */
+  /* ---------- Hero: heading + subheading over a soft light-blue aura ---------- */
   .hero {
     position: relative;
-    padding: calc(56px + 80px) 0 var(--sp-section);
+    min-height: 76vh;
+    display: flex;
+    align-items: center;
+    padding: calc(56px + 70px) 0 var(--sp-section);
     overflow: hidden;
     text-align: center;
   }
-  .hero-canvas {
+  .hero-aura { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .hero-aura::before, .hero-aura::after {
+    content: "";
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0.85;
+    border-radius: 50%;
+    filter: blur(80px);
   }
-  .hero .container {
-    position: relative;
-    z-index: 1;
-    width: 100%;
+  .hero-aura::before {
+    width: 680px; height: 680px;
+    top: -200px; left: 50%; margin-left: -340px;
+    background: radial-gradient(circle, rgba(26, 140, 255, 0.30), rgba(26, 140, 255, 0) 70%);
+    animation: auraA 16s ease-in-out infinite;
   }
-  .hero-kicker {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    max-width: 40ch;
-    margin: 0 auto var(--sp-lg);
+  .hero-aura::after {
+    width: 460px; height: 460px;
+    bottom: -160px; right: 8%;
+    background: radial-gradient(circle, rgba(120, 190, 255, 0.30), rgba(120, 190, 255, 0) 70%);
+    animation: auraB 20s ease-in-out infinite;
   }
-  .hero h1 {
-    max-width: 18ch;
-    margin: 0 auto var(--sp-lg);
+  @keyframes auraA { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(50px) scale(1.08); } }
+  @keyframes auraB { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-40px) scale(1.12); } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-aura::before, .hero-aura::after { animation: none; }
   }
-  .hero .subhead {
-    font-size: 18px;
-    max-width: 540px;
-    margin: 0 auto var(--sp-xl);
-  }
+  .hero .container { position: relative; z-index: 1; width: 100%; }
+  .hero h1 { max-width: 16ch; margin: 0 auto var(--sp-lg); }
+  .hero h1 .hl { color: var(--accent-blue); }
+  .hero .subhead { font-size: 18px; max-width: 560px; margin: 0 auto var(--sp-xl); }
   .hero-actions {
     display: flex;
     gap: var(--sp-sm);
     justify-content: center;
     flex-wrap: wrap;
-  }
-  .hero-note {
-    margin-top: var(--sp-lg);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-muted);
-  }
-  .hero-corner {
-    position: absolute;
-    font-size: 16px;
-    color: var(--ink-muted);
-    opacity: 0.5;
-    user-select: none;
-    pointer-events: none;
-  }
-  .hero-corner.bl { left: 28px; bottom: 28px; }
-  .hero-corner.br { right: 28px; bottom: 28px; }
-
-  /* Browser-frame mockup: surface-1 tile with the level-2 light-edge lift */
-  .hero-mock {
-    max-width: 840px;
-    margin: 64px auto 0;
-    background: var(--surface-1);
-    border-radius: var(--r-xl);
-    padding: 12px;
-    box-shadow:
-      inset 0 0.5px 0 rgba(255, 255, 255, 0.1),
-      0 10px 30px rgba(0, 0, 0, 0.25);
-    text-align: left;
-  }
-  .hero-mock-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 4px 14px;
-  }
-  .hm-dots {
-    position: absolute;
-    left: 8px;
-    display: flex;
-    gap: 6px;
-  }
-  .hm-dots span {
-    width: 9px; height: 9px;
-    border-radius: 9999px;
-    background: var(--surface-2);
-  }
-  .hm-url {
-    width: min(240px, 40%);
-    height: 16px;
-    border-radius: 8px;
-    background: var(--surface-2);
-  }
-  .hero-mock-screen {
-    background: var(--canvas);
-    border-radius: var(--r-md);
-    padding: clamp(22px, 4vw, 42px) clamp(20px, 4vw, 48px);
-  }
-  .hm-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: clamp(28px, 4vw, 44px);
-  }
-  .hm-chip { width: 58px; height: 10px; border-radius: 5px; background: var(--surface-2); }
-  .hm-links { display: flex; gap: 10px; }
-  .hm-links i { width: 26px; height: 7px; border-radius: 4px; background: var(--surface-2); }
-  .hm-cta { width: 58px; height: 16px; border-radius: 9999px; background: rgba(255, 255, 255, 0.5); }
-  .hm-hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-  .hm-line { height: 16px; border-radius: 8px; background: var(--surface-2); }
-  .hm-line.w60 { width: 56%; }
-  .hm-line.w40 { width: 38%; background: rgba(255, 255, 255, 0.12); }
-  .hm-btn {
-    width: 92px; height: 24px;
-    border-radius: 9999px;
-    background: #ffffff;
-    margin-top: 8px;
-  }
-  .hm-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: clamp(28px, 4vw, 44px);
-  }
-  .hm-cards span {
-    height: clamp(48px, 7vw, 72px);
-    border-radius: var(--r-md);
-    background: var(--surface-1);
   }
 
   /* ---------- Trust strip ---------- */
@@ -364,9 +270,9 @@
 
   .eyebrow {
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
-    color: var(--ink-muted);
+    color: var(--accent-blue);
     margin-bottom: var(--sp-md);
   }
 
@@ -586,8 +492,8 @@
     position: absolute;
     left: 0;
     top: 0;
-    color: var(--ink-muted);
-    font-weight: 500;
+    color: var(--accent-blue);
+    font-weight: 700;
   }
   .why-points strong { color: var(--ink); font-weight: 600; }
 
@@ -627,21 +533,24 @@
     max-width: 60ch;
   }
 
-  /* ---------- CTA: one large gradient spotlight card ---------- */
+  /* ---------- CTA: one light-blue conversion card ---------- */
   .cta-card {
     border-radius: var(--r-xxl);
     padding: clamp(40px, 7vw, 90px) var(--sp-xl);
     text-align: center;
     position: relative;
     overflow: hidden;
+    background: var(--accent-blue);
   }
-  .cta-card h2 { max-width: 14ch; margin: 0 auto var(--sp-lg); }
+  .cta-card h2 { max-width: 14ch; margin: 0 auto var(--sp-lg); color: #ffffff; }
   .cta-card .subhead {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.92);
     max-width: 440px;
     margin: 0 auto var(--sp-xxl);
     font-size: 18px;
   }
+  .cta-card .btn-primary { background: #ffffff; color: var(--accent-blue); }
+  .cta-card .btn-primary:hover { background: rgba(255, 255, 255, 0.88); }
   .cta-actions {
     display: flex;
     gap: var(--sp-sm);
@@ -701,7 +610,7 @@
     letter-spacing: -0.05em;
     display: block;
     transform: translateY(16%);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.02) 85%);
+    background: linear-gradient(180deg, rgba(13, 14, 17, 0.07), rgba(13, 14, 17, 0) 85%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -743,9 +652,7 @@
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
     .feature-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-main { grid-template-columns: 1fr 1fr; }
-    .hero { padding-top: calc(56px + 56px); }
-    .hero-canvas { opacity: 0.5; }
-    .hero-mock { margin-top: 48px; }
+    .hero { min-height: 70vh; padding-top: calc(56px + 48px); }
     .section { padding: 72px 0; }
 
     .why-row, .why-row.reversed { grid-template-columns: 1fr; gap: var(--sp-xl); padding: 44px 0; }
@@ -795,36 +702,13 @@
 
 <!-- ======= HERO ======= -->
 <header class="hero">
-  <canvas class="hero-canvas" id="orbits" aria-hidden="true"></canvas>
-  <span class="hero-corner bl" aria-hidden="true">+</span>
-  <span class="hero-corner br" aria-hidden="true">+</span>
+  <div class="hero-aura" aria-hidden="true"></div>
   <div class="container">
-    <span class="hero-kicker">Info-product agency for people who are already good at what they do</span>
-    <h1 class="display-lg">You know your craft. We turn it into a product that sells.</h1>
+    <h1 class="display-lg">You know your craft. We turn it into <span class="hl">a product that sells</span>.</h1>
     <p class="subhead">Vorgrow helps experts build, package, and launch their own digital product from scratch, from the first idea to drop day, without guessing what your audience wants or duct-taping the tech together yourself.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">Book a call</a>
       <a href="#process" class="btn btn-secondary">See how it works</a>
-    </div>
-
-    <div class="hero-mock" aria-hidden="true">
-      <div class="hero-mock-bar">
-        <span class="hm-dots"><span></span><span></span><span></span></span>
-        <span class="hm-url"></span>
-      </div>
-      <div class="hero-mock-screen">
-        <div class="hm-nav">
-          <span class="hm-chip"></span>
-          <span class="hm-links"><i></i><i></i><i></i></span>
-          <span class="hm-cta"></span>
-        </div>
-        <div class="hm-hero">
-          <span class="hm-line w60"></span>
-          <span class="hm-line w40"></span>
-          <span class="hm-btn"></span>
-        </div>
-        <div class="hm-cards"><span></span><span></span><span></span></div>
-      </div>
     </div>
   </div>
 </header>
@@ -855,7 +739,7 @@
     <div class="feature-grid reveal">
       <div class="feature-cell">
         <div class="feature-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d0e11" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M8 11l2 2 4-4"/>
             <circle cx="11" cy="11" r="8"/>
             <path d="M21 21l-4.3-4.3"/>
@@ -866,7 +750,7 @@
       </div>
       <div class="feature-cell">
         <div class="feature-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d0e11" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
           </svg>
           <h3>Offer &amp; funnel strategy</h3>
@@ -875,7 +759,7 @@
       </div>
       <div class="feature-cell">
         <div class="feature-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d0e11" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M22 10v6"/>
             <path d="M2 10l10-5 10 5-10 5z"/>
             <path d="M6 12v5c3 3 9 3 12 0v-5"/>
@@ -886,7 +770,7 @@
       </div>
       <div class="feature-cell">
         <div class="feature-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d0e11" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M9 9l5 12 1.8-5.2L21 14z"/>
             <path d="M7.2 2.2 8 5.1"/>
             <path d="M5.1 8l-2.9-.8"/>
@@ -899,7 +783,7 @@
       </div>
       <div class="feature-cell">
         <div class="feature-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d0e11" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="4" width="20" height="16" rx="2"/>
             <path d="M22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
           </svg>
@@ -909,7 +793,7 @@
       </div>
       <div class="feature-cell">
         <div class="feature-head">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d0e11" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
             <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
             <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
@@ -960,37 +844,37 @@
       <div class="why-main">
         <div class="why-visual" aria-hidden="true">
           <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An online course curriculum with completed and in-progress lessons">
-            <text x="16" y="30" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="12" font-weight="600" letter-spacing="1.5">CURRICULUM</text>
-            <circle cx="250" cy="24" r="15" stroke="rgba(255,255,255,0.15)" stroke-width="5"/>
-            <circle cx="250" cy="24" r="15" stroke="#7c6cff" stroke-width="5" stroke-linecap="round" stroke-dasharray="56 94" transform="rotate(-90 250 24)"/>
+            <text x="16" y="30" fill="#8a8f98" font-family="Inter, sans-serif" font-size="12" font-weight="600" letter-spacing="1.5">CURRICULUM</text>
+            <circle cx="250" cy="24" r="15" stroke="rgba(13,14,17,0.12)" stroke-width="5"/>
+            <circle cx="250" cy="24" r="15" stroke="#1a8cff" stroke-width="5" stroke-linecap="round" stroke-dasharray="56 94" transform="rotate(-90 250 24)"/>
 
             <!-- Lesson 1: complete -->
-            <rect x="16" y="54" width="248" height="48" rx="12" fill="#1c1c1c"/>
-            <circle cx="42" cy="78" r="13" fill="rgba(255,255,255,0.1)"/>
-            <polyline points="35,78 40,83 49,72" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="70" y="70" width="150" height="8" rx="4" fill="rgba(255,255,255,0.65)"/>
-            <rect x="70" y="84" width="95" height="6" rx="3" fill="rgba(255,255,255,0.18)"/>
+            <rect x="16" y="54" width="248" height="48" rx="12" fill="#ffffff" stroke="#e6e7ec"/>
+            <circle cx="42" cy="78" r="13" fill="#eef0f3"/>
+            <polyline points="35,78 40,83 49,72" stroke="#1a8cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="70" y="70" width="150" height="8" rx="4" fill="rgba(13,14,17,0.6)"/>
+            <rect x="70" y="84" width="95" height="6" rx="3" fill="rgba(13,14,17,0.16)"/>
 
             <!-- Lesson 2: complete -->
-            <rect x="16" y="114" width="248" height="48" rx="12" fill="#1c1c1c"/>
-            <circle cx="42" cy="138" r="13" fill="rgba(255,255,255,0.1)"/>
-            <polyline points="35,138 40,143 49,132" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="70" y="130" width="130" height="8" rx="4" fill="rgba(255,255,255,0.65)"/>
-            <rect x="70" y="144" width="85" height="6" rx="3" fill="rgba(255,255,255,0.18)"/>
+            <rect x="16" y="114" width="248" height="48" rx="12" fill="#ffffff" stroke="#e6e7ec"/>
+            <circle cx="42" cy="138" r="13" fill="#eef0f3"/>
+            <polyline points="35,138 40,143 49,132" stroke="#1a8cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="70" y="130" width="130" height="8" rx="4" fill="rgba(13,14,17,0.6)"/>
+            <rect x="70" y="144" width="85" height="6" rx="3" fill="rgba(13,14,17,0.16)"/>
 
             <!-- Lesson 3: in progress -->
-            <rect x="16" y="174" width="248" height="48" rx="12" fill="#1c1c1c" stroke="#7c6cff" stroke-width="1.5"/>
-            <circle cx="42" cy="198" r="13" fill="#7c6cff"/>
+            <rect x="16" y="174" width="248" height="48" rx="12" fill="#ffffff" stroke="#1a8cff" stroke-width="1.5"/>
+            <circle cx="42" cy="198" r="13" fill="#1a8cff"/>
             <path d="M38,192 L48,198 L38,204 Z" fill="#ffffff"/>
-            <rect x="70" y="186" width="140" height="8" rx="4" fill="rgba(255,255,255,0.85)"/>
-            <rect x="70" y="202" width="150" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
-            <rect x="70" y="202" width="78" height="6" rx="3" fill="#7c6cff"/>
+            <rect x="70" y="186" width="140" height="8" rx="4" fill="rgba(13,14,17,0.78)"/>
+            <rect x="70" y="202" width="150" height="6" rx="3" fill="rgba(13,14,17,0.1)"/>
+            <rect x="70" y="202" width="78" height="6" rx="3" fill="#1a8cff"/>
 
             <!-- Lesson 4: upcoming -->
-            <rect x="16" y="234" width="248" height="48" rx="12" fill="#161616"/>
-            <circle cx="42" cy="258" r="13" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-            <rect x="70" y="250" width="120" height="8" rx="4" fill="rgba(255,255,255,0.22)"/>
-            <rect x="70" y="264" width="80" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+            <rect x="16" y="234" width="248" height="48" rx="12" fill="#f0f2f5"/>
+            <circle cx="42" cy="258" r="13" stroke="rgba(13,14,17,0.18)" stroke-width="1.5"/>
+            <rect x="70" y="250" width="120" height="8" rx="4" fill="rgba(13,14,17,0.18)"/>
+            <rect x="70" y="264" width="80" height="6" rx="3" fill="rgba(13,14,17,0.1)"/>
           </svg>
         </div>
         <div class="why-copy">
@@ -1012,32 +896,32 @@
         <div class="why-visual" aria-hidden="true">
           <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A landing page with a call-to-action button and a rising conversion rate">
             <!-- Browser window -->
-            <rect x="16" y="20" width="248" height="196" rx="14" fill="#141414" stroke="rgba(255,255,255,0.1)"/>
-            <circle cx="34" cy="38" r="3.5" fill="rgba(255,255,255,0.25)"/>
-            <circle cx="46" cy="38" r="3.5" fill="rgba(255,255,255,0.25)"/>
-            <circle cx="58" cy="38" r="3.5" fill="rgba(255,255,255,0.25)"/>
-            <rect x="80" y="32" width="120" height="12" rx="6" fill="#1c1c1c"/>
-            <line x1="16" y1="54" x2="264" y2="54" stroke="rgba(255,255,255,0.08)"/>
+            <rect x="16" y="20" width="248" height="196" rx="14" fill="#ffffff" stroke="#e6e7ec"/>
+            <circle cx="34" cy="38" r="3.5" fill="rgba(13,14,17,0.18)"/>
+            <circle cx="46" cy="38" r="3.5" fill="rgba(13,14,17,0.18)"/>
+            <circle cx="58" cy="38" r="3.5" fill="rgba(13,14,17,0.18)"/>
+            <rect x="80" y="32" width="120" height="12" rx="6" fill="#eef0f3"/>
+            <line x1="16" y1="54" x2="264" y2="54" stroke="#eceef1"/>
 
             <!-- Headline + subtext -->
-            <rect x="36" y="72" width="150" height="13" rx="6" fill="rgba(255,255,255,0.85)"/>
-            <rect x="36" y="92" width="110" height="13" rx="6" fill="rgba(255,255,255,0.85)"/>
-            <rect x="36" y="116" width="184" height="7" rx="3.5" fill="rgba(255,255,255,0.22)"/>
-            <rect x="36" y="128" width="150" height="7" rx="3.5" fill="rgba(255,255,255,0.22)"/>
+            <rect x="36" y="72" width="150" height="13" rx="6" fill="rgba(13,14,17,0.8)"/>
+            <rect x="36" y="92" width="110" height="13" rx="6" fill="rgba(13,14,17,0.8)"/>
+            <rect x="36" y="116" width="184" height="7" rx="3.5" fill="rgba(13,14,17,0.16)"/>
+            <rect x="36" y="128" width="150" height="7" rx="3.5" fill="rgba(13,14,17,0.16)"/>
 
             <!-- CTA + cursor -->
-            <rect x="36" y="150" width="98" height="32" rx="16" fill="#7c6cff"/>
+            <rect x="36" y="150" width="98" height="32" rx="16" fill="#1a8cff"/>
             <text x="85" y="170" fill="#ffffff" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Get it now</text>
-            <path d="M150,156 L150,180 L156,174 L160,183 L164,181 L160,172 L168,172 Z" fill="#ffffff" stroke="#0a0a0a" stroke-width="1" stroke-linejoin="round"/>
+            <path d="M150,156 L150,180 L156,174 L160,183 L164,181 L160,172 L168,172 Z" fill="#0d0e11" stroke="#ffffff" stroke-width="1" stroke-linejoin="round"/>
 
             <!-- Conversion uplift -->
-            <text x="16" y="250" fill="rgba(255,255,255,0.4)" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.2">CONVERSIONS</text>
-            <polyline points="30,290 92,278 152,260 232,232" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="30" cy="290" r="3" fill="#ffffff"/>
-            <circle cx="92" cy="278" r="3" fill="#ffffff"/>
-            <circle cx="152" cy="260" r="3" fill="#ffffff"/>
-            <circle cx="232" cy="232" r="4" fill="#7c6cff"/>
-            <path d="M222,231 L232,231 L232,241" stroke="#7c6cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="16" y="250" fill="#8a8f98" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.2">CONVERSIONS</text>
+            <polyline points="30,290 92,278 152,260 232,232" stroke="#0d0e11" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="30" cy="290" r="3" fill="#0d0e11"/>
+            <circle cx="92" cy="278" r="3" fill="#0d0e11"/>
+            <circle cx="152" cy="260" r="3" fill="#0d0e11"/>
+            <circle cx="232" cy="232" r="4" fill="#1a8cff"/>
+            <path d="M222,231 L232,231 L232,241" stroke="#1a8cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
         <div class="why-copy">
@@ -1059,29 +943,29 @@
         <div class="why-visual" aria-hidden="true">
           <svg class="why-svg" viewBox="0 0 280 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A magnet attracting leads, and a calendar marking the launch drop day">
             <!-- Magnet attracting leads -->
-            <path d="M118,98 L118,66 A22,22 0 0 1 162,66 L162,98" stroke="#ffffff" stroke-width="14" fill="none"/>
-            <line x1="118" y1="90" x2="118" y2="98" stroke="#7c6cff" stroke-width="14"/>
-            <line x1="162" y1="90" x2="162" y2="98" stroke="rgba(255,255,255,0.55)" stroke-width="14"/>
+            <path d="M118,98 L118,66 A22,22 0 0 1 162,66 L162,98" stroke="#0d0e11" stroke-width="14" fill="none"/>
+            <line x1="118" y1="90" x2="118" y2="98" stroke="#1a8cff" stroke-width="14"/>
+            <line x1="162" y1="90" x2="162" y2="98" stroke="rgba(13,14,17,0.45)" stroke-width="14"/>
 
             <!-- Leads being pulled in -->
-            <circle cx="108" cy="150" r="5" fill="rgba(255,255,255,0.9)"/>
-            <circle cx="140" cy="166" r="4" fill="rgba(255,255,255,0.55)"/>
-            <circle cx="172" cy="150" r="5" fill="rgba(255,255,255,0.9)"/>
-            <circle cx="124" cy="134" r="3.5" fill="rgba(255,255,255,0.45)"/>
-            <circle cx="156" cy="136" r="3.5" fill="rgba(255,255,255,0.7)"/>
-            <path d="M136,122 l4,-5 l4,5" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M108,124 l4,-5 l4,5" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M164,124 l4,-5 l4,5" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <text x="140" y="186" fill="rgba(255,255,255,0.45)" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5" text-anchor="middle">LEAD MAGNET</text>
+            <circle cx="108" cy="150" r="5" fill="rgba(13,14,17,0.85)"/>
+            <circle cx="140" cy="166" r="4" fill="rgba(13,14,17,0.5)"/>
+            <circle cx="172" cy="150" r="5" fill="rgba(13,14,17,0.85)"/>
+            <circle cx="124" cy="134" r="3.5" fill="rgba(13,14,17,0.4)"/>
+            <circle cx="156" cy="136" r="3.5" fill="rgba(13,14,17,0.65)"/>
+            <path d="M136,122 l4,-5 l4,5" stroke="rgba(13,14,17,0.35)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M108,124 l4,-5 l4,5" stroke="rgba(13,14,17,0.25)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M164,124 l4,-5 l4,5" stroke="rgba(13,14,17,0.25)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="140" y="186" fill="#8a8f98" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5" text-anchor="middle">LEAD MAGNET</text>
 
             <!-- Drop-day calendar -->
-            <rect x="78" y="194" width="8" height="14" rx="3" fill="rgba(255,255,255,0.3)"/>
-            <rect x="194" y="194" width="8" height="14" rx="3" fill="rgba(255,255,255,0.3)"/>
-            <rect x="40" y="200" width="200" height="86" rx="12" fill="#141414" stroke="rgba(255,255,255,0.1)"/>
-            <line x1="40" y1="226" x2="240" y2="226" stroke="rgba(255,255,255,0.1)"/>
-            <text x="54" y="218" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5">DROP DAY</text>
+            <rect x="78" y="194" width="8" height="14" rx="3" fill="rgba(13,14,17,0.25)"/>
+            <rect x="194" y="194" width="8" height="14" rx="3" fill="rgba(13,14,17,0.25)"/>
+            <rect x="40" y="200" width="200" height="86" rx="12" fill="#ffffff" stroke="#e6e7ec"/>
+            <line x1="40" y1="226" x2="240" y2="226" stroke="#eceef1"/>
+            <text x="54" y="218" fill="#8a8f98" font-family="Inter, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5">DROP DAY</text>
 
-            <g fill="rgba(255,255,255,0.1)">
+            <g fill="#eef0f3">
               <rect x="54" y="238" width="18" height="16" rx="4"/>
               <rect x="80" y="238" width="18" height="16" rx="4"/>
               <rect x="106" y="238" width="18" height="16" rx="4"/>
@@ -1095,7 +979,7 @@
               <rect x="184" y="262" width="18" height="16" rx="4"/>
               <rect x="210" y="262" width="18" height="16" rx="4"/>
             </g>
-            <rect x="132" y="260" width="44" height="20" rx="5" fill="#7c6cff"/>
+            <rect x="132" y="260" width="44" height="20" rx="5" fill="#1a8cff"/>
             <path d="M154,276 L154,265 M149,270 L154,264 L159,270" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
@@ -1145,7 +1029,7 @@
 <!-- ======= CTA ======= -->
 <section class="section" id="contact" style="padding-top: 0;">
   <div class="container">
-    <div class="cta-card spotlight-magenta reveal">
+    <div class="cta-card reveal">
       <h2 class="display-lg">You've got the expertise. Let's build the product.</h2>
       <p class="subhead">If people already trust you for what you know, you're closer to a real digital product than you think. Let's map it out together.</p>
       <div class="cta-actions">
@@ -1223,93 +1107,6 @@
     el.style.transitionDelay = `${(i % 4) * 60}ms`;
     observer.observe(el);
   });
-
-  // Hero dotted-orbit animation: concentric rings of dots, each ring
-  // drifting at its own speed with a soft twinkle.
-  (() => {
-    const canvas = document.getElementById("orbits");
-    const ctx = canvas.getContext("2d");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let w, h, cx, cy, rings = [];
-
-    function build() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = canvas.parentElement.getBoundingClientRect();
-      w = rect.width;
-      h = rect.height;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      // Orbits radiate from behind the centered headline.
-      cx = w * 0.5;
-      cy = h * 0.5;
-
-      const maxRadius = Math.hypot(Math.max(cx, w - cx), Math.max(cy, h - cy));
-      const ringGap = Math.max(54, maxRadius / 14);
-      rings = [];
-      for (let r = ringGap * 1.6, i = 0; r < maxRadius; r += ringGap, i++) {
-        const dots = [];
-        // Dots are laid down in random arc clusters so rings look
-        // hand-scattered rather than evenly stippled.
-        let angle = Math.random() * Math.PI * 2;
-        const target = Math.floor(r / 5);
-        while (dots.length < target) {
-          const clusterLen = 4 + Math.floor(Math.random() * 14);
-          for (let j = 0; j < clusterLen && dots.length < target; j++) {
-            angle += (4.5 + Math.random() * 3) / r;
-            dots.push({
-              a: angle,
-              size: 0.6 + Math.random() * 1.15,
-              alpha: 0.12 + Math.random() * 0.55,
-              phase: Math.random() * Math.PI * 2,
-            });
-          }
-          angle += (30 + Math.random() * 90) / r; // gap between clusters
-        }
-        rings.push({
-          radius: r,
-          rot: 0,
-          speed: (0.00025 + Math.random() * 0.00045) * (i % 2 ? 1 : -1),
-        });
-        rings[rings.length - 1].dots = dots;
-      }
-    }
-
-    function draw(t) {
-      ctx.clearRect(0, 0, w, h);
-      for (const ring of rings) {
-        ring.rot += ring.speed;
-        for (const d of ring.dots) {
-          const a = d.a + ring.rot;
-          const x = cx + Math.cos(a) * ring.radius;
-          const y = cy + Math.sin(a) * ring.radius;
-          if (x < -4 || x > w + 4 || y < -4 || y > h + 4) continue;
-          const twinkle = 0.7 + 0.3 * Math.sin(t * 0.0012 + d.phase);
-          ctx.globalAlpha = d.alpha * twinkle;
-          ctx.fillStyle = "#ffffff";
-          ctx.beginPath();
-          ctx.arc(x, y, d.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-      ctx.globalAlpha = 1;
-    }
-
-    function loop(t) {
-      draw(t);
-      requestAnimationFrame(loop);
-    }
-
-    build();
-    window.addEventListener("resize", build);
-    if (reduceMotion) {
-      draw(0);
-    } else {
-      requestAnimationFrame(loop);
-    }
-  })();
 </script>
 
 </body>
