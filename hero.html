@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vorgrow — Hero</title>
+<meta name="description" content="Vorgrow hero — scattered content becoming a structured digital product." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     Vorgrow hero — "Chaos → Product"
+     Full-bleed WebGL scene behind the headline.
+     The canvas is a background layer; all content sits above it.
+     ============================================================ */
+  :root {
+    --bg-0: #0A0812;
+    --bg-1: #120E20;
+    --violet: #7C3AED;
+    --violet-hi: #A78BFA;
+    --violet-pale: #C4B5FD;
+    --text: #EDEAF7;
+    --text-muted: #A29BBE;
+    --font: "Poppins", "DM Sans", -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-0);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Hero section ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    /* No-WebGL / pre-JS fallback: the gradient alone still looks intentional.
+       The canvas paints on top of this when WebGL is available. */
+    background:
+      radial-gradient(120% 95% at 68% 36%, var(--bg-1) 0%, var(--bg-0) 62%);
+  }
+
+  /* Faint CSS stand-in for the core glow, only shown when WebGL failed */
+  .hero.no-webgl::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(34% 30% at 66% 38%, rgba(124, 58, 237, 0.20) 0%, rgba(124, 58, 237, 0) 70%);
+    pointer-events: none;
+  }
+
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    display: block;
+  }
+
+  /* Scrim: guarantees WCAG contrast for the text column no matter
+     what is moving behind it. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(90deg,
+      rgba(10, 8, 18, 0.85) 0%,
+      rgba(10, 8, 18, 0.55) 34%,
+      rgba(10, 8, 18, 0.00) 62%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .hero-inner { max-width: 560px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--violet-hi);
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-size: clamp(38px, 4.6vw, 62px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin-bottom: 36px;
+  }
+
+  .cta {
+    display: inline-block;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--violet);
+    border: none;
+    border-radius: 999px;
+    padding: 16px 34px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .cta:hover { background: #8B5CF6; transform: translateY(-1px); }
+
+  /* ---------- Next section stub (to check the seam) ---------- */
+  .next-section {
+    min-height: 46vh;
+    background: var(--bg-0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4A4463;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 767px) {
+    .hero {
+      align-items: flex-end;
+      padding-bottom: 10vh;
+    }
+    .hero-content { padding: 0 24px; }
+    .hero-scrim {
+      background: linear-gradient(180deg,
+        rgba(10, 8, 18, 0.0) 30%,
+        rgba(10, 8, 18, 0.72) 58%,
+        rgba(10, 8, 18, 0.9) 100%);
+    }
+    h1 { margin-bottom: 20px; }
+    .hero-sub { margin-bottom: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero" id="hero">
+  <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-inner">
+      <span class="eyebrow">Done-for-you digital products</span>
+      <h1>Your audience is ready. Your product isn&rsquo;t. We&nbsp;fix&nbsp;that.</h1>
+      <p class="hero-sub">We turn your scattered content into a structured, launched digital product — in six weeks, without you lifting a finger.</p>
+      <a class="cta" href="#">Start your product</a>
+    </div>
+  </div>
+</section>
+
+<section class="next-section">next section — seam check</section>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js" } }
+</script>
+
+<script type="module">
+/* ==================================================================
+   Vorgrow hero scene — chaos at the edges, order at the center.
+   ------------------------------------------------------------------
+   All feel-defining constants live in CFG below. Everything is in
+   world units unless noted; the camera sits ~9 units from the core.
+   ================================================================== */
+import * as THREE from 'three';
+
+const CFG = {
+  /* --- population --- */
+  FRAGMENT_COUNT: 170,          // desktop shard count
+  FRAGMENT_COUNT_MOBILE: 60,    // < 768px viewports
+  OUTER_FIELD_SHARE: 0.25,      // share of shards that never fully settle (edge chaos)
+  ACCENT_SHARE: 0.05,           // share of pale-lavender accent shards
+
+  /* --- structure --- */
+  RING_RADII: [1.60, 2.10, 2.60],       // orbital ring radii around the core
+  RING_TILTS: [                          // per-ring plane tilt away from the screen plane
+    [0.50, -0.38, 0.0],                  // (radians around X, Y) — keep < ~0.7 so the
+    [0.62,  0.26, 0.0],                  //  rings stay readable as ellipses, not lines
+    [0.40, -0.10, 0.0],
+  ],
+  RING_Y_JITTER: 0.05,          // out-of-plane scatter inside a ring
+  CHAOS_INNER: 0.55,            // chaotic homes live outside this normalized radius
+  CHAOS_MIN_R: 3.4,             // chaotic shards never come closer to the core than
+                                // this (world units) — keeps a calm gap around the rings
+
+  /* --- speeds (seconds per full cycle — bigger = slower) --- */
+  CORE_ROTATION_PERIOD: 75,     // one full core rotation
+  ORBIT_PERIOD: 90,             // innermost ring revolution; outer rings are slower
+  CYCLE_PERIOD: 40,             // ambient release/return cycle
+  RELEASE_WINDOW: 0.35,         // fraction of the cycle a released shard is away
+  RELEASE_SHARE: 0.45,          // share of ring shards that ever release
+  DRIFT_SPEED: 0.032,           // chaotic drift time scale (underwater feel)
+  TUMBLE_SPEED: 0.04,           // chaotic rotation speed (rad/s-ish)
+  SWIRL_SPEED: 0.003,           // global slow swirl of the chaotic field
+
+  /* --- scale / composition --- */
+  CORE_SIZE: [1.5, 2.0, 0.24],  // w, h, depth of the slab (3:4 portrait)
+  FRAGMENT_BASE: [0.30, 0.20],  // base shard width/height before per-instance scale
+  FRAGMENT_SCALE: [0.65, 1.15], // min/max per-instance scale
+  CORE_POS_DESKTOP: [1.15, 0.35, 0],
+  CORE_POS_MOBILE: [0, 1.30, 0],
+  SCENE_SCALE_MOBILE: 0.72,
+
+  /* --- colors --- */
+  COL_BG: 0x0A0812,
+  COL_CORE: 0x7C3AED,
+  COL_HIGHLIGHT: 0xA78BFA,
+  COL_FRAGMENT: 0x2A2440,
+  COL_RIM: 0x8B5CF6,
+  COL_ACCENT: 0xC4B5FD,
+
+  /* --- atmosphere --- */
+  FOG_NEAR: 7.5,                // world distance where depth fade starts
+  FOG_FAR: 13.0,                // fully faded to background
+  GLOW_SCALE: 6.8,              // core glow sprite size
+  GLOW_OPACITY: 0.55,
+
+  /* --- interaction / perf --- */
+  PARALLAX: 0.018,              // max scene tilt (radians) toward cursor
+  DPR_CAP: 2,
+  DPR_CAP_MOBILE: 1.5,
+  FPS_FLOOR: 45,                // sustained fps below this → cut shards 40%
+};
+
+/* ------------------------------------------------------------------ */
+
+const section = document.getElementById('hero');
+const canvas = document.getElementById('hero-canvas');
+const isMobile = () => window.innerWidth < 768;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({
+    canvas, alpha: true, antialias: true, powerPreference: 'low-power',
+  });
+} catch (e) {
+  section.classList.add('no-webgl');
+}
+
+if (renderer) initScene();
+
+function initScene() {
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 40);
+  camera.position.set(0, 0, 9.2);
+
+  /* Everything lives in one group so layout (desktop/mobile) is just
+     moving/scaling the group. The core sits at the group's origin. */
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const bgColor = new THREE.Color(CFG.COL_BG);
+
+  /* ---------- shared shader chunks ---------- */
+  const fogPars = `
+    uniform float uFogNear;
+    uniform float uFogFar;
+    uniform vec3  uBg;
+  `;
+
+  /* ---------- core slab ---------- */
+  const [cw, ch, cd] = CFG.CORE_SIZE;
+  const coreGeo = new THREE.ExtrudeGeometry(roundedRect(cw, ch, 0.20), {
+    depth: cd, bevelEnabled: true, bevelThickness: 0.035, bevelSize: 0.035,
+    bevelSegments: 2, curveSegments: 8,
+  });
+  coreGeo.translate(0, 0, -cd / 2);
+
+  const coreMat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: true,
+    uniforms: {
+      uBase:   { value: new THREE.Color(CFG.COL_CORE) },
+      uHi:     { value: new THREE.Color(CFG.COL_HIGHLIGHT) },
+      uBg:     { value: bgColor },
+      uKeyDir: { value: new THREE.Vector3(-0.55, 0.7, 0.45).normalize() },
+      uFogNear: { value: CFG.FOG_NEAR },
+      uFogFar:  { value: CFG.FOG_FAR },
+    },
+    vertexShader: `
+      varying vec3 vN;
+      varying vec3 vV;
+      varying float vFog;
+      varying float vY;
+      ${fogPars}
+      void main() {
+        vec4 wPos = modelMatrix * vec4(position, 1.0);
+        vN = normalize(mat3(modelMatrix) * normal);
+        vV = normalize(cameraPosition - wPos.xyz);
+        vY = position.y;
+        vec4 mv = viewMatrix * wPos;
+        vFog = smoothstep(uFogNear, uFogFar, -mv.z);
+        gl_Position = projectionMatrix * mv;
+      }
+    `,
+    fragmentShader: `
+      varying vec3 vN;
+      varying vec3 vV;
+      varying float vFog;
+      varying float vY;
+      uniform vec3 uBase;
+      uniform vec3 uHi;
+      uniform vec3 uKeyDir;
+      ${fogPars}
+      void main() {
+        vec3 n = gl_FrontFacing ? normalize(vN) : -normalize(vN);
+        float ndv = clamp(abs(dot(n, normalize(vV))), 0.0, 1.0);
+        float fres = pow(1.0 - ndv, 2.4);
+        float key = max(dot(n, uKeyDir), 0.0);
+        /* deep violet translucent body, lavender rim + soft key sheen */
+        vec3 col = uBase * 0.16;
+        col += uBase * key * 0.28;
+        col += uHi * fres * 1.05;
+        col += uHi * pow(key, 3.0) * 0.16;
+        col += uHi * smoothstep(-1.0, 1.6, vY) * 0.07;
+        float a = 0.46 + fres * 0.46;
+        col = mix(col, uBg, vFog);
+        gl_FragColor = vec4(col, a);
+        #include <colorspace_fragment>
+      }
+    `,
+  });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  core.renderOrder = 1;
+  group.add(core);
+
+  /* ---------- core glow (billboarded radial sprite — no bloom) ---------- */
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: makeGlowTexture(),
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    opacity: CFG.GLOW_OPACITY,
+  }));
+  glow.scale.setScalar(CFG.GLOW_SCALE);
+  glow.position.z = -0.9;
+  glow.renderOrder = 0;
+  group.add(glow);
+
+  /* ---------- fragments (one InstancedMesh — one draw call) ---------- */
+  const N = CFG.FRAGMENT_COUNT;
+  const [fw, fh] = CFG.FRAGMENT_BASE;
+  const fragGeo = new THREE.ExtrudeGeometry(roundedRect(fw, fh, 0.05), {
+    depth: 0.02, bevelEnabled: false, curveSegments: 3,
+  });
+  fragGeo.translate(0, 0, -0.01);
+
+  const fragMat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    uniforms: {
+      uRim:     { value: new THREE.Color(CFG.COL_RIM) },
+      uKeyDir:  { value: new THREE.Vector3(-0.55, 0.7, 0.45).normalize() },
+      uKeyCol:  { value: new THREE.Color(CFG.COL_HIGHLIGHT) },
+      uFillDir: { value: new THREE.Vector3(0.2, -1.0, 0.3).normalize() },
+      uFillCol: { value: new THREE.Color(0x35406b) },
+      uCorePos: { value: new THREE.Vector3() },
+      uBg:      { value: bgColor },
+      uFogNear: { value: CFG.FOG_NEAR },
+      uFogFar:  { value: CFG.FOG_FAR },
+    },
+    vertexShader: `
+      varying vec3 vN;
+      varying vec3 vV;
+      varying vec3 vCol;
+      varying float vFog;
+      varying float vNear;
+      varying float vBoost;
+      uniform vec3 uCorePos;
+      ${fogPars}
+      void main() {
+        mat4 im = mat4(1.0);
+        #ifdef USE_INSTANCING
+          im = instanceMatrix;
+        #endif
+        vec4 wPos = modelMatrix * im * vec4(position, 1.0);
+        vN = normalize(mat3(modelMatrix) * mat3(im) * normal);
+        vV = normalize(cameraPosition - wPos.xyz);
+        /* shards near the core catch its light */
+        vBoost = smoothstep(3.4, 1.2, distance(wPos.xyz, uCorePos));
+        #ifdef USE_INSTANCING_COLOR
+          vCol = instanceColor;
+        #else
+          vCol = vec3(0.16, 0.14, 0.25);
+        #endif
+        vec4 mv = viewMatrix * wPos;
+        vFog = smoothstep(uFogNear, uFogFar, -mv.z);
+        /* fade shards that drift too close to the camera */
+        vNear = smoothstep(7.5, 8.3, -mv.z);
+        gl_Position = projectionMatrix * mv;
+      }
+    `,
+    fragmentShader: `
+      varying vec3 vN;
+      varying vec3 vV;
+      varying vec3 vCol;
+      varying float vFog;
+      varying float vNear;
+      varying float vBoost;
+      uniform vec3 uRim;
+      uniform vec3 uKeyDir;
+      uniform vec3 uKeyCol;
+      uniform vec3 uFillDir;
+      uniform vec3 uFillCol;
+      ${fogPars}
+      void main() {
+        vec3 n = gl_FrontFacing ? normalize(vN) : -normalize(vN);
+        float ndv = clamp(abs(dot(n, normalize(vV))), 0.0, 1.0);
+        float fres = pow(1.0 - ndv, 1.8);
+        float key = max(dot(n, uKeyDir), 0.0);
+        float fill = max(dot(n, uFillDir), 0.0);
+        vec3 col = vCol * 1.15;
+        col += uKeyCol * key * 0.20;
+        col += uFillCol * fill * 0.08;
+        col += uRim * fres * (0.55 + vBoost * 0.95);
+        float a = (0.40 + fres * 0.45) * (0.55 + vBoost * 0.45);
+        col = mix(col, uBg, vFog);
+        a *= 1.0 - vFog * 0.9;
+        a *= vNear;
+        gl_FragColor = vec4(col, a);
+        #include <colorspace_fragment>
+      }
+    `,
+  });
+
+  const frags = new THREE.InstancedMesh(fragGeo, fragMat, N);
+  frags.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  frags.renderOrder = 2;
+  group.add(frags);
+
+  /* ---------- per-fragment simulation state ---------- */
+  const rings = buildRingAssignments(N);
+  const ringQuats = CFG.RING_TILTS.map(t =>
+    new THREE.Quaternion().setFromEuler(new THREE.Euler(t[0], t[1], t[2])));
+
+  const P = [];   // fragment params
+  const colAttr = new THREE.Color();
+  for (let i = 0; i < N; i++) {
+    const r = rings[i];
+    const outer = r.ring === -1;
+    const accent = Math.random() < CFG.ACCENT_SHARE;
+    const p = {
+      ring: r.ring,
+      slotAngle: r.angle + (Math.random() - 0.5) * 0.05,
+      radius: (r.ring >= 0 ? CFG.RING_RADII[r.ring] : 0) + (Math.random() - 0.5) * 0.08,
+      yJit: (Math.random() - 0.5) * 2 * CFG.RING_Y_JITTER,
+      maxOrder: outer ? 0.10 + Math.random() * 0.22 : 0.86 + Math.random() * 0.14,
+      releaseDepth: (!outer && Math.random() < CFG.RELEASE_SHARE) ? 0.55 + Math.random() * 0.45 : 0,
+      cyclePhase: Math.random(),
+      /* chaotic home: an elliptical annulus, so scatter hugs the edges
+         and the center stays calm (chaos outside, order inside) */
+      ...(() => {
+        const ang = Math.random() * Math.PI * 2;
+        const rad = CFG.CHAOS_INNER + Math.random() * 0.6;
+        return { hx: Math.cos(ang) * rad, hy: Math.sin(ang) * rad };
+      })(),
+      hz: -2.6 + Math.random() * 3.1,
+      seed: Math.random() * 100,
+      scale: CFG.FRAGMENT_SCALE[0] + Math.random() * (CFG.FRAGMENT_SCALE[1] - CFG.FRAGMENT_SCALE[0]),
+      aspect: 0.85 + Math.random() * 0.4,
+      tumble: (0.6 + Math.random() * 0.8) * CFG.TUMBLE_SPEED,
+      qOff: new THREE.Quaternion().setFromEuler(new THREE.Euler(
+        (Math.random() - 0.5) * 0.12, (Math.random() - 0.5) * 0.12, (Math.random() - 0.5) * 0.12)),
+    };
+    P.push(p);
+    if (accent) colAttr.setHex(CFG.COL_ACCENT).multiplyScalar(0.55);
+    else colAttr.setHex(CFG.COL_FRAGMENT).multiplyScalar(0.85 + Math.random() * 0.3);
+    frags.setColorAt(i, colAttr);
+  }
+  frags.instanceColor.needsUpdate = true;
+
+  /* ---------- layout / resize ---------- */
+  const bounds = { x: 5, y: 3 };   // visible half-extents in group space
+  let activeCount = N;
+
+  function layout() {
+    const w = section.clientWidth, h = section.clientHeight;
+    const mobile = isMobile();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1,
+      mobile ? CFG.DPR_CAP_MOBILE : CFG.DPR_CAP));
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+
+    const pos = mobile ? CFG.CORE_POS_MOBILE : CFG.CORE_POS_DESKTOP;
+    group.position.set(pos[0], pos[1], pos[2]);
+    group.scale.setScalar(mobile ? CFG.SCENE_SCALE_MOBILE : 1);
+
+    /* visible half extents at z=0, in group-local units */
+    const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+    const halfW = halfH * camera.aspect;
+    const s = group.scale.x;
+    bounds.x = (halfW * 1.05) / s;
+    bounds.y = (halfH * 0.95) / s;
+
+    if (mobile && activeCount > CFG.FRAGMENT_COUNT_MOBILE) {
+      activeCount = CFG.FRAGMENT_COUNT_MOBILE;
+      frags.count = activeCount;
+    }
+    fragMat.uniforms.uCorePos.value.copy(group.position);
+  }
+
+  /* ---------- simulation ---------- */
+  const _p = new THREE.Vector3(), _s = new THREE.Vector3();
+  const _q = new THREE.Quaternion(), _qc = new THREE.Quaternion();
+  const _e = new THREE.Euler(), _m = new THREE.Matrix4();
+  const coreQuat = new THREE.Quaternion();
+
+  function simulate(t, staticFrame) {
+    /* core: one rotation per CORE_ROTATION_PERIOD, gentle float */
+    _e.set(
+      0.14 + Math.sin(t * 0.11) * 0.05,
+      (t / CFG.CORE_ROTATION_PERIOD) * Math.PI * 2,
+      Math.sin(t * 0.07) * 0.04);
+    coreQuat.setFromEuler(_e);
+    core.quaternion.copy(coreQuat);
+    core.position.y = Math.sin(t * 0.16) * 0.07;
+    glow.position.y = core.position.y * 0.6;
+
+    const swirl = t * CFG.SWIRL_SPEED;
+    const cosS = Math.cos(swirl), sinS = Math.sin(swirl);
+    const dt2 = t * CFG.DRIFT_SPEED;
+
+    for (let i = 0; i < activeCount; i++) {
+      const p = P[i];
+
+      /* order parameter: settled most of the time, occasionally released */
+      let pulse = 1;
+      if (!staticFrame && p.releaseDepth > 0) {
+        const u = fract(t / CFG.CYCLE_PERIOD + p.cyclePhase);
+        if (u < CFG.RELEASE_WINDOW) {
+          const b = Math.sin(Math.PI * u / CFG.RELEASE_WINDOW);
+          pulse = 1 - p.releaseDepth * b * b;
+        }
+      }
+      const order = p.maxOrder * pulse;
+      const s = order * order * (3 - 2 * order);   // smoothstep ease
+
+      /* chaotic pose: slow noise drift around a swirling home point */
+      const hx = (p.hx * cosS - p.hy * sinS) * bounds.x;
+      const hy = (p.hx * sinS + p.hy * cosS) * bounds.y;
+      let cx = hx + noise1(p.seed, dt2) * 0.55;
+      let cy = hy + noise1(p.seed + 31.7, dt2) * 0.45;
+      let cz = p.hz + noise1(p.seed + 63.1, dt2) * 0.4;
+
+      /* keep idle chaos out of the ring zone — order owns the center */
+      const cr = Math.hypot(cx, cy);
+      if (cr > 0.0001 && cr < CFG.CHAOS_MIN_R) {
+        const push = CFG.CHAOS_MIN_R / cr;
+        cx *= push; cy *= push;
+      }
+
+      /* ordered pose: slot on a slowly revolving ring; ring planes face
+         the camera (tilted a little) so the orbits read as ellipses */
+      const k = p.ring >= 0 ? p.ring : 0;
+      const orbSpeed = (Math.PI * 2 / CFG.ORBIT_PERIOD) * (1 - k * 0.18);
+      const a = p.slotAngle + t * orbSpeed;
+      _p.set(Math.cos(a) * p.radius, Math.sin(a) * p.radius,
+             p.yJit + noise1(p.seed + 7.7, dt2) * 0.05);
+      _p.applyQuaternion(ringQuats[k]);
+
+      /* blend position */
+      _p.x = cx + (_p.x - cx) * s;
+      _p.y = cy + (_p.y - cy) * s;
+      _p.z = cz + (_p.z - cz) * s;
+
+      /* blend rotation: slow tumble → flat in the ring plane (so settled
+         shards read as aligned cards, whatever the core's spin phase) */
+      const ta = t * p.tumble;
+      _e.set(p.seed + ta, p.seed * 1.7 + ta * 0.8, p.seed * 0.6 + ta * 0.6);
+      _qc.setFromEuler(_e);
+      _q.copy(ringQuats[k]).multiply(p.qOff);
+      _qc.slerp(_q, s);
+
+      _s.setScalar(p.scale);
+      _s.x *= p.aspect;
+      _m.compose(_p, _qc, _s);
+      frags.setMatrixAt(i, _m);
+    }
+    frags.instanceMatrix.needsUpdate = true;
+  }
+
+  /* ---------- render loop with pause + adaptive quality ---------- */
+  let running = false;
+  let rafId = 0;
+  let tSim = 0;
+  let lastTime = 0;
+  let fpsAcc = 0, fpsN = 0, degraded = 0;
+  let inView = true;
+
+  const parallax = { tx: 0, ty: 0, x: 0, y: 0 };
+
+  function frame(now) {
+    if (!running) return;
+    rafId = requestAnimationFrame(frame);
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+    tSim += dt;
+
+    /* adaptive quality: sustained low fps → cut fragment count 40% */
+    if (dt > 0) { fpsAcc += 1 / dt; fpsN++; }
+    if (fpsN >= 150) {
+      const avg = fpsAcc / fpsN;
+      fpsAcc = 0; fpsN = 0;
+      if (avg < CFG.FPS_FLOOR && degraded < 2) {
+        degraded++;
+        activeCount = Math.max(40, Math.floor(activeCount * 0.6));
+        frags.count = activeCount;
+      }
+    }
+
+    /* cursor parallax (lerped, tiny) */
+    parallax.x += (parallax.tx - parallax.x) * 0.02;
+    parallax.y += (parallax.ty - parallax.y) * 0.02;
+    scene.rotation.y = parallax.x;
+    scene.rotation.x = parallax.y;
+
+    simulate(tSim, false);
+    renderer.render(scene, camera);
+  }
+
+  function start() {
+    if (running || reducedMotion.matches) return;
+    running = true;
+    lastTime = performance.now();
+    rafId = requestAnimationFrame(frame);
+  }
+  function stop() {
+    running = false;
+    cancelAnimationFrame(rafId);
+  }
+
+  function renderStatic() {
+    /* one composed frame: everything settled in its rings */
+    simulate(37.0, true);
+    renderer.render(scene, camera);
+  }
+
+  /* pause when out of viewport or tab hidden */
+  new IntersectionObserver(entries => {
+    inView = entries[0].isIntersecting;
+    if (inView && !document.hidden) start(); else stop();
+  }, { threshold: 0 }).observe(section);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else if (inView) start();
+  });
+
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) { stop(); renderStatic(); }
+    else if (inView) start();
+  });
+
+  /* parallax input — pointer only, never touch */
+  if (window.matchMedia('(pointer: fine)').matches) {
+    window.addEventListener('pointermove', e => {
+      parallax.tx = (e.clientX / window.innerWidth - 0.5) * 2 * CFG.PARALLAX;
+      parallax.ty = (e.clientY / window.innerHeight - 0.5) * 2 * CFG.PARALLAX * 0.6;
+    }, { passive: true });
+  }
+
+  let resizeT = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => { layout(); if (!running) renderStatic(); }, 120);
+  });
+
+  layout();
+  if (reducedMotion.matches) renderStatic();
+  else start();
+
+  /* small integration hook for the site build */
+  window.__vorgrowHero = { start, stop, renderer };
+}
+
+/* ================= helpers ================= */
+
+function roundedRect(w, h, r) {
+  const s = new THREE.Shape();
+  const x = -w / 2, y = -h / 2;
+  s.moveTo(x, y + r);
+  s.lineTo(x, y + h - r);
+  s.quadraticCurveTo(x, y + h, x + r, y + h);
+  s.lineTo(x + w - r, y + h);
+  s.quadraticCurveTo(x + w, y + h, x + w, y + h - r);
+  s.lineTo(x + w, y + r);
+  s.quadraticCurveTo(x + w, y, x + w - r, y);
+  s.lineTo(x + r, y);
+  s.quadraticCurveTo(x, y, x, y + r);
+  return s;
+}
+
+function makeGlowTexture() {
+  const size = 256;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  g.addColorStop(0.0, 'rgba(167, 139, 250, 0.85)');
+  g.addColorStop(0.25, 'rgba(124, 58, 237, 0.38)');
+  g.addColorStop(0.6, 'rgba(124, 58, 237, 0.10)');
+  g.addColorStop(1.0, 'rgba(124, 58, 237, 0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+/* assign ~70% of shards evenly-spaced slots on 3 rings; rest = outer field */
+function buildRingAssignments(n) {
+  const ringTotal = Math.round(n * (1 - CFG.OUTER_FIELD_SHARE));
+  const weights = [0.37, 0.33, 0.30];
+  const counts = weights.map(w => Math.round(ringTotal * w));
+  const out = [];
+  for (let k = 0; k < 3; k++) {
+    for (let j = 0; j < counts[k]; j++) {
+      out.push({ ring: k, angle: (j / counts[k]) * Math.PI * 2 });
+    }
+  }
+  while (out.length < n) out.push({ ring: -1, angle: 0 });
+  /* shuffle so adaptive count reduction removes a mix, not one ring */
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+/* cheap layered sine noise — smooth, slow, no lib */
+function noise1(seed, t) {
+  return Math.sin(t * 0.9 + seed * 12.9) * 0.55
+       + Math.sin(t * 2.3 + seed * 78.2) * 0.30
+       + Math.sin(t * 0.4 + seed * 3.7) * 0.15;
+}
+
+function fract(x) { return x - Math.floor(x); }
+</script>
+</body>
+</html>
