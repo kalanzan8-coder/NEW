@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funnel Journey — Prototype 2 (flowing)</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #131211;
+  }
+  #bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<script>
+(() => {
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+
+  let W = 0, H = 0, DPR = 1;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------------------------------------------------------------
+  // PROTOTYPE 2 — flowing layout:
+  // the same journey, but the two lines sweep around the hero space
+  // in smooth asymmetric arcs (the top one peaks early, the bottom
+  // one dips late) before merging on the right. The center
+  // (roughly x 20%..62%, y 32%..68%) stays empty for the hero text
+  // box and call-to-action.
+  // ---------------------------------------------------------------
+
+  const CONFIG = {
+    cornerRadius: () => Math.min(W, H) * 0.45,
+    paths: [
+      { // top line: rises early, glides down into the merge
+        points: [[-0.05, 0.46], [0.13, 0.38], [0.28, 0.15], [0.50, 0.19],
+                 [0.68, 0.40], [0.86, 0.53], [1.06, 0.53]],
+        stations: [2, 3, 4, 5]
+      },
+      { // bottom line: dips later and deeper, then climbs to meet it
+        points: [[-0.05, 0.56], [0.17, 0.65], [0.34, 0.85], [0.58, 0.78],
+                 [0.73, 0.62], [0.86, 0.53], [1.06, 0.53]],
+        stations: [2, 3, 4]
+      }
+    ],
+    mergeAt: [0.86, 0.53],
+    leadsPerPath: 5
+  };
+
+  // The lead's journey told in color: orange in, dark blue through
+  // the middle of the funnel, pale light once the lines merge.
+  const COLOR_STOPS = [
+    { t: 0.00, c: [255, 138, 60] },
+    { t: 0.38, c: [255, 138, 60] },
+    { t: 0.55, c: [58, 94, 182] },
+    { t: 0.78, c: [58, 94, 182] },
+    { t: 0.92, c: [226, 220, 210] },
+    { t: 1.00, c: [226, 220, 210] }
+  ];
+
+  function colorAt(t) {
+    for (let i = 1; i < COLOR_STOPS.length; i++) {
+      if (t <= COLOR_STOPS[i].t) {
+        const a = COLOR_STOPS[i - 1], b = COLOR_STOPS[i];
+        const k = (t - a.t) / (b.t - a.t || 1);
+        return [
+          Math.round(a.c[0] + (b.c[0] - a.c[0]) * k),
+          Math.round(a.c[1] + (b.c[1] - a.c[1]) * k),
+          Math.round(a.c[2] + (b.c[2] - a.c[2]) * k)
+        ];
+      }
+    }
+    return COLOR_STOPS[COLOR_STOPS.length - 1].c;
+  }
+
+  // ---------------------------------------------------------------
+  // Path building: polyline with rounded corners, sampled densely,
+  // arc-length parametrized, with normals for the shimmer offset
+  // ---------------------------------------------------------------
+
+  const paths = [];
+
+  function buildPaths() {
+    paths.length = 0;
+    const radius = CONFIG.cornerRadius();
+
+    for (let pi = 0; pi < CONFIG.paths.length; pi++) {
+      const def = CONFIG.paths[pi];
+      const pts = def.points.map(p => ({ x: p[0] * W, y: p[1] * H }));
+      const samples = [];
+      const cornerSample = new Array(pts.length).fill(0);
+
+      function sampleLine(a, b) {
+        const steps = Math.max(2, Math.round(Math.hypot(b.x - a.x, b.y - a.y) / 14));
+        for (let s = 1; s <= steps; s++) {
+          const k = s / steps;
+          samples.push({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k });
+        }
+      }
+
+      samples.push({ x: pts[0].x, y: pts[0].y });
+      let cursor = pts[0];
+
+      for (let i = 1; i < pts.length - 1; i++) {
+        const p = pts[i], next = pts[i + 1];
+        const v0 = { x: p.x - cursor.x, y: p.y - cursor.y };
+        const l0 = Math.hypot(v0.x, v0.y) || 1;
+        const v1 = { x: next.x - p.x, y: next.y - p.y };
+        const l1 = Math.hypot(v1.x, v1.y) || 1;
+        const r = Math.min(radius, l0 * 0.5, l1 * 0.5);
+        const A = { x: p.x - v0.x / l0 * r, y: p.y - v0.y / l0 * r };
+        const B = { x: p.x + v1.x / l1 * r, y: p.y + v1.y / l1 * r };
+
+        sampleLine(cursor, A);
+        // quadratic corner through the control point p
+        const quadSteps = 14;
+        for (let s = 1; s <= quadSteps; s++) {
+          const k = s / quadSteps;
+          const ik = 1 - k;
+          samples.push({
+            x: ik * ik * A.x + 2 * ik * k * p.x + k * k * B.x,
+            y: ik * ik * A.y + 2 * ik * k * p.y + k * k * B.y
+          });
+          if (s === Math.round(quadSteps / 2)) cornerSample[i] = samples.length - 1;
+        }
+        cursor = B;
+      }
+      sampleLine(cursor, pts[pts.length - 1]);
+      cornerSample[pts.length - 1] = samples.length - 1;
+
+      // arc length + normals
+      let len = 0;
+      const cum = [0];
+      for (let i = 1; i < samples.length; i++) {
+        len += Math.hypot(samples[i].x - samples[i - 1].x, samples[i].y - samples[i - 1].y);
+        cum.push(len);
+      }
+      for (let i = 0; i < samples.length; i++) {
+        samples[i].t = cum[i] / len;
+        const a = samples[Math.max(i - 1, 0)];
+        const b = samples[Math.min(i + 1, samples.length - 1)];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const dl = Math.hypot(dx, dy) || 1;
+        samples[i].nx = -dy / dl;
+        samples[i].ny = dx / dl;
+      }
+
+      paths.push({
+        samples,
+        phase: pi * 2.1,
+        stations: def.stations.map(idx => samples[cornerSample[idx]].t)
+      });
+    }
+  }
+  buildPaths();
+  window.addEventListener('resize', buildPaths);
+
+  function shimmer(path, t, time) {
+    return Math.sin(time * 0.0005 + t * 9 + path.phase) * 2.5;
+  }
+
+  function pointAt(path, t, time) {
+    const s = path.samples;
+    let lo = 0, hi = s.length - 1;
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      if (s[mid].t < t) lo = mid; else hi = mid;
+    }
+    const a = s[lo], b = s[hi];
+    const k = (t - a.t) / (b.t - a.t || 1);
+    const off = shimmer(path, t, time);
+    return {
+      x: a.x + (b.x - a.x) * k + (a.nx + (b.nx - a.nx) * k) * off,
+      y: a.y + (b.y - a.y) * k + (a.ny + (b.ny - a.ny) * k) * off
+    };
+  }
+
+  // ---------------------------------------------------------------
+  // Drawing
+  // ---------------------------------------------------------------
+
+  const STRANDS = [
+    { off: -2.6, alpha: 0.05 },
+    { off: 0,    alpha: 0.11 },
+    { off: 2.6,  alpha: 0.05 }
+  ];
+
+  function drawPath(path, time) {
+    for (const strand of STRANDS) {
+      ctx.beginPath();
+      const s = path.samples;
+      for (let i = 0; i < s.length; i++) {
+        const off = strand.off + shimmer(path, s[i].t, time);
+        const x = s[i].x + s[i].nx * off;
+        const y = s[i].y + s[i].ny * off;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(208, 201, 192, ${strand.alpha})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+
+  function drawStations(path, time, leads) {
+    for (const st of path.stations) {
+      const p = pointAt(path, st, time);
+      const c = colorAt(st);
+
+      // resting ring + core
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(208, 201, 192, 0.22)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, 0.55)`;
+      ctx.fill();
+
+      // pulse when a lead passes through
+      for (const lead of leads) {
+        if (lead.path !== path) continue;
+        const d = Math.abs(lead.t - st);
+        if (d < 0.025) {
+          const k = 1 - d / 0.025;
+          const lc = colorAt(lead.t);
+          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 16 + k * 10);
+          g.addColorStop(0, `rgba(${lc[0]}, ${lc[1]}, ${lc[2]}, ${0.28 * k})`);
+          g.addColorStop(1, `rgba(${lc[0]}, ${lc[1]}, ${lc[2]}, 0)`);
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 16 + k * 10, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 7 + k * 5, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(${lc[0]}, ${lc[1]}, ${lc[2]}, ${0.5 * k})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Leads travelling the funnel
+  // ---------------------------------------------------------------
+
+  const leads = [];
+
+  function buildLeads() {
+    leads.length = 0;
+    for (const path of paths) {
+      for (let i = 0; i < CONFIG.leadsPerPath; i++) {
+        leads.push({
+          path,
+          t: (i / CONFIG.leadsPerPath + Math.random() * 0.08) % 1,
+          speed: 0.000045 + Math.random() * 0.000025,
+          size: 1.4 + Math.random() * 0.9,
+          flicker: Math.random() * Math.PI * 2
+        });
+      }
+    }
+  }
+  buildLeads();
+  window.addEventListener('resize', buildLeads);
+
+  function drawLeads(time, dt) {
+    for (const lead of leads) {
+      lead.t += lead.speed * dt;
+      if (lead.t > 1) {
+        lead.t = 0;
+        lead.speed = 0.000045 + Math.random() * 0.000025;
+      }
+
+      const c = colorAt(lead.t);
+      const pos = pointAt(lead.path, lead.t, time);
+      const fadeIn = Math.min(lead.t * 12, 1);
+      const fadeOut = Math.min((1 - lead.t) * 12, 1);
+      const flicker = 0.8 + Math.sin(time * 0.006 + lead.flicker) * 0.2;
+      const a = fadeIn * fadeOut * flicker;
+
+      // trail
+      const TRAIL = 0.035;
+      const steps = 8;
+      ctx.lineWidth = lead.size * 0.9;
+      for (let s = 0; s < steps; s++) {
+        const t0 = Math.max(lead.t - TRAIL * (1 - s / steps), 0);
+        const t1 = Math.max(lead.t - TRAIL * (1 - (s + 1) / steps), 0);
+        const p0 = pointAt(lead.path, t0, time);
+        const p1 = pointAt(lead.path, t1, time);
+        ctx.strokeStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${a * 0.45 * (s / steps)})`;
+        ctx.beginPath();
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p1.x, p1.y);
+        ctx.stroke();
+      }
+
+      // core + glow
+      const glow = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, lead.size * 5);
+      glow.addColorStop(0, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${a * 0.85})`);
+      glow.addColorStop(0.35, `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${a * 0.3})`);
+      glow.addColorStop(1, `rgba(${c[0]}, ${c[1]}, ${c[2]}, 0)`);
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, lead.size * 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Frame loop
+  // ---------------------------------------------------------------
+
+  function drawMergeGlow() {
+    const x = CONFIG.mergeAt[0] * W, y = CONFIG.mergeAt[1] * H;
+    const r = Math.min(W, H) * 0.16;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, 'rgba(205, 195, 180, 0.05)');
+    g.addColorStop(1, 'rgba(205, 195, 180, 0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+  }
+
+  function drawVignette() {
+    const v = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35,
+                                       W / 2, H / 2, Math.max(W, H) * 0.75);
+    v.addColorStop(0, 'rgba(19, 18, 17, 0)');
+    v.addColorStop(1, 'rgba(10, 9, 9, 0.55)');
+    ctx.fillStyle = v;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  let last = performance.now();
+
+  function frame(now) {
+    requestAnimationFrame(frame);   // schedule first so a bad frame can't kill the loop
+    const dt = Math.min(now - last, 50);
+    last = now;
+
+    ctx.fillStyle = '#131211';
+    ctx.fillRect(0, 0, W, H);
+
+    const t = reducedMotion ? 0 : now;
+    drawMergeGlow();
+    for (const path of paths) drawPath(path, t);
+    for (const path of paths) drawStations(path, t, leads);
+    drawLeads(t, reducedMotion ? 0 : dt);
+    drawVignette();
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
