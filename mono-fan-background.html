@@ -53,17 +53,19 @@
   });
 
   // ---------------------------------------------------------------
-  // One colour, one shape: a true 3D cone of rays. Every line is
-  // born at a single apex just off the left edge and opens toward
-  // the right. The cone slowly revolves around its own axis, so in
-  // perspective each line continuously drifts, widens, and changes
-  // brightness as it travels through depth. Front rays are brighter
-  // and spread wider; rays swinging to the back compress and dim.
+  // One colour, one shape: a true 3D cone of rays. The rays enter
+  // wide apart along the left edge and all gather quickly into a
+  // single point at the right-middle of the screen — then leave it
+  // as one tight, nearly-parallel beam running to the right edge.
+  // The cone slowly revolves around its own axis, so in perspective
+  // each line continuously drifts and changes brightness as it
+  // travels through depth. Front rays are brighter; rays swinging
+  // to the back compress and dim.
   // ---------------------------------------------------------------
 
   const COLOR = '214, 206, 197';        // the single colour, warm off-white
   const RAY_COUNT = 320;
-  const MAX_SPREAD = 0.50;              // cone half-angle, radians
+  const MAX_SPREAD = 0.55;              // cone half-angle, radians
   const ROT_SPEED = 0.000055;           // radians per ms — full turn ~2 min
   const FOCAL = 1000;                   // perspective focal length, px
 
@@ -85,10 +87,11 @@
   }
   buildRays();
 
+  // the gathering point: right of center, at mid height
   function apex() {
     return {
-      x: -W * 0.06 + mouse.x * 14,
-      y: H * 0.45 + mouse.y * 14
+      x: W * 0.60 + mouse.x * 14,
+      y: H * 0.47 + mouse.y * 14
     };
   }
 
@@ -100,7 +103,8 @@
 
   function drawFan(time) {
     const a = apex();
-    const reach = W * 0.95;
+    const reach = W * 0.78;               // how far back the spread reaches left
+    const beamLen = W * 0.48;             // the gathered beam out to the right
     const rot = time * ROT_SPEED;
     const tilt = mouse.x * 0.05;          // parallax nudges the revolve
 
@@ -113,28 +117,47 @@
       const dz = sinS * Math.sin(th);
       const dx = Math.cos(ray.spread);
 
+      // wide end, off to the left of the gathering point
       const L = reach * ray.len;
-      const ex = a.x + dx * L;
-      const ey = a.y + dy * L * 0.62;     // squash vertically to a wide fan
-      const ez = dz * L * 0.38;
+      const sx = a.x - dx * L;
+      const sy = a.y - dy * L * 0.62;     // squash vertically to a wide fan
+      const sz = -dz * L * 0.38;
 
-      const p0 = project(a.x, a.y, 0);
+      // past the gathering point the ray stays in the bundle:
+      // almost parallel, keeping only a trace of its old direction
+      const ex = a.x + beamLen;
+      const ey = a.y + dy * beamLen * 0.045;
+      const ez = dz * beamLen * 0.06;
+
+      const p0 = project(sx, sy, Math.max(sz, -FOCAL * 0.75));
+      const pa = project(a.x, a.y, 0);
       const p1 = project(ex, ey, Math.min(ez, FOCAL * 0.75));
 
       // front of the revolve is bright, the back nearly disappears
       const front = 0.5 + 0.5 * Math.sin(th) * (ray.spread / MAX_SPREAD);
       const alpha = (0.03 + 0.11 * front) * ray.jitter;
 
-      const grad = ctx.createLinearGradient(p0.x, p0.y, p1.x, p1.y);
-      grad.addColorStop(0, `rgba(${COLOR}, ${alpha * 1.9})`);
-      grad.addColorStop(0.4, `rgba(${COLOR}, ${alpha * 0.6})`);
-      grad.addColorStop(0.85, `rgba(${COLOR}, ${alpha * 0.12})`);
-      grad.addColorStop(1, `rgba(${COLOR}, 0)`);
-
-      ctx.strokeStyle = grad;
+      // spread side: faint at the left edge, brightest at the gather
+      const gIn = ctx.createLinearGradient(p0.x, p0.y, pa.x, pa.y);
+      gIn.addColorStop(0, `rgba(${COLOR}, ${alpha * 0.25})`);
+      gIn.addColorStop(0.6, `rgba(${COLOR}, ${alpha * 0.8})`);
+      gIn.addColorStop(1, `rgba(${COLOR}, ${alpha * 1.8})`);
+      ctx.strokeStyle = gIn;
       ctx.lineWidth = ray.width * (0.7 + 0.6 * front);
       ctx.beginPath();
       ctx.moveTo(p0.x, p0.y);
+      ctx.lineTo(pa.x, pa.y);
+      ctx.stroke();
+
+      // gathered side: one tight beam, slowly dying toward the edge
+      const gOut = ctx.createLinearGradient(pa.x, pa.y, p1.x, p1.y);
+      gOut.addColorStop(0, `rgba(${COLOR}, ${alpha * 1.4})`);
+      gOut.addColorStop(0.7, `rgba(${COLOR}, ${alpha * 0.35})`);
+      gOut.addColorStop(1, `rgba(${COLOR}, 0)`);
+      ctx.strokeStyle = gOut;
+      ctx.lineWidth = ray.width * 0.6;
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
       ctx.lineTo(p1.x, p1.y);
       ctx.stroke();
     }
@@ -143,7 +166,7 @@
   // soft halo where all the lines get together — same colour, nothing else
   function drawApexGlow() {
     const a = apex();
-    const r = Math.min(W, H) * 0.45;
+    const r = Math.min(W, H) * 0.30;
     const g = ctx.createRadialGradient(a.x, a.y, 0, a.x, a.y, r);
     g.addColorStop(0, `rgba(${COLOR}, 0.07)`);
     g.addColorStop(0.4, `rgba(${COLOR}, 0.025)`);
